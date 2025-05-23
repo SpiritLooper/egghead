@@ -4,6 +4,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: ingress
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  targetNamespace: ingress
+  path: ./k8s/infra/ingress
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: system
   namespace: flux-system
 spec:
