@@ -18,7 +18,7 @@ spec:
           image: jellyfin/jellyfin:10.10.7
           env:
             - name: JELLYFIN_PublishedServerUrl
-              value: https://jellyfin.egghead.lan
+              value: https://jellyfin.egghead.infrao.top
             - name: JELLYFIN_CACHE_DIR
               value: /cache
             - name: JELLYFIN_CONFIG_DIR
@@ -89,7 +89,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-  - host: jellyfin.egghead.lan
+  - host: jellyfin.egghead.infrao.top
     http:
       paths:
       - backend:
@@ -101,4 +101,4 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - jellyfin.egghead.lan
+    - jellyfin.egghead.infrao.top

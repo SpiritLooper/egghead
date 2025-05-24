@@ -27,7 +27,7 @@ spec:
   targetNamespace: kube-system
   values:
     nfs:
-      server: ohara.lan
+      server: ohara.infrao.top
       path: /mnt/raid/k3s
       mountOptions:
         - nfsvers=4.2

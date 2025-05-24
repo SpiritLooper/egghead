@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs
   nfs:
-    server: ohara.lan
+    server: ohara.infrao.top
     path: /mnt/raid/k3s/media/media
 ---
 apiVersion: v1
