@@ -1,0 +1,104 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - name: jellyfin
+          image: jellyfin/jellyfin:10.10.7
+          env:
+            - name: JELLYFIN_PublishedServerUrl
+              value: https://jellyfin.egghead.lan
+            - name: JELLYFIN_CACHE_DIR
+              value: /cache
+            - name: JELLYFIN_CONFIG_DIR
+              value: /config
+            - name: JELLYFIN_LOG_DIR
+              value: /log
+          volumeMounts:
+            - mountPath: /config
+              name: config
+            - mountPath: /cache
+              name: cache
+            - mountPath: /media
+              name: media
+              readOnly: true
+            - mountPath: /dev/dri
+              name: dri
+          securityContext:
+            privileged: true
+      volumes:
+        - name: cache
+          emptyDir:
+            sizeLimit: 8Gi
+        - name: media
+          persistentVolumeClaim:
+            claimName: media-nfs
+        - name: config
+          persistentVolumeClaim:
+            claimName: jellyfin-config
+        - hostPath:
+            path: /dev/dri
+            type: Directory
+          name: dri
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyfin-config
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin
+  namespace: media
+spec:
+  selector:
+    app: jellyfin
+  ports:
+    - protocol: TCP
+      name: web
+      port: 8096
+      targetPort: 8096
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyfin
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: jellyfin.egghead.lan
+    http:
+      paths:
+      - backend:
+          service:
+            name: jellyfin
+            port:
+              number: 8096
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - jellyfin.egghead.lan

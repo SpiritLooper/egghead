@@ -1,0 +1,6 @@
+# This file prevents the top level kustomization to deploy all the yaml in the sub folders
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+resources:
+  - ./deploy.yaml
