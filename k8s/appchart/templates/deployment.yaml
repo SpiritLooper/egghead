@@ -1,0 +1,120 @@
+# templates/deployment.yaml
+{{- range .Values.apps }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: {{ .image }}
+          {{- if .env }}
+          env:
+            {{- toYaml .env | nindent 12 }}
+          {{- end }}
+          {{- if .volumeMounts }}
+          volumeMounts:
+            {{- toYaml .volumeMounts | nindent 12 }}
+          {{- end }}
+          {{- if .extras }}
+          {{- toYaml .extras | nindent 10 }}
+          {{- end }}
+      {{- if .volumes }}
+      volumes:
+        {{- toYaml .volumes | nindent 8 }}
+      {{- end }}
+      {{- if .imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .imagePullSecret }}
+      {{- end }}
+---
+
+# svc generation
+{{- if .service }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name }}
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - protocol: TCP
+      name: {{ .service | quote }}
+      port: {{ .service }}
+      targetPort: {{ .service }}
+{{- end }}
+
+---
+# pvc generation
+{{- if .pvc }}
+{{- range .pvc }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ . }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+{{- end }}
+{{- end }}
+
+---
+{{- if .ingress }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .name }}
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: {{ .ingress.domain }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ .name }}
+            port:
+              number: {{ .service }}
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .ingress.domain }}
+---
+
+{{- end }}
+{{- end }}
+
+---
+
+
+
+# configmap generation
+{{- range $name, $data := .Values.configmaps }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $name }}
+data:
+  {{- range $key, $value := $data }}
+  {{ $key }}: |
+    {{- $value | nindent 4 }}
+  {{- end }}
+
+---
+{{- end }}
