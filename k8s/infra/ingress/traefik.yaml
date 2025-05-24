@@ -29,10 +29,10 @@ spec:
   targetNamespace: ingress
   values:
     globalArguments: []
-    # tlsStore:
-    #   default:
-    #     defaultCertificate:
-    #       secretName: my-awesome-secret-tls
+    tlsStore:
+      default:
+        defaultCertificate:
+          secretName: wildcard-egghead-infrao-top-tls
     service:
       enabled: true
       type: LoadBalancer

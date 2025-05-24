@@ -17,7 +17,7 @@ All configuration is declarative and stored in a Git repository. Changes are pus
 ## 🌐 Access & Networking
 
 - 🔐 All services are routed through **Traefik** with automatic HTTPS
-- 🧩 Subdomain-based access under `.egghead.lan` for each service
+- 🧩 Subdomain-based access under `.egghead.infrao.top` for each service
 
 ---
 

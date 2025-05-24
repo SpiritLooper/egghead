@@ -1,0 +1,9 @@
+creation_rules:
+  - encrypted_regex: "(token|email|^data$|^stringData$|webhook$|creds$)"
+    key_groups:
+      - age: 
+        - "age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx"
+
+stores:
+  yaml:
+    indent: 2
