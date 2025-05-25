@@ -28,5 +28,30 @@ A few of the self-hosted apps currently running:
 > TODO: Add more apps ! 
 
 ---
+## 🚀 Deploying the stack !
+
+1. Get a github token and set an env var:
+
+```fish
+export GITHUB_TOKEN=xxx
+```
+
+2. Enter some commands
+```fish
+# pre create the decryption key
+kubectl create ns flux-system
+kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey
+
+# bootstrap flux
+flux bootstrap github \
+              --owner=SpiritLooper \
+              --repository=egghead \
+              --branch=main \
+              --path=./k8s/flux
+```
+
+3. Things should start to deploy ! 🪄
+
+---
 🛠 Built with love, open source, and a lot of YAML.  
 Questions? Ideas? Pull requests are welcome! 💌
