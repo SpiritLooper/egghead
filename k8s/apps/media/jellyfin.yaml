@@ -25,6 +25,8 @@ spec:
               value: /config
             - name: JELLYFIN_LOG_DIR
               value: /log
+            - name: TZ
+              value: Europe/Paris
           volumeMounts:
             - mountPath: /config
               name: config

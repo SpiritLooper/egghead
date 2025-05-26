@@ -32,3 +32,14 @@ spec:
       enabled: true
     dns01RecursiveNameserversOnly: true
     dns01RecursiveNameservers: "8.8.8.8:53,1.1.1.1:53"
+    extraEnv:
+      - name: TZ
+        value: Europe/Paris
+    webhook:
+      extraEnv:
+        - name: TZ
+          value: Europe/Paris
+    cainjector:
+      extraEnv:
+        - name: TZ
+          value: Europe/Paris

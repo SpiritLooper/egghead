@@ -29,6 +29,9 @@ spec:
   targetNamespace: ingress
   values:
     globalArguments: []
+    env:
+      - name: TZ
+        value: Europe/Paris
     tlsStore:
       default:
         defaultCertificate:
