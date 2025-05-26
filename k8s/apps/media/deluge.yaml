@@ -1,0 +1,90 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deluge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deluge
+  template:
+    metadata:
+      labels:
+        app: deluge
+    spec:
+      containers:
+        - name: deluge
+          image: linuxserver/deluge:2.2.0
+          env:
+            - name: PUID
+              value: "1000"
+            - name: GUID
+              value: "1000"
+            - name: TZ
+              value: Europe/Paris
+            - name: DELUGE_LOGLEVEL
+              value: "error"
+          volumeMounts:
+            - mountPath: /config
+              name: config
+            - mountPath: /downloads
+              name: downloads
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: media-nfs
+        - name: config
+          persistentVolumeClaim:
+            claimName: deluge-config
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deluge-config
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deluge
+  namespace: media
+spec:
+  selector:
+    app: deluge
+  ports:
+    - protocol: TCP
+      name: web
+      port: 8112
+      targetPort: 8112
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: deluge
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: torrent.egghead.infrao.top
+    http:
+      paths:
+      - backend:
+          service:
+            name: deluge
+            port:
+              number: 8112
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - torrent.egghead.infrao.top
