@@ -1,0 +1,68 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: paperless
+spec:
+  install:
+    createNamespace: true
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: paperless-ngx
+        image: ghcr.io/paperless-ngx/paperless-ngx:2.16.1
+        volumeMounts:
+          - name: paperless-data
+            mountPath: /usr/src/paperless/data
+          - name: paperless-media
+            mountPath: /usr/src/paperless/media
+          - name: paperless-export
+            mountPath: /usr/src/paperless/export
+          - name: paperless-consume
+            mountPath: /usr/src/paperless/consume
+        env:
+          - name: PAPERLESS_REDIS
+            value: redis://paperless-redis:6379
+          - name: PAPERLESS_OCR_LANGUAGE
+            value: fra
+          - name: PAPERLESS_BIND_ADDR
+            value: 0.0.0.0
+          - name: TZ
+            value: Europe/Paris
+          - name: PAPERLESS_URL
+            value: https://paperless.egghead.infrao.top
+
+        volumes:
+          - name: paperless-data
+            persistentVolumeClaim:
+              claimName: paperless-data
+          - name: paperless-media
+            persistentVolumeClaim:
+              claimName: paperless-media
+          - name: paperless-export
+            persistentVolumeClaim:
+              claimName: paperless-export
+          - name: paperless-consume
+            persistentVolumeClaim:
+              claimName: paperless-consume
+
+        service: 8000
+        ingress:
+          domain: paperless.egghead.infrao.top
+        pvc:
+          - paperless-data
+          - paperless-media
+          - paperless-export
+          - paperless-consume
+
+      - name: paperless-redis
+        image: redis:8.0.1-bookworm
+        service: 6379
