@@ -1,0 +1,15 @@
+apps:
+- name: vaultwarden
+  image: vaultwarden/server:1.34.1
+  volumeMounts:
+    - name: vaultwarden-data
+      mountPath: /data
+  volumes:
+    - name: vaultwarden-data
+      persistentVolumeClaim:
+        claimName: vaultwarden-data
+  service: 80
+  ingress:
+    domain: vaultwarden.apps.infrao.top
+  pvc:
+    - vaultwarden-data
