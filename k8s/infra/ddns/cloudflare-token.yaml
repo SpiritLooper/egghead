@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-api-token
+type: Opaque
+stringData:
+  CLOUDFLARE_API_TOKEN: ENC[AES256_GCM,data:2KIYufC0YWZs2Xkbfw+PQvYnKUaTtsVwJGGfmXY2s3+gmlla7EkPEQ==,iv:nIDGfNV5K3cwIC7wXfAPUuyfKSQFRJKKTiMfHNdatys=,tag:gq3wK0GD5F3V2osC99Ixfg==,type:str]
+  DOMAINS: ENC[AES256_GCM,data:uus4m2CI3OpeXr0GaqaY4LLW2QBtZEzo,iv:rLmwkumFSgNrj61Svmz2qtknU4NLOCIhYTbAdmGklMA=,tag:tdFfso8jJMili+qjm/X+EQ==,type:str]
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnM0Q2cWprZUpGL3pyTXVv
+        RjI5VmI5WTF3TG5lc0pSaVBYblpDeFBDd3lRCnBRSDc0eVdSVCsrSC9qR3dyNlFj
+        UlRYWEZhYmZ2RW1rRERUYnVDZFZvL3MKLS0tIHF5eW10MFpKcUdwdWMvTlJpbVVs
+        RDBBREkrT250c0RCMHhBZkxsUnhsaDQKV9UPBeL9WSTsloBLNjFa1v2LI9+HxrtN
+        5fGENHjzGjr9WEE6XOHFLsD8MkgO3dN0TAJHjQeZb02SRWk7HD3TQQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-09-28T13:27:41Z"
+  mac: ENC[AES256_GCM,data:I2c8v5VTtm4ulFaQywFa+/dJK3G16WFMEngg9LOKnuDyXDBi8Sof8kTj3W8KhS125B04NIyxjjfNwQ3Es4OZR+jt2zi3YlVn7xcAR999s02DxE+trcnHdgA65Nrn2tBOsqoJR7eGNjK/HiFih+VzUWi8cM1yzJ4lnbYmuxQsEEs=,iv:HXpm7E/ptvbMDwg/el5B+RJ3/cw3QcC2p5bKkttOuFU=,tag:8/uFcY0GPk60cQGEevjVEQ==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.10.2

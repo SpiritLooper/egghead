@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-ddns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddns
+  template:
+    metadata:
+      labels:
+        app: ddns
+    spec:
+      containers:
+        - name: ddns
+          image: favonia/cloudflare-ddns:1.15.1
+          env:
+            - name: IP6_PROVIDER
+              value: "none"
+            - name: TZ
+              value: Europe/Paris
+          envFrom:
+            - secretRef:
+                name: cloudflare-api-token
+                optional: false
+
