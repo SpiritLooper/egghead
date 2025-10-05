@@ -81,6 +81,15 @@ spec:
             key: port
     image:
       tag: v2.0.1
+    securityContext:
+      privileged: true
+    persistence:
+      dri:
+        enabled: true
+        type: hostPath
+        mountPath: /dev/dri
+        hostPath: /dev/dri
+        readOnly: false
     immich:
       metrics:
         enabled: false
@@ -90,12 +99,20 @@ spec:
       # configuration is immich-config.json converted to yaml
       # ref: https://immich.app/docs/install/config-file/
       #
-      configuration: 
+      configuration:
+        ffmpeg:
+          acceptedVideoCodecs: 
+            - h264
+            - hevc
+            - vp9
+          accel: vaapi
+          accelDecode: true
         backup:
-          database: 
+          database:
             enabled: false
-
     valkey:
+      env:
+        TZ: Europe/Paris
       enabled: true
       persistence:
         data:
