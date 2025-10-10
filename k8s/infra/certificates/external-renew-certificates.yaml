@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cert-renew-minio-ohara
+  labels:
+    app: push-tls
+  annotations:
+    secret.reloader.stakater.com/reload: "ohara-infrao-top-tls"
+spec:
+  ttlSecondsAfterFinished: 6480000
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: push-tls
+          image: alpine:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              apk add --no-cache openssh
+              echo "Writing TLS files..."
+              mkdir -vp /tmp/tls
+              echo -n "$TLS_CRT" > /tmp/tls/public.crt
+              echo -n "$TLS_KEY" > /tmp/tls/private.key
+              chmod -v 600 /tmp/tls/*
+              echo "Setting up SSH key..."
+              mkdir -vp ~/.ssh
+              echo "$SSH_KEY" > ~/.ssh/ohara.key
+              chmod -v 600 ~/.ssh/ohara.key
+              ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+              echo "Pushing TLS files via SCP..."
+              scp -i ~/.ssh/ohara.key /tmp/tls/public.crt /tmp/tls/private.key $SSH_USER@$SSH_HOST:$DEST_PATH
+          env:
+            - name: TLS_CRT
+              valueFrom:
+                secretKeyRef:
+                  name: ohara-infrao-top-tls
+                  key: tls.crt
+            - name: TLS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ohara-infrao-top-tls
+                  key: tls.key
+            - name: SSH_USER
+              valueFrom:
+                secretKeyRef:
+                  name: ohara-creds
+                  key: SSH_USER
+            - name: SSH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ohara-creds
+                  key: SSH_KEY
+            - name: SSH_HOST
+              value: "ohara.infrao.top"
+            - name: DEST_PATH
+              value: "~/.minio/certs"
