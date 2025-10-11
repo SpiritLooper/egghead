@@ -23,7 +23,7 @@ spec:
   storageClassName: nfs
   nfs:
     server: ohara.infrao.top
-    path: /mnt/raid/k3s/immich
+    path: /mnt/raid/k3s/immich-shared
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
