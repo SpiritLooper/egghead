@@ -22,7 +22,7 @@ kind: ScheduledBackup
 metadata:
   name: immich-backup
 spec:
-  schedule: "@every 1m"
+  schedule: "@every 12h"
   cluster:
     name: immich-database
   immediate: true
