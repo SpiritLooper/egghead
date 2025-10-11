@@ -1,0 +1,31 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: minio-immich-backup-store
+  namespace: immich
+spec:
+  configuration:
+    destinationPath: s3://immich-backup/pgsql/
+    endpointURL: https://ohara.infrao.top:9004
+    s3Credentials:
+      accessKeyId:
+        name: minio-creds
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: minio-creds
+        key: ACCESS_SECRET_KEY
+    wal:
+      compression: gzip
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: immich-backup
+spec:
+  schedule: "@every 1m"
+  cluster:
+    name: immich-database
+  immediate: true
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
