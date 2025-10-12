@@ -25,7 +25,7 @@ kind: ScheduledBackup
 metadata:
   name: immich-backup
 spec:
-  schedule: "@every 12h"
+  schedule: "0 30 4 * * *"
   cluster:
     name: immich-database
   immediate: true
@@ -67,5 +67,5 @@ spec:
   prune:
     schedule: '0 1 * * 0'
     retention:
-      keepLast: 21
-      keepDaily: 14
+      keepLast: 5
+      keepDaily: 2
