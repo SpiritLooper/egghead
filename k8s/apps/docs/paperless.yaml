@@ -59,9 +59,9 @@ spec:
           domain: paperless.egghead.infrao.top
         pvc:
           - name: paperless-data
-            backup: false
+            backup: true
           - name: paperless-media
-            backup: false
+            backup: true
           - name: paperless-export
             backup: false
           - name: paperless-consume

@@ -1,0 +1,24 @@
+apiVersion: v1
+stringData:
+  ACCESS_KEY_ID: ENC[AES256_GCM,data:wVCGvjD22xyWHX0=,iv:FRRbm9lVTHa1uMSQ4DHfR58RYxvEt1vWtSgIXZpfeW4=,tag:toniblwaTf1y8f9AzFa+1A==,type:str]
+  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:oE2wgzzXni7L031sExSiFA==,iv:ZTy/fp0pbbIy+ocV3lEXEEhCCkP5TwxxMxqMKUSX0Bs=,tag:dvg18gtaZYmlVY0bfVBOGw==,type:str]
+  restic-password: ENC[AES256_GCM,data:YksCozLgvx8FtqmbJ960eA==,iv:DjHlldd89ciAG5WuL7w5fniKK6Y7sugv7/2EMEsk5Ro=,tag:knC4ULXbZpoS/5/wu/JtOw==,type:str]
+kind: Secret
+metadata:
+  name: minio-creds
+  namespace: docs
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBaNzhrcHdWTHQ5NFJkLzV4
+        Wko3UlN3NWZmVjljdUp2anVBVE4wbW9GTmpNCncrVVV2TU9Ga04veTZndDZiZnhF
+        THJHb3c4dndvUFIrRFFaNVdqam90V0EKLS0tIGtUZnpSbGUvSTNHMFJvMmQ2aTJt
+        Z2xKMUdtZlI3bVM1TG5QajRmQWRxazgKdrzYi3c+cbE+nohH0eJpiSuxLmy79nME
+        UtFeMWefra4+42HW/9pxpOOHQwEVODRtVX7a33uTCyS5fs/XzzleZg==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-10-12T16:42:49Z"
+  mac: ENC[AES256_GCM,data:VUQ153nmPQWE/9jt5CEGLIubCdEOAHy0GOLOQyT6vya519Rxdg5hlRgJV8bkV7glWRi1l/KUba21TJeJD6gZOBg/eYwKqbJ+R8iYugN6obi1AVgf00Cd5X2hiYivGN4Ft1gkkgMShFeaED7jo4/g4EDrEjWDRZaYwvfwId7AdGo=,iv:mnmf0N4C0LEogmamlR4/9EoMGI/lxFKA7F2BzlQ0UZI=,tag:MfZV0eP6OSlAGnFPG90IEw==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.11.0
