@@ -7,8 +7,7 @@ spec:
   interval: 1h
   url: https://github.com/immich-app/immich-charts
   ref:
-    commit: 4dff0ef9b1881e2a37d18144e38993b465e3e5cc
-    # tag: immich-0.9.3
+    tag: immich-0.10.0
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -30,7 +29,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: immich-shared
   annotations:
-    k8up.syn.tools/backup: "true"
+    k8up.io/backup: "true"
 spec:
   volumeName: immich-shared
   storageClassName: nfs
@@ -111,15 +110,16 @@ spec:
           accelDecode: true
         backup:
           database:
-            enabled: false
+            enabled: false # handled by k8up + cnpg
     valkey:
       env:
         TZ: Europe/Paris
       enabled: true
       persistence:
         data:
-          type: pvc
           storageClass: nfs
+          accessMode: ReadWriteOnce
+          size: 1Gi # Set a size appropriate for your needs
     server: 
       env:
         TZ: Europe/Paris
@@ -138,6 +138,8 @@ spec:
         TZ: Europe/Paris
       persistence:
         cache:
+          annotations:
+            k8up.io/backup: "false"
           enabled: true
           size: 10Gi
           type: pvc
