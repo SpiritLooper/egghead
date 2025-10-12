@@ -62,7 +62,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ . }}
+  annotations:
+    k8up.io/backup: {{ ternary true false .backup | quote }}
+  name: {{ .name | quote }}
 spec:
   accessModes:
     - ReadWriteMany

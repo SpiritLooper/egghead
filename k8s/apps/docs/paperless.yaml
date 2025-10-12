@@ -58,10 +58,14 @@ spec:
         ingress:
           domain: paperless.egghead.infrao.top
         pvc:
-          - paperless-data
-          - paperless-media
-          - paperless-export
-          - paperless-consume
+          - name: paperless-data
+            backup: false
+          - name: paperless-media
+            backup: false
+          - name: paperless-export
+            backup: false
+          - name: paperless-consume
+            backup: false
 
       - name: paperless-redis
         image: redis:8.0.1-bookworm
