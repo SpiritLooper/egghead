@@ -12,7 +12,7 @@ spec:
       key: restic-password
     s3:
       endpoint: https://ohara.infrao.top:9004
-      bucket: docs-backup/paperless/
+      bucket: docs-backup/docs/
       accessKeyIDSecretRef:
         name: minio-creds
         key: ACCESS_KEY_ID
