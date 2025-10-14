@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pocketid
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pocketid
+  template:
+    metadata:
+      labels:
+        app: pocketid
+    spec:
+      containers:
+        - name: pocketid
+          image: ghcr.io/pocket-id/pocket-id:v1.13.1
+          env:
+            - name: APP_URL
+              value: https://pocketid.egghead.infrao.top
+            - name: TRUST_PROXY
+              value: "true"
+            - name: PUID
+              value: "1000"
+            - name: GUID
+              value: "100"
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: encryption-key
+                  name: pocketid
+            - name: TZ
+              value: Europe/Paris
+          volumeMounts:
+            - mountPath: /app/data
+              name: pocketid-data
+      volumes:
+        - name: pocketid-data
+          persistentVolumeClaim:
+            claimName: pocketid-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pocketid-data
+  annotations:
+    k8up.io/backup: true
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pocketid
+spec:
+  selector:
+    app: pocketid
+  ports:
+    - protocol: TCP
+      name: web
+      port: 1411
+      targetPort: 1411
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pocketid
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: pocketid.egghead.infrao.top
+    http:
+      paths:
+      - backend:
+          service:
+            name: pocketid
+            port:
+              number: 1411
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - pocketid.egghead.infrao.top
