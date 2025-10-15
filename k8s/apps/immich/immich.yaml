@@ -19,8 +19,8 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-14T21:45:46Z"
-  mac: ENC[AES256_GCM,data:DWc73uVuD5afnsIXg2ptG8CBAygUOKHcEmQIEZBYQL7vqUx8JJzTmJhPC0rFyOS2Sviv/OX6HNaYK4YfBes5Ur94XRRUiIL0cq2UUQANwAhhxpzmQu85dXiC493LBnnB6VwivGDQ4DAuKYd7Da0sqgczaYjOhGXzcd6hrEXSL08=,iv:YdU8fGC8WiDkHv/6FSAytAGeYT+n9NFyqLyWQAXHmLw=,tag:yVP8fB7JNFJP825w0S6jag==,type:str]
+  lastmodified: "2025-10-15T16:27:05Z"
+  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
 ---
@@ -49,8 +49,8 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-14T21:45:46Z"
-  mac: ENC[AES256_GCM,data:DWc73uVuD5afnsIXg2ptG8CBAygUOKHcEmQIEZBYQL7vqUx8JJzTmJhPC0rFyOS2Sviv/OX6HNaYK4YfBes5Ur94XRRUiIL0cq2UUQANwAhhxpzmQu85dXiC493LBnnB6VwivGDQ4DAuKYd7Da0sqgczaYjOhGXzcd6hrEXSL08=,iv:YdU8fGC8WiDkHv/6FSAytAGeYT+n9NFyqLyWQAXHmLw=,tag:yVP8fB7JNFJP825w0S6jag==,type:str]
+  lastmodified: "2025-10-15T16:27:05Z"
+  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
 ---
@@ -79,8 +79,8 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-14T21:45:46Z"
-  mac: ENC[AES256_GCM,data:DWc73uVuD5afnsIXg2ptG8CBAygUOKHcEmQIEZBYQL7vqUx8JJzTmJhPC0rFyOS2Sviv/OX6HNaYK4YfBes5Ur94XRRUiIL0cq2UUQANwAhhxpzmQu85dXiC493LBnnB6VwivGDQ4DAuKYd7Da0sqgczaYjOhGXzcd6hrEXSL08=,iv:YdU8fGC8WiDkHv/6FSAytAGeYT+n9NFyqLyWQAXHmLw=,tag:yVP8fB7JNFJP825w0S6jag==,type:str]
+  lastmodified: "2025-10-15T16:27:05Z"
+  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
 ---
@@ -159,10 +159,11 @@ spec:
             enabled: false
         oauth:
           enabled: true
+          autoLaunch: true
           issuerUrl: https://pocketid.egghead.infrao.top/.well-known/openid-configuration
           clientId: ENC[AES256_GCM,data:R0As9e+DEy6NMFzaM9t1dcLI0zLaqbR3J6e5b6I1k0Lxo5Ow,iv:P3diR5t9FQzdh+lvIsR/ZNJ0omIiDgQnvF7kqLiwPiU=,tag:RPbxhOF3CEWml8HNGiAarA==,type:str]
           clientSecret: ENC[AES256_GCM,data:hQ7/SazL/P1mh8x8Y4HaolP0HJ6pyiMJVBOXL9PV3lg=,iv:8nT+hWTyVjn7LfibymHonQNyOYgL5eLDvYcjRFR/oFk=,tag:yQi1p9uJ6WUFZ6jPvGcu0g==,type:str]
-          buttonText: Login with OAuth
+          buttonText: Login with Pocket ID
     valkey:
       env:
         TZ: Europe/Paris
@@ -209,7 +210,7 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-14T21:45:46Z"
-  mac: ENC[AES256_GCM,data:DWc73uVuD5afnsIXg2ptG8CBAygUOKHcEmQIEZBYQL7vqUx8JJzTmJhPC0rFyOS2Sviv/OX6HNaYK4YfBes5Ur94XRRUiIL0cq2UUQANwAhhxpzmQu85dXiC493LBnnB6VwivGDQ4DAuKYd7Da0sqgczaYjOhGXzcd6hrEXSL08=,iv:YdU8fGC8WiDkHv/6FSAytAGeYT+n9NFyqLyWQAXHmLw=,tag:yVP8fB7JNFJP825w0S6jag==,type:str]
+  lastmodified: "2025-10-15T16:27:05Z"
+  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
