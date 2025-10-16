@@ -19,8 +19,8 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-15T16:27:05Z"
-  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
+  lastmodified: "2025-10-16T17:58:37Z"
+  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
 ---
@@ -49,8 +49,8 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-15T16:27:05Z"
-  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
+  lastmodified: "2025-10-16T17:58:37Z"
+  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
 ---
@@ -79,8 +79,8 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-15T16:27:05Z"
-  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
+  lastmodified: "2025-10-16T17:58:37Z"
+  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
 ---
@@ -126,7 +126,7 @@ spec:
             name: immich-database-app
             key: port
     image:
-      tag: v2.0.1
+      tag: v2.1.0
     securityContext:
       privileged: true
     persistence:
@@ -210,7 +210,7 @@ sops:
         YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
         u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-15T16:27:05Z"
-  mac: ENC[AES256_GCM,data:61+o6//NcAdsdgX5rg/1S575lbixpKi9Cwk4PewYyMyJEH7D/WZknzaui5akwDmaUckC9PwDbnUVg9/wJoWGC0XfnB2zVK3a8+luAcz76X/WowuQk6GBdM/nS6NhqQDRCxFZYfreYdjWBkd2rCG2idKb6Ua5WA4XZZ2GxWMLpXs=,iv:Kty17jy2QGkOcFPJmSCM4HKdsenWxF8cM/v5DblE554=,tag:D0odhEU5YIaqONnptmXOmw==,type:str]
+  lastmodified: "2025-10-16T17:58:37Z"
+  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
   encrypted_regex: ^(clientId|clientSecret)$
   version: 3.11.0
