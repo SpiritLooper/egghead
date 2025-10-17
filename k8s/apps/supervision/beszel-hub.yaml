@@ -1,0 +1,84 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beszel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beszel
+  template:
+    metadata:
+      labels:
+        app: beszel
+    spec:
+      containers:
+        - name: beszel
+          image: henrygd/beszel:0.13.2
+          env:
+            - name: APP_URL
+              value: https://beszel.egghead.infrao.top
+            - name: DISABLE_PASSWORD_AUTH
+              value: "false"
+            - name: USER_CREATION
+              value: "true"
+            - name: JELLYFIN_LOG_DIR
+              value: /log
+            - name: TZ
+              value: Europe/Paris
+          volumeMounts:
+            - mountPath: /beszel_data
+              name: data
+          securityContext:
+            privileged: true
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: beszel-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: beszel-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: beszel
+spec:
+  selector:
+    app: beszel
+  ports:
+    - protocol: TCP
+      name: web
+      port: 8090
+      targetPort: 8090
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: beszel
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: beszel.egghead.infrao.top
+    http:
+      paths:
+      - backend:
+          service:
+            name: beszel
+            port:
+              number: 8090
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - beszel.egghead.infrao.top
