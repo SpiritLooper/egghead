@@ -19,7 +19,7 @@ spec:
   values:
     apps:
       - name: vaultwarden
-        image: vaultwarden/server:1.34.1
+        image: vaultwarden/server:1.34.3
         volumeMounts:
           - name: vaultwarden-data
             mountPath: /data
