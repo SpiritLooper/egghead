@@ -72,9 +72,9 @@ data:
     # Homepage configuration
     # See https://fontawesome.com/search for icons options
 
-    title: "infrao.top Dashboard"
+    title: "👍 infrao.top Dashboard"
     subtitle: "Homer"
-    documentTitle: "Welcome" # Customize the browser tab text
+    documentTitle: "👍 infrao.top" # Customize the browser tab text
     # logo: "assets/logo.png"
     # Alternatively a fa icon can be provided:
     icon: "fa-solid fa-egg"
@@ -119,6 +119,7 @@ data:
             tagstyle: "is-success"
             keywords: "documents paper scan facture" # optional keyword used for searching purpose
             url: "https://paperless.egghead.infrao.top"
+            target: "_blank"
           - name: "Immich"
             logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg"
             subtitle: "🖼️ Store your photos"
@@ -133,6 +134,7 @@ data:
             tag: "movies"
             tagstyle: "is-success"
             url: "https://jellyfin.egghead.infrao.top"
+            target: "_blank"
           - name: "Vaultwarden"
             subtitle: "🔐 Password manager"
             logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/vaultwarden-light.svg"
@@ -140,6 +142,7 @@ data:
             tagstyle: "is-link"
             type: "Vaultwarden"
             url: "https://vaultwarden.egghead.infrao.top"
+            target: "_blank"
       - name: "Monitoring"
         icon: "fas fa-heartbeat"
         items:
