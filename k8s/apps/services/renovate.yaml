@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: renovate
+spec:
+  schedule: "0,15,30 19 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: renovate-cache
+            persistentVolumeClaim:
+              claimName: renovate-cache
+          containers:
+            - name: renovate
+              image: renovate/renovate:41.131.9
+              args:
+                - SpiritLooper/egghead
+              envFrom:
+                - configMapRef:
+                    name: renovate-env
+                - secretRef:
+                    name: renovate-env
+              volumeMounts:
+              - mountPath: /tmp/renovate
+                name: renovate-cache
+          restartPolicy: Never
+---
+apiVersion: v1
+data:
+  RENOVATE_BASE_DIR: /tmp/renovate
+  RENOVATE_PLATFORM: github
+kind: ConfigMap
+metadata:
+  name: renovate-env
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: renovate-cache
+  annotations:
+    k8up.io/backup: "false"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

@@ -1,0 +1,70 @@
+name: flux-local diff
+permissions:
+  contents: read
+on:
+  push:
+    branches-ignore: ["main"]
+
+jobs:
+  diff:
+    name: flux diff
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout main
+        uses: actions/checkout:v5.0.0
+        with:
+          ref: "${{ github.event.repository.default_branch }}"
+          path: main
+          token: ${{ secrets.GIT_TOKEN }}
+      - name: Checkout PR
+        uses: actions/checkout:v5.0.0
+        with:
+          path: pr
+          token: ${{ secrets.GIT_TOKEN }}
+
+      - name: Run flux-local ks diff
+        uses: docker://ghcr.io/allenporter/flux-local:v7.10.1
+        with:
+          args: >-
+            diff ks
+            --path /github/workspace/pr/k8s/flux
+            --path-orig /github/workspace/main/k8s/flux
+            --all-namespaces
+            --output-file ks.diff
+      - name: Run flux-local hr diff
+        uses: docker://ghcr.io/allenporter/flux-local:v7.10.1
+        with:
+          args: >-
+            diff hr
+            --path /github/workspace/pr/k8s/flux
+            --path-orig /github/workspace/main/k8s/flux
+            --all-namespaces
+            --output-file hr.diff
+      - name: diff
+        id: diff
+        run: |
+          # merge the 2 diff files
+          cat hr.diff >> ks.diff
+
+          # Message formatting based on diff
+
+          {
+            echo "diff<<EOF"
+            if [[ -s "ks.diff" ]]; then
+            echo "Here is the diff to main:"
+            echo "\`\`\`diff"
+            cat ks.diff
+            echo "\`\`\`"
+            else
+              echo "No diff to main detected."
+            fi
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Add Comment
+        uses: mshick/add-pr-comment:v2.8.2
+        with:
+          message: |
+            ${{ steps.diff.outputs.diff }}
