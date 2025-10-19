@@ -80,5 +80,5 @@ spec:
             backup: false
 
       - name: paperless-redis
-        image: redis:8.0.1-bookworm
+        image: redis:8.2.2-bookworm
         service: 6379
