@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: deluge
-          image: linuxserver/deluge:2.2.0
+          image: linuxserver/deluge:18.04.1
           env:
             - name: PUID
               value: "1000"
