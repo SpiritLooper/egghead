@@ -18,7 +18,7 @@ spec:
   values:
     apps:
       - name: paperless-ngx
-        image: ghcr.io/paperless-ngx/paperless-ngx:2.16.1
+        image: ghcr.io/paperless-ngx/paperless-ngx:2.18.4
         volumeMounts:
           - name: paperless-data
             mountPath: /usr/src/paperless/data
