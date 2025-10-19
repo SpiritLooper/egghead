@@ -2,41 +2,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: beszel
+  name: kuma
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: beszel
+      app: kuma
   template:
     metadata:
       labels:
-        app: beszel
+        app: kuma
     spec:
       containers:
-        - name: beszel
-          image: henrygd/beszel:0.13.2
+        - name: kuma
+          image: louislam/uptime-kuma:1.23.16-alpine
           env:
-            - name: APP_URL
-              value: https://beszel.egghead.infrao.top
-            - name: DISABLE_PASSWORD_AUTH
-              value: "true"
-            - name: USER_CREATION
-              value: "true"
+            - name: DATA_DIR
+              value: /app/data
             - name: TZ
               value: Europe/Paris
           volumeMounts:
-            - mountPath: /beszel_data
-              name: data
+            - mountPath: /app/data
+              name: uptime-kuma-data
       volumes:
-        - name: data
+        - name: uptime-kuma-data
           persistentVolumeClaim:
-            claimName: beszel-data
+            claimName: uptime-kuma-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: beszel-data
+  name: uptime-kuma-data
 spec:
   accessModes:
     - ReadWriteOnce
@@ -47,33 +43,33 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: beszel
+  name: kuma
 spec:
   selector:
-    app: beszel
+    app: kuma
   ports:
     - protocol: TCP
       name: web
-      port: 8090
-      targetPort: 8090
+      port: 3001
+      targetPort: 3001
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: beszel
+  name: uptime-kuma
 spec:
   ingressClassName: traefik
   rules:
-  - host: beszel.egghead.infrao.top
+  - host: uptime.egghead.infrao.top
     http:
       paths:
       - backend:
           service:
-            name: beszel
+            name: kuma
             port:
-              number: 8090
+              number: 3001
         path: /
         pathType: Prefix
   tls:
   - hosts:
-    - beszel.egghead.infrao.top
+    - uptime.egghead.infrao.top
