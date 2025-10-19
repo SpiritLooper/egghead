@@ -1,0 +1,186 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homer
+  template:
+    metadata:
+      labels:
+        app: homer
+    spec:
+      containers:
+        - name: homer
+          image: b4bz/homer:v25.10.1
+          env:
+            - name: INIT_ASSETS
+              value: "1"
+            - name: IPV6_DISABLE
+              value: "1"
+            - name: TZ
+              value: Europe/Paris
+          volumeMounts:
+            - mountPath: /www/assets
+              name: homer-config
+      volumes:
+        - name: homer-config
+          configMap:
+            name: homer-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homer
+spec:
+  selector:
+    app: homer
+  ports:
+    - protocol: TCP
+      name: web
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homer
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: egghead.infrao.top
+    http:
+      paths:
+      - backend:
+          service:
+            name: homer
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - egghead.infrao.top
+---
+apiVersion: v1
+data:
+  config.yml: |
+    ---
+    # Homepage configuration
+    # See https://fontawesome.com/search for icons options
+
+    title: "infrao.top Dashboard"
+    subtitle: "Homer"
+    documentTitle: "Welcome" # Customize the browser tab text
+    # logo: "assets/logo.png"
+    # Alternatively a fa icon can be provided:
+    icon: "fa-solid fa-egg"
+
+    header: false # Set to false to hide the header
+    # Optional: Different hotkey for search, defaults to "/"
+    # hotkey:
+    #   search: "Shift"
+    footer: false # set false if you want to hide it.
+
+    columns: "3" # "auto" or number (must be a factor of 12: 1, 2, 3, 4, 6, 12)
+    connectivityCheck: true # whether you want to display a message when the apps are not accessible anymore (VPN disconnected for example).
+                            # You should set it to true when using an authentication proxy, it also reloads the page when a redirection is detected when checking connectivity.
+
+    # Set the default layout and color scheme
+    defaults:
+      layout: columns # Either 'columns', or 'list'
+      colorTheme: auto # One of 'auto', 'light', or 'dark'
+
+    # Optional theming
+    theme: neon # 'default' or one of the themes available in 'src/assets/themes'.
+
+    # Optional navbar
+    # links: [] # Allows for navbar (dark mode, layout, and search) without any links
+    links:
+      - name: "Repo"
+        icon: "fab fa-github"
+        url: "https://github.com/SpiritLooper/egghead"
+        target: "_blank" # optional html tag target attribute
+
+    # Services
+    # First level array represents a group.
+    # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+    services:
+      - name: "Application"
+        icon: "fas fa-desktop"
+        items:
+          - name: "Paperless-ngx"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg"
+            subtitle: "📝 Manage your document"
+            tag: "docs"
+            tagstyle: "is-success"
+            keywords: "documents paper scan facture" # optional keyword used for searching purpose
+            url: "https://paperless.egghead.infrao.top"
+          - name: "Immich"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg"
+            subtitle: "🖼️ Store your photos"
+            tag: "photos"
+            tagstyle: "is-info"
+            keywords: "photo immich" # optional keyword used for searching purpose
+            url: "https://photos.egghead.infrao.top"
+            target: "_blank" # optional html tag target attribute
+          - name: "Jellyfin"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/jellyfin.svg"
+            subtitle: "🍿 Watch movies"
+            tag: "movies"
+            tagstyle: "is-success"
+            url: "https://jellyfin.egghead.infrao.top"
+          - name: "Vaultwarden"
+            subtitle: "🔐 Password manager"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/vaultwarden-light.svg"
+            tag: "password"
+            tagstyle: "is-link"
+            type: "Vaultwarden"
+            url: "https://vaultwarden.egghead.infrao.top"
+      - name: "Monitoring"
+        icon: "fas fa-heartbeat"
+        items:
+          - name: "Beszel"
+            subtitle: "🥯 Ressources Usage"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/beszel-light.svg"
+            tag: "monitoring"
+            tagstyle: "is-primary"
+            url: "https://beszel.egghead.infrao.top"
+            target: "_blank" # optional html a tag target attribute
+          - name: "Uptime Kuma"
+            subtitle: "🐻 Probe plateform"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/uptime-kuma.svg"
+            tag: "monitoring"
+            tagstyle: "is-success"
+            url: "https://uptime.egghead.infrao.top"
+            target: "_blank" # optional html a tag target attribute
+      - name: "Administration"
+        icon: "fas fa-user-tie"
+        items:
+          - name: "Deluge"
+            subtitle: "📥 Torrent Downloader"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/deluge.svg"
+            tag: "torrent"
+            tagstyle: "is-outlined is-info"
+            url: "https://torrent.egghead.infrao.top"
+            target: "_blank" # optional html a tag target attribute
+          - name: "Pocket ID"
+            subtitle: "👮 OIDC Provider"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/pocket-id.svg"
+            tag: "authentication"
+            tagstyle: "is-outlined is-danger"
+            url: "https://pocketid.egghead.infrao.top"
+            target: "_blank" # optional html a tag target attribute
+          - name: "Minio"
+            subtitle: "💽 S3 Storage"
+            logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/minio-light.svg"
+            tag: "storage"
+            tagstyle: "is-outlined is-warning"
+            url: "https://ohara.infrao.top"
+            target: "_blank" # optional html a tag target attribute
+kind: ConfigMap
+metadata:
+  name: homer-config

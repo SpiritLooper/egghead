@@ -29,7 +29,7 @@ spec:
   targetNamespace: kube-system
   values:
     reloader:
-      ignoreConfigMaps: true
+      ignoreConfigMaps: false
       ignoreCronJobs: true
       watchGlobally: true
       deployment:
