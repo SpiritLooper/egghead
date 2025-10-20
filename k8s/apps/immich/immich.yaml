@@ -1,27 +1,25 @@
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
+kind: HelmRepository
 metadata:
-  name: immich-git
+  name: immich-oci
 spec:
   interval: 1h
-  url: https://github.com/immich-app/immich-charts
-  ref:
-    commit: 4dff0ef9b1881e2a37d18144e38993b465e3e5cc
-    # tag: immich-0.9.3
+  type: oci
+  url: oci://ghcr.io/immich-app/immich-charts
 sops:
   age:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5Y2l1SEJxYk1TM2xSK0Fn
-        alltZ2RCbGE1VEN2YVFIUGpFc3lNZFhxY0ZrCm1SU2d5aFlhZm9Nb1lBcy82cmFu
-        Rk91SHVGdkhFMGpDWlRsRTBKRGJaNU0KLS0tIEJyTG9uVitwZlBZSGg3Snd2enJM
-        YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
-        u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
+        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
+        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
+        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
+        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-16T17:58:37Z"
-  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
-  encrypted_regex: ^(clientId|clientSecret)$
+  lastmodified: "2025-10-20T16:59:06Z"
+  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
+  encrypted_regex: (^clientId$|^clientSecret$)
   version: 3.11.0
 ---
 apiVersion: v1
@@ -43,15 +41,15 @@ sops:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5Y2l1SEJxYk1TM2xSK0Fn
-        alltZ2RCbGE1VEN2YVFIUGpFc3lNZFhxY0ZrCm1SU2d5aFlhZm9Nb1lBcy82cmFu
-        Rk91SHVGdkhFMGpDWlRsRTBKRGJaNU0KLS0tIEJyTG9uVitwZlBZSGg3Snd2enJM
-        YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
-        u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
+        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
+        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
+        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
+        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-16T17:58:37Z"
-  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
-  encrypted_regex: ^(clientId|clientSecret)$
+  lastmodified: "2025-10-20T16:59:06Z"
+  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
+  encrypted_regex: (^clientId$|^clientSecret$)
   version: 3.11.0
 ---
 apiVersion: v1
@@ -73,15 +71,15 @@ sops:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5Y2l1SEJxYk1TM2xSK0Fn
-        alltZ2RCbGE1VEN2YVFIUGpFc3lNZFhxY0ZrCm1SU2d5aFlhZm9Nb1lBcy82cmFu
-        Rk91SHVGdkhFMGpDWlRsRTBKRGJaNU0KLS0tIEJyTG9uVitwZlBZSGg3Snd2enJM
-        YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
-        u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
+        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
+        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
+        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
+        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-16T17:58:37Z"
-  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
-  encrypted_regex: ^(clientId|clientSecret)$
+  lastmodified: "2025-10-20T16:59:06Z"
+  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
+  encrypted_regex: (^clientId$|^clientSecret$)
   version: 3.11.0
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -94,48 +92,53 @@ spec:
   chart:
     spec:
       chart: charts/immich
+      version: 0.10.0
       sourceRef:
-        kind: GitRepository
-        name: immich-git
+        kind: HelmRepository
+        name: immich-oci
   values:
-    env:
-      TZ: Europe/Paris
-      DB_DATABASE_NAME:
-        valueFrom:
-          secretKeyRef:
-            name: immich-database-app
-            key: dbname
-      DB_HOSTNAME:
-        valueFrom:
-          secretKeyRef:
-            name: immich-database-app
-            key: host
-      DB_USERNAME:
-        valueFrom:
-          secretKeyRef:
-            name: immich-database-app
-            key: user
-      DB_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: immich-database-app
-            key: password
-      DB_PORT:
-        valueFrom:
-          secretKeyRef:
-            name: immich-database-app
-            key: port
-    image:
-      tag: v2.1.0
-    securityContext:
-      privileged: true
-    persistence:
-      dri:
-        enabled: true
-        type: hostPath
-        mountPath: /dev/dri
-        hostPath: /dev/dri
-        readOnly: false
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              tag: v2.1.0
+            env:
+              TZ: Europe/Paris
+              DB_DATABASE_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database-app
+                    key: dbname
+              DB_HOSTNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database-app
+                    key: host
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database-app
+                    key: user
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database-app
+                    key: password
+              DB_PORT:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database-app
+                    key: port
+        securityContext:
+          privileged: true
+        persistence:
+          dri:
+            enabled: true
+            type: hostPath
+            mountPath: /dev/dri
+            hostPath: /dev/dri
+            readOnly: false
     immich:
       metrics:
         enabled: false
@@ -161,22 +164,19 @@ spec:
           enabled: true
           autoLaunch: true
           issuerUrl: https://pocketid.egghead.infrao.top/.well-known/openid-configuration
-          clientId: ENC[AES256_GCM,data:R0As9e+DEy6NMFzaM9t1dcLI0zLaqbR3J6e5b6I1k0Lxo5Ow,iv:P3diR5t9FQzdh+lvIsR/ZNJ0omIiDgQnvF7kqLiwPiU=,tag:RPbxhOF3CEWml8HNGiAarA==,type:str]
-          clientSecret: ENC[AES256_GCM,data:hQ7/SazL/P1mh8x8Y4HaolP0HJ6pyiMJVBOXL9PV3lg=,iv:8nT+hWTyVjn7LfibymHonQNyOYgL5eLDvYcjRFR/oFk=,tag:yQi1p9uJ6WUFZ6jPvGcu0g==,type:str]
+          clientId: ENC[AES256_GCM,data:y4L7zXtKWHpmwGxKl5d5qQuM8fT+Yh6G6uyfM9T/0C2DVw11,iv:xWthRjYn8eMbuKTFN+KWd78k0TwI60/nxiqmmVUNksw=,tag:52Q+gijidpmFsVwkgjiAGw==,type:str]
+          clientSecret: ENC[AES256_GCM,data:NhlR//GUYuuLrsruCe+DTMO8FEt+m04SNgwBpBFBQYc=,iv:vXQwFG9bc9TmxcZeF/dq+72g9ntK/KZ0SY32eA1nYRw=,tag:H67K4UFiQ2f37DcYTLc83Q==,type:str]
           buttonText: Login with Pocket ID
     valkey:
-      env:
-        TZ: Europe/Paris
       enabled: true
       persistence:
         data:
+          enable: true
+          type: persistentVolumeClaim
           storageClass: nfs
           accessMode: ReadWriteOnce
-          # Set a size appropriate for your needs
           size: 1Gi
     server:
-      env:
-        TZ: Europe/Paris
       ingress:
         main:
           enabled: true
@@ -188,15 +188,13 @@ spec:
             - hosts:
                 - photos.egghead.infrao.top
     machine-learning:
-      env:
-        TZ: Europe/Paris
       persistence:
         cache:
           annotations:
             k8up.io/backup: "false"
           enabled: true
           size: 10Gi
-          type: pvc
+          type: persistentVolumeClaim
           accessMode: ReadWriteMany
           storageClass: nfs
 sops:
@@ -204,13 +202,13 @@ sops:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5Y2l1SEJxYk1TM2xSK0Fn
-        alltZ2RCbGE1VEN2YVFIUGpFc3lNZFhxY0ZrCm1SU2d5aFlhZm9Nb1lBcy82cmFu
-        Rk91SHVGdkhFMGpDWlRsRTBKRGJaNU0KLS0tIEJyTG9uVitwZlBZSGg3Snd2enJM
-        YnloUVFJaHFUOG92cmdJcm1IT0FVclUKjgGnvrwIbCxXELRkRGcjxmOuiwzP/s+X
-        u4uWSjxrXMxbDHJW3FkkqbgwfSOmdzkBLgzeEzCeSV2ipahnpWQb6w==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
+        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
+        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
+        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
+        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-16T17:58:37Z"
-  mac: ENC[AES256_GCM,data:hoHhs207vJ5KRVDTUoD/LKydgnwt64Kg1bLzqpsIDmnOmwI+MtD1UNkLFkGPyHg7S1k2kLRNI9r53C7r3eA+Ixml/ztZtEoM1DhJ8IZyFGMRGs4dN+vd6BT5U+QXEDEYi5DnkKFaGpyN3ruik169wRtooOWxgGsbFODz0VUIZtI=,iv:zVGDxIBw2DRAgMcsMqj3JLzb9OYUW/J7b5i7ZpocbQc=,tag:dCYh5RPxCGQW4tN9LKceLA==,type:str]
-  encrypted_regex: ^(clientId|clientSecret)$
+  lastmodified: "2025-10-20T16:59:06Z"
+  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
+  encrypted_regex: (^clientId$|^clientSecret$)
   version: 3.11.0

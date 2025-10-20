@@ -1,14 +1,13 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
+kind: HelmRepository
 metadata:
   name: local-path-provisionner
   namespace: flux-system
 spec:
   interval: 1h
-  url: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
-  ref:
-    tag: 0.0.32 
+  type: oci
+  url: oci://ghcr.io/rancher/local-path-provisioner
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -21,8 +20,9 @@ spec:
   chart:
     spec:
       chart: deploy/chart/local-path-provisioner
+      version: 0.0.32
       sourceRef:
-        kind: OCIRepository
+        kind: HelmRepository
         name: local-path-provisionner
   releaseName: local-path-provisionner
   targetNamespace: kube-system
