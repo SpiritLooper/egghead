@@ -1,0 +1,18 @@
+name: flux-local test
+permissions:
+  contents: read
+on:
+  push:
+    branches-ignore: ["main"]
+
+jobs:
+  test:
+    name: flux test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Run flux-local test
+        uses: docker://ghcr.io/allenporter/flux-local:v7
+        with:
+          args: test --enable-helm --all-namespaces --path k8s/flux -v
