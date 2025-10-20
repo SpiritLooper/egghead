@@ -1,26 +1,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
+kind: OCIRepository
 metadata:
   name: immich-oci
 spec:
   interval: 1h
-  type: oci
-  url: oci://ghcr.io/immich-app/immich-charts
-sops:
-  age:
-    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
-        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
-        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
-        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
-        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-20T16:59:06Z"
-  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
-  encrypted_regex: (^clientId$|^clientSecret$)
-  version: 3.11.0
+  url: oci://ghcr.io/immich-app/immich-charts/immich
+  ref:
+    tag: 0.10.0
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -36,21 +22,6 @@ spec:
   nfs:
     server: ohara.infrao.top
     path: /mnt/raid/k3s/immich-shared
-sops:
-  age:
-    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
-        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
-        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
-        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
-        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-20T16:59:06Z"
-  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
-  encrypted_regex: (^clientId$|^clientSecret$)
-  version: 3.11.0
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -66,21 +37,6 @@ spec:
   resources:
     requests:
       storage: 1Mi
-sops:
-  age:
-    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
-        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
-        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
-        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
-        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-20T16:59:06Z"
-  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
-  encrypted_regex: (^clientId$|^clientSecret$)
-  version: 3.11.0
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -89,13 +45,9 @@ metadata:
 spec:
   interval: 10m
   timeout: 5m
-  chart:
-    spec:
-      chart: charts/immich
-      version: 0.10.0
-      sourceRef:
-        kind: HelmRepository
-        name: immich-oci
+  chartRef:
+    kind: OCIRepository
+    name: immich-oci
   values:
     controllers:
       main:
@@ -145,28 +97,6 @@ spec:
       persistence:
         library:
           existingClaim: immich-shared
-      # configuration is immich-config.json converted to yaml
-      # ref: https://immich.app/docs/install/config-file/
-      #
-      configuration:
-        ffmpeg:
-          acceptedVideoCodecs:
-            - h264
-            - hevc
-            - vp9
-          accel: vaapi
-          accelDecode: true
-        backup:
-          database:
-            # handled by k8up + cnpg
-            enabled: false
-        oauth:
-          enabled: true
-          autoLaunch: true
-          issuerUrl: https://pocketid.egghead.infrao.top/.well-known/openid-configuration
-          clientId: ENC[AES256_GCM,data:y4L7zXtKWHpmwGxKl5d5qQuM8fT+Yh6G6uyfM9T/0C2DVw11,iv:xWthRjYn8eMbuKTFN+KWd78k0TwI60/nxiqmmVUNksw=,tag:52Q+gijidpmFsVwkgjiAGw==,type:str]
-          clientSecret: ENC[AES256_GCM,data:NhlR//GUYuuLrsruCe+DTMO8FEt+m04SNgwBpBFBQYc=,iv:vXQwFG9bc9TmxcZeF/dq+72g9ntK/KZ0SY32eA1nYRw=,tag:H67K4UFiQ2f37DcYTLc83Q==,type:str]
-          buttonText: Login with Pocket ID
     valkey:
       enabled: true
       persistence:
@@ -177,6 +107,17 @@ spec:
           accessMode: ReadWriteOnce
           size: 1Gi
     server:
+      controllers:
+        main:
+          containers:
+            main:
+              env:
+                IMMICH_CONFIG_FILE: /config/immich-config.yaml
+      persistence:
+        config:
+          enabled: true
+          type: secret
+          name: immich-config
       ingress:
         main:
           enabled: true
@@ -197,18 +138,3 @@ spec:
           type: persistentVolumeClaim
           accessMode: ReadWriteMany
           storageClass: nfs
-sops:
-  age:
-    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwRUY5c2pvTmRzODNVb0h4
-        eFMvbmZzUVBCdDVUZ1hrZmdXTGlUaXBwdmdrCjAzMDRRamU0ekxHMWhuSytaMWFu
-        bUxjejYvMlZmTHVqNWFSRjdPempFYlUKLS0tIHZLL1ByeWR2RnJOWFFXc1NXNXIy
-        Vi9qQ3ppUlJlSjlhdUNBN2tRYUhFK2cKkxXXGi5ShLXEAsYzI4uG0O6bf9EbY3/7
-        bE2oWlA2b8mawlJpt2Q4d3KAISaltc1pZfYp4S1K9Y9L4hXZWH1E0A==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-20T16:59:06Z"
-  mac: ENC[AES256_GCM,data:mtHYnfZw226qGo9WiT7xd3F7zTKH/sNM21eJ6+jF61PtgXucRkQu++8BPXuiBSvQmyUPHVa3O6igQ9jfK4IcY79KOyX7PWaYZDKD0IRpHBfEb0VZenhfQY5imgm8AK5zUcWuQIkG9+kit+pisln+LnfsnD6bZvjb6nTXUWgWSfk=,iv:h0kaFVB54FVAQ0z9PiZjZBhBaCBo4rCblMVxPewwLhs=,tag:owjJfl6FxAaRLUqFbkTqeA==,type:str]
-  encrypted_regex: (^clientId$|^clientSecret$)
-  version: 3.11.0
