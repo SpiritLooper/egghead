@@ -6,7 +6,7 @@ spec:
   interval: 1h
   url: oci://ghcr.io/immich-app/immich-charts/immich
   ref:
-    tag: 0.10.0
+    tag: 0.10.1
 ---
 apiVersion: v1
 kind: PersistentVolume
