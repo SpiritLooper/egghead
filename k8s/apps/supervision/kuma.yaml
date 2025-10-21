@@ -53,10 +53,36 @@ spec:
       port: 3001
       targetPort: 3001
 ---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: kuma-oidc
+spec:
+  plugin:
+    traefik-oidc-auth: # same key as in the static configuration
+      BypassAuthenticationRule: >- 
+        PathPrefix(`/status`) ||
+        PathPrefix(`/assets`) || 
+        PathPrefix(`/api/status-page/heartbeat/`) ||
+        Path(`/icon.svg`)
+      CallbackUri: "https://uptime.egghead.infrao.top/oidc/callback"
+      Provider:
+        # You could just write strings here for the values.
+        ClientId: "urn:k8s:secret:kuma-oidc-secret:providerClientId"
+        ClientSecret: "urn:k8s:secret:kuma-oidc-secret:providerClientSecret"
+        Url: "https://pocketid.egghead.infrao.top/"
+        UsePkce: true
+      Scopes: ["openid", "profile", "email"]
+      SessionCookie:
+        Domain: ".egghead.infrao.top"
+      Secret: "urn:k8s:secret:kuma-oidc-secret:pluginSecret"
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: uptime-kuma
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: supervision-kuma-oidc@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
