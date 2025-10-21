@@ -7,6 +7,9 @@ metadata:
   name: {{ .name }}
 spec:
   replicas: 1
+  {{- if .deploymentSpec }}
+  {{- toYaml .deploymentSpec | nindent 2 }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ .name }}
@@ -15,6 +18,9 @@ spec:
       labels:
         app: {{ .name }}
     spec:
+      {{- if .podSpec }}
+      {{- toYaml .podSpec | nindent 6 }}
+      {{- end }}
       containers:
         - name: {{ .name }}
           image: {{ .image }}
@@ -26,8 +32,8 @@ spec:
           volumeMounts:
             {{- toYaml .volumeMounts | nindent 12 }}
           {{- end }}
-          {{- if .extras }}
-          {{- toYaml .extras | nindent 10 }}
+          {{- if .containerSpec }}
+          {{- toYaml .containerSpec | nindent 10 }}
           {{- end }}
       {{- if .volumes }}
       volumes:
@@ -37,8 +43,8 @@ spec:
       imagePullSecrets:
         - name: {{ .imagePullSecret }}
       {{- end }}
----
 
+---
 # svc generation
 {{- if .service }}
 apiVersion: v1
@@ -64,7 +70,7 @@ kind: PersistentVolumeClaim
 metadata:
   annotations:
     k8up.io/backup: {{ ternary true false .backup | quote }}
-  name: {{ .name | quote }}
+  name: {{ .name }}
 spec:
   accessModes:
     - ReadWriteMany
@@ -81,8 +87,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .name }}
+  {{- $middlewares := list }}
+  {{- if .ingress.corspolicy }}
+  {{- $middlewares = append $middlewares (printf "%s-%s-cors-header@kubernetescrd" $.Release.Namespace .name) }}
+  {{- end }}
+  {{- if .ingress.oidc }}
+  {{- $middlewares = append $middlewares (printf "%s-%s-oidc@kubernetescrd" $.Release.Namespace .name) }}
+  {{- end }}
+  {{- if $middlewares }}
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: {{ $.Release.Namespace }}-cors-header@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: {{ join "," $middlewares }}
+  {{- end }}
 spec:
   ingressClassName: traefik
   rules:
@@ -100,10 +115,11 @@ spec:
   - hosts:
     - {{ .ingress.domain }}
 ---
+{{- if .ingress.corspolicy }}
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: cors-header
+  name: {{ (printf "%s-cors-header@kubernetescrd" .name) }}
 spec:
   headers:
     accessControlAllowMethods:
@@ -113,14 +129,38 @@ spec:
     accessControlAllowHeaders:
       - "*"
     accessControlAllowOriginList:
-      - "https://egghead.infrao.top"
+      - {{ .ingress.corspolicy }}
     accessControlMaxAge: 100
     addVaryHeader: true
+{{- end }}
+---
+{{- if .ingress.oidc }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ .name }}-oidc
+spec:
+  plugin:
+    traefik-oidc-auth:
+      CallbackUri: {{ .ingress.oidc.CallbackUri }}
+      Provider:
+        # You could just write strings here for the values.
+        ClientId: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:providerClientId"
+        ClientSecret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:providerClientSecret"
+        Url: "https://pocketid.egghead.infrao.top/"
+        UsePkce: true
+      Scopes: ["openid", "profile", "email"]
+      {{- if .ingress.oidc.SessionCookie  }}
+      SessionCookie:
+      {{- toYaml .ingress.oidc.SessionCookie | nindent 8 }}
+      {{- end }}
+      Secret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:pluginSecret"
+{{- end }}
 {{- end }}
 {{- end }}
 
 ---
-
 # configmap generation
 {{- range $name, $data := .Values.configmaps }}
 apiVersion: v1

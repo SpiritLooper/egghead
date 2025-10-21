@@ -1,10 +1,31 @@
+# the chart will iter on apps
 apps:
+
+    # here is what a very simple app can look like:
+  - name: simple-echo
+    image: traefik/whoami:latest
+    service: 80
+    ingress:
+      domain: echo.domain.com
+
+    # here is a more complex deployment with various available options
+    # name for the deployment and pods
   - name: busy
-    image: busybox@sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f
-    #imagePullSecret: registry-creds
+  
+    # image  
+    image: busybox:latest
+
+    # use this key to configure the deployment
+    deploymentSpec:
+      strategy:
+        type: Recreate
+
+    # env vars
     env:
       - name: key
         value: val
+
+    # classic volume definition
     volumeMounts:
       - name: config
         mountPath: /etc/app
@@ -17,28 +38,53 @@ apps:
       - name: data
         persistentVolumeClaim:
           claimName: data
-    extras:
+
+    # extra spec for the pod
+    podSpec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: In
+                values:
+                - antarctica-east1
+
+    # extras spec for the container
+    containerSpec:
       envFrom:
         - secretRef:
             name: test-secret
+
+    # create a svc on that target port
     service: 8080
+    
+   
+    # will create a pvc w/ this name
     pvc:
-      - data
+      - name: data
+        backup: false
+    
+    # create the appropriate ingress
+    # default ingressclass is traefik, w/ cors-policy header if defined
+    # And protected oidc
     ingress:
+      corspolicy: https://domain.com
       domain: app.domain.com
+      oidc:
+        CallbackUri: "https://app.domain.com/oidc/callback"
+        OidcUrl: "https://oidc.domain.com/"
+        # See https://traefik-oidc-auth.sevensolutions.cc/docs/getting-started/callback-uri
+        SessionCookie:
+          Domain: .domain.com
+        # The secret must contains these key : 
+        # - ClientId : Oidc client ID
+        # - ClientSecret : Oidc client Secret
+        # - pluginSecret : Plugin Oidc traefik encryption secret
+        secretref: oidc-secret
 
-  - name: simple
-    image: traefik/whoami@sha256:200689790a0a0ea48ca45992e0450bc26ccab5307375b41c84dfc4f2475937ab
-    extras:
-      envFrom:
-        - secretRef:
-            name: test-secret
-    service: 8080
-    pvc:
-      - data
-    ingress:
-      domain: lol.domain.com
-
+# shortcuts for creating simple configmaps
 configmaps:
-  config:
+  conf:
     key: value
