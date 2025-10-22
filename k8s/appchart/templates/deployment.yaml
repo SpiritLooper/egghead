@@ -73,7 +73,13 @@ metadata:
   name: {{ .name }}
 spec:
   accessModes:
+  {{- if .localstorage }}
+    - ReadWriteOnce
+  storageClassName: local-path
+  {{- else }}
     - ReadWriteMany
+  storageClassName: nfs
+  {{- end }}
   resources:
     requests:
       storage: 5Gi

@@ -46,4 +46,5 @@ spec:
           domain: pocketid.egghead.infrao.top
         pvc:
           - name: pocketid-data
+            localstorage: true
             backup: true
