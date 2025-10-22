@@ -29,6 +29,7 @@ spec:
               claimName: vaultwarden-data
         service: 80
         ingress:
+          corspolicy: https://egghead.infrao.top
           domain: vaultwarden.egghead.infrao.top
         pvc:
           - name: vaultwarden-data
