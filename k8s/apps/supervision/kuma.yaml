@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: kuma
-        image: louislam/uptime-kuma:1.23.16-alpine
+        image: louislam/uptime-kuma:1.23.17-alpine
         env:
           - name: DATA_DIR
             value: /app/data
