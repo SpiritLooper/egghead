@@ -1,101 +1,49 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: kuma
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: kuma
-  template:
-    metadata:
-      labels:
-        app: kuma
+  interval: 10m
+  chart:
     spec:
-      containers:
-        - name: kuma
-          image: louislam/uptime-kuma:1.23.16-alpine
-          env:
-            - name: DATA_DIR
-              value: /app/data
-            - name: TZ
-              value: Europe/Paris
-          volumeMounts:
-            - mountPath: /app/data
-              name: uptime-kuma-data
-      volumes:
-        - name: uptime-kuma-data
-          persistentVolumeClaim:
-            claimName: uptime-kuma-data
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: uptime-kuma-data
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kuma
-spec:
-  selector:
-    app: kuma
-  ports:
-    - protocol: TCP
-      name: web
-      port: 3001
-      targetPort: 3001
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: kuma-oidc
-spec:
-  plugin:
-    traefik-oidc-auth: # same key as in the static configuration
-      BypassAuthenticationRule: >- 
-        PathPrefix(`/status`) ||
-        PathPrefix(`/assets`) || 
-        PathPrefix(`/api/status-page/heartbeat/`) ||
-        Path(`/icon.svg`)
-      CallbackUri: "https://uptime.egghead.infrao.top/oidc/callback"
-      Provider:
-        # You could just write strings here for the values.
-        ClientId: "urn:k8s:secret:kuma-oidc-secret:providerClientId"
-        ClientSecret: "urn:k8s:secret:kuma-oidc-secret:providerClientSecret"
-        Url: "https://pocketid.egghead.infrao.top/"
-        UsePkce: true
-      Scopes: ["openid", "profile", "email"]
-      SessionCookie:
-        Domain: ".egghead.infrao.top"
-      Secret: "urn:k8s:secret:kuma-oidc-secret:pluginSecret"
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: uptime-kuma
-  annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: supervision-kuma-oidc@kubernetescrd
-spec:
-  ingressClassName: traefik
-  rules:
-  - host: uptime.egghead.infrao.top
-    http:
-      paths:
-      - backend:
-          service:
-            name: kuma
-            port:
-              number: 3001
-        path: /
-        pathType: Prefix
-  tls:
-  - hosts:
-    - uptime.egghead.infrao.top
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: kuma
+        image: louislam/uptime-kuma:1.23.16-alpine
+        env:
+          - name: DATA_DIR
+            value: /app/data
+          - name: TZ
+            value: Europe/Paris
+        volumeMounts:
+          - mountPath: /app/data
+            name: uptime-kuma-data
+        volumes:
+          - name: uptime-kuma-data
+            persistentVolumeClaim:
+              claimName: uptime-kuma-data
+        service: 3001
+        ingress:
+          domain: uptime.egghead.infrao.top
+          oidc:
+            BypassAuthenticationRule: >- 
+              PathPrefix(`/status`) ||
+              PathPrefix(`/assets`) || 
+              PathPrefix(`/api/status-page/heartbeat/`) ||
+              Path(`/icon.svg`)
+            CallbackUri: "https://uptime.egghead.infrao.top/oidc/callback"
+            OidcUrl: "https://pocketid.egghead.infrao.top/"
+            SessionCookie:
+              Domain: .egghead.infrao.top
+            secretref: kuma-oidc-secret
+        pvc:
+          - name: uptime-kuma-data
+            backup: false

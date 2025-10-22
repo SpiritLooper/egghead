@@ -153,6 +153,9 @@ metadata:
 spec:
   plugin:
     traefik-oidc-auth:
+      {{- if .ingress.oidc.BypassAuthenticationRule }}
+      BypassAuthenticationRule: {{ .ingress.oidc.BypassAuthenticationRule }}
+      {{- end }}
       CallbackUri: {{ .ingress.oidc.CallbackUri }}
       Provider:
         # You could just write strings here for the values.
