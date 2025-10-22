@@ -28,6 +28,10 @@ spec:
           env:
             {{- toYaml .env | nindent 12 }}
           {{- end }}
+          {{- if .envFrom }}
+          envFrom:
+            {{- toYaml .envFrom | nindent 12 }}
+          {{- end }}
           {{- if .volumeMounts }}
           volumeMounts:
             {{- toYaml .volumeMounts | nindent 12 }}
