@@ -45,6 +45,12 @@ spec:
         service: 8989
         ingress:
           domain: sonarr.egghead.infrao.top
+          oidc:
+            CallbackUri: "https://sonarr.egghead.infrao.top/oidc/callback"
+            OidcUrl: "https://pocketid.egghead.infrao.top/"
+            SessionCookie:
+              Domain: .egghead.infrao.top
+            secretref: sonarr-oidc-secret
         pvc:
           - name: sonarr-config
             localstorage: true
