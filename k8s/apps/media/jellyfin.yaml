@@ -1,92 +1,62 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: jellyfin
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: jellyfin
-  template:
-    metadata:
-      labels:
-        app: jellyfin
+  interval: 10m
+  chart:
     spec:
-      containers:
-        - name: jellyfin
-          image: jellyfin/jellyfin:10.10.7
-          env:
-            - name: JELLYFIN_PublishedServerUrl
-              value: https://jellyfin.egghead.infrao.top
-            - name: JELLYFIN_CACHE_DIR
-              value: /cache
-            - name: JELLYFIN_CONFIG_DIR
-              value: /config
-            - name: JELLYFIN_LOG_DIR
-              value: /log
-            - name: TZ
-              value: Europe/Paris
-          volumeMounts:
-            - mountPath: /config
-              name: config
-            - mountPath: /cache
-              name: cache
-            - mountPath: /media
-              name: media
-              readOnly: true
-            - mountPath: /dev/dri
-              name: dri
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: jellyfin
+        image: jellyfin/jellyfin:10.11.0
+        podSpec:
           securityContext:
             privileged: true
-      volumes:
-        - name: cache
-          emptyDir:
-            sizeLimit: 8Gi
-        - name: media
-          persistentVolumeClaim:
-            claimName: media-nfs
-        - name: config
-          persistentVolumeClaim:
-            claimName: jellyfin-config
-        - hostPath:
-            path: /dev/dri
-            type: Directory
-          name: dri
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: jellyfin
-  namespace: media
-spec:
-  selector:
-    app: jellyfin
-  ports:
-    - protocol: TCP
-      name: web
-      port: 8096
-      targetPort: 8096
+        volumeMounts:
+          - mountPath: /config
+            name: config
+          - mountPath: /cache
+            name: cache
+          - mountPath: /media
+            name: media
+            readOnly: true
+          - mountPath: /dev/dri
+            name: dri
+        env:
+          - name: JELLYFIN_PublishedServerUrl
+            value: https://jellyfin.egghead.infrao.top
+          - name: JELLYFIN_CACHE_DIR
+            value: /cache
+          - name: JELLYFIN_CONFIG_DIR
+            value: /config
+          - name: JELLYFIN_LOG_DIR
+            value: /log
+          - name: TZ
+            value: Europe/Paris
+        volumes:
+          - name: cache
+            emptyDir:
+              sizeLimit: 8Gi
+          - name: media
+            persistentVolumeClaim:
+              claimName: media
+          - name: config
+            persistentVolumeClaim:
+              claimName: jellyfin-config
+          - hostPath:
+              path: /dev/dri
+              type: Directory
+            name: dri
+        service: 8096
+        ingress:
+          domain: jellyfin.egghead.infrao.top
 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: jellyfin
-  namespace: media
-spec:
-  ingressClassName: traefik
-  rules:
-  - host: jellyfin.egghead.infrao.top
-    http:
-      paths:
-      - backend:
-          service:
-            name: jellyfin
-            port:
-              number: 8096
-        path: /
-        pathType: Prefix
-  tls:
-  - hosts:
-    - jellyfin.egghead.infrao.top
