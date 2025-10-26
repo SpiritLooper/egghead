@@ -60,7 +60,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-nfs
+  name: torrents
 spec:
   capacity:
     storage: 1Mi
@@ -70,18 +70,19 @@ spec:
   storageClassName: nfs
   nfs:
     server: ohara.infrao.top
-    path: /mnt/raid/k3s/media/media
+    path: /mnt/raid/arr-stack/media/torrents/
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: media-nfs
+  name: torrents
   namespace: media
 spec:
-  volumeName: media-nfs
+  volumeName: torrents
   storageClassName: nfs
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 1Mi
+
