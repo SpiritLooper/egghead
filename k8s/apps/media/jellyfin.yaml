@@ -22,8 +22,6 @@ spec:
             - name: JELLYFIN_CACHE_DIR
               value: /cache
             - name: JELLYFIN_CONFIG_DIR
-              value: /data
-            - name: JELLYFIN_DATA_DIR
               value: /config
             - name: JELLYFIN_LOG_DIR
               value: /log
@@ -32,8 +30,6 @@ spec:
           volumeMounts:
             - mountPath: /config
               name: config
-            - mountPath: /data
-              name: data
             - mountPath: /cache
               name: cache
             - mountPath: /media
@@ -53,40 +49,10 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: jellyfin-config
-        - name: data
-          persistentVolumeClaim:
-            claimName: jellyfin-data
         - hostPath:
             path: /dev/dri
             type: Directory
           name: dri
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-data
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Mi
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyfin-config
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Mi
-
 ---
 apiVersion: v1
 kind: Service

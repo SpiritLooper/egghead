@@ -48,7 +48,3 @@ spec:
             SessionCookie:
               Domain: .egghead.infrao.top
             secretref: deluge-oidc-secret
-        pvc:
-          - name: deluge-config
-            backup: false
-
