@@ -45,35 +45,10 @@ spec:
         service: 8989
         ingress:
           domain: sonarr.egghead.infrao.top
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: sonarr-config
-spec:
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
-    server: ohara.infrao.top
-    path: /mnt/raid/arr-stack/config/sonarr/
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: sonarr-config
-  namespace: media
-spec:
-  volumeName: sonarr-config
-  storageClassName: nfs
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Mi
+        pvc:
+          - name: sonarr-config
+            localstorage: true
+            backup: false
 ---
 apiVersion: v1
 kind: PersistentVolume
