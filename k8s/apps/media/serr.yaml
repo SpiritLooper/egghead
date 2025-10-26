@@ -1,0 +1,40 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: seerr-oci
+spec:
+  interval: 1h
+  url: oci://ghcr.io/fallenbagel/jellyseerr/jellyseerr-chart
+  ref:
+    tag: 2.7.0
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: seerr
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: seerr-oci
+  values:
+    config:
+      persistence:
+        annotations:
+          k8up.io/backup: "true"
+        name: serr-config
+    extraEnv:
+      - name: TZ
+        value: Europe/Paris
+    ingress:
+      enabled: true
+      hosts:
+        - host: seerr.egghead.infrao.top
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - hosts: 
+            - seerr.egghead.infrao.top
