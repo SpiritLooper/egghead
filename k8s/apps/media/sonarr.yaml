@@ -1,0 +1,105 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sonarr
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: sonarr
+        image: linuxserver/sonarr:4.0.15
+        volumeMounts:
+          - mountPath: /config
+            name: config
+          - mountPath: /downloads
+            name: torrents
+          - mountPath: /tv
+            name: series
+        env:
+          - name: PUID
+            value: "1000"
+          - name: GUID
+            value: "1000"
+          - name: TZ
+            value: Europe/Paris
+        volumes:
+          - name: config
+            persistentVolumeClaim:
+              claimName: sonarr-config
+          - name: series
+            persistentVolumeClaim:
+              claimName: series
+          - name: torrents
+            persistentVolumeClaim:
+              claimName: torrents
+        service: 8989
+        ingress:
+          domain: sonarr.egghead.infrao.top
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sonarr-config
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    server: ohara.infrao.top
+    path: /mnt/raid/arr-stack/config/sonarr/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-config
+  namespace: media
+spec:
+  volumeName: sonarr-config
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: series
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    server: ohara.infrao.top
+    path: /mnt/raid/arr-stack/media/media/series/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: series
+  namespace: media
+spec:
+  volumeName: series
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
