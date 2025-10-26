@@ -26,6 +26,8 @@ spec:
             name: config
           - mountPath: /cache
             name: cache
+          - mountPath: /data
+            name: data
           - mountPath: /media
             name: media
             readOnly: true
