@@ -48,3 +48,32 @@ spec:
             SessionCookie:
               Domain: .egghead.infrao.top
             secretref: deluge-oidc-secret
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: deluge-config
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    server: ohara.infrao.top
+    path: /mnt/raid/arr-stack/config/deluge/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deluge-config
+  namespace: media
+spec:
+  volumeName: deluge-config
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
