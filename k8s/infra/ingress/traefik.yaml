@@ -32,6 +32,9 @@ spec:
     env:
       - name: TZ
         value: Europe/Paris
+    envFrom:
+      - secretRef:
+          name: traefik-secrets
     tlsStore:
       default:
         defaultCertificate:

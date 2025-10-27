@@ -43,6 +43,7 @@ spec:
         ingress:
           domain: torrent.egghead.infrao.top
           oidc:
+            BypassKey: false
             secretref: deluge-oidc-secret
         pvc:
           - name: deluge-config

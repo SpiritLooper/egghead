@@ -153,7 +153,9 @@ metadata:
 spec:
   plugin:
     traefik-oidc-auth:
-      {{- if .ingress.oidc.BypassAuthenticationRule }}
+      {{- if.ingress.oidc.BypassKey }}
+      BypassAuthenticationRule: "${OIDC_BYPASS_KEY}"
+      {{- else if .ingress.oidc.BypassAuthenticationRule }}
       BypassAuthenticationRule: {{ .ingress.oidc.BypassAuthenticationRule }}
       {{- end }}
       CallbackUri: https://{{ .ingress.domain }}/oidc/callback
