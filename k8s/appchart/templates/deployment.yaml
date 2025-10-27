@@ -164,8 +164,6 @@ spec:
         Url: "https://pocketid.egghead.infrao.top/"
         UsePkce: false
       Scopes: ["openid", "profile", "email"]
-      SessionCookie:
-        Domain: .egghead.infrao.top
       Secret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:pluginSecret"
 {{- end }}
 {{- end }}
