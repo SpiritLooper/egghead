@@ -167,6 +167,8 @@ spec:
         UsePkce: false
       Scopes: ["openid", "profile", "email"]
       Secret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:pluginSecret"
+      SessionCookie:
+        Domain: .egghead.infrao.top
 {{- end }}
 {{- end }}
 {{- end }}
