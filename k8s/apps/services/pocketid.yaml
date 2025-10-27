@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: pocketid
-        image: ghcr.io/pocket-id/pocket-id:v1.14.0
+        image: ghcr.io/pocket-id/pocket-id:v1.14.1
         volumeMounts:
           - mountPath: /app/data
             name: pocketid-data
