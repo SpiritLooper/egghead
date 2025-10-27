@@ -156,18 +156,16 @@ spec:
       {{- if .ingress.oidc.BypassAuthenticationRule }}
       BypassAuthenticationRule: {{ .ingress.oidc.BypassAuthenticationRule }}
       {{- end }}
-      CallbackUri: {{ .ingress.oidc.CallbackUri }}
+      CallbackUri: https://{{ .ingress.domain }}/oidc/callback
       Provider:
         # You could just write strings here for the values.
         ClientId: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:providerClientId"
         ClientSecret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:providerClientSecret"
         Url: "https://pocketid.egghead.infrao.top/"
-        UsePkce: true
+        UsePkce: false
       Scopes: ["openid", "profile", "email"]
-      {{- if .ingress.oidc.SessionCookie  }}
       SessionCookie:
-      {{- toYaml .ingress.oidc.SessionCookie | nindent 8 }}
-      {{- end }}
+        Domain: .egghead.infrao.top
       Secret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:pluginSecret"
 {{- end }}
 {{- end }}

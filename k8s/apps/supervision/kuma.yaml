@@ -39,10 +39,6 @@ spec:
               PathPrefix(`/assets`) || 
               PathPrefix(`/api/status-page/heartbeat/`) ||
               Path(`/icon.svg`)
-            CallbackUri: "https://uptime.egghead.infrao.top/oidc/callback"
-            OidcUrl: "https://pocketid.egghead.infrao.top/"
-            SessionCookie:
-              Domain: .egghead.infrao.top
             secretref: kuma-oidc-secret
         pvc:
           - name: uptime-kuma-data

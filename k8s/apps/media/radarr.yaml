@@ -46,10 +46,6 @@ spec:
         ingress:
           domain: radarr.egghead.infrao.top
           oidc:
-            CallbackUri: "https://radarr.egghead.infrao.top/oidc/callback"
-            OidcUrl: "https://pocketid.egghead.infrao.top/"
-            SessionCookie:
-              Domain: .egghead.infrao.top
             secretref: radarr-oidc-secret
         pvc:
           - name: radarr-config

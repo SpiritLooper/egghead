@@ -43,10 +43,6 @@ spec:
         ingress:
           domain: torrent.egghead.infrao.top
           oidc:
-            CallbackUri: "https://torrent.egghead.infrao.top/oidc/callback"
-            OidcUrl: "https://pocketid.egghead.infrao.top/"
-            SessionCookie:
-              Domain: .egghead.infrao.top
             secretref: deluge-oidc-secret
         pvc:
           - name: deluge-config
