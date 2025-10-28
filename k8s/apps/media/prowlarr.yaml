@@ -36,7 +36,7 @@ spec:
         ingress:
           domain: prowlarr.egghead.infrao.top
           oidc:
-            secretref: prowlarr-oidc-secret
+            secretRef: prowlarr-oidc-secret
         pvc:
           - name: prowlarr-config
             localstorage: true

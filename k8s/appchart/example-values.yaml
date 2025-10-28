@@ -65,6 +65,8 @@ apps:
     pvc:
       - name: data
         backup: false
+        # Store on node config
+        local: false
     
     # create the appropriate ingress
     # default ingressclass is traefik, w/ cors-policy header if defined
@@ -73,16 +75,17 @@ apps:
       corspolicy: https://domain.com
       domain: app.domain.com
       oidc:
-        CallbackUri: "https://app.domain.com/oidc/callback"
-        OidcUrl: "https://oidc.domain.com/"
-        # See https://traefik-oidc-auth.sevensolutions.cc/docs/getting-started/callback-uri
-        SessionCookie:
-          Domain: .domain.com
+        # Add an header to bypass oidc authentication
+        BypassKey: false
+        # Add a specific bypass rule
+        # ( Override BypassKey value )
+        # see https://traefik-oidc-auth.sevensolutions.cc/docs/getting-started/bypass-authentication-rule
+        BypassAuthenticationRule: "PathPrefix(`/products`)"
         # The secret must contains these key : 
         # - ClientId : Oidc client ID
         # - ClientSecret : Oidc client Secret
         # - pluginSecret : Plugin Oidc traefik encryption secret
-        secretref: oidc-secret
+        secretRef: oidc-secret
 
 # shortcuts for creating simple configmaps
 configmaps:

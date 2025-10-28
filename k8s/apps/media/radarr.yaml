@@ -46,7 +46,7 @@ spec:
         ingress:
           domain: radarr.egghead.infrao.top
           oidc:
-            secretref: radarr-oidc-secret
+            secretRef: radarr-oidc-secret
         pvc:
           - name: radarr-config
             localstorage: true

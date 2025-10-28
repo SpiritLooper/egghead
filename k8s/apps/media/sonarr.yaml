@@ -46,7 +46,7 @@ spec:
         ingress:
           domain: sonarr.egghead.infrao.top
           oidc:
-            secretref: sonarr-oidc-secret
+            secretRef: sonarr-oidc-secret
         pvc:
           - name: sonarr-config
             localstorage: true

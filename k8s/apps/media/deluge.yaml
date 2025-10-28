@@ -44,7 +44,7 @@ spec:
           domain: torrent.egghead.infrao.top
           oidc:
             BypassKey: false
-            secretref: deluge-oidc-secret
+            secretRef: deluge-oidc-secret
         pvc:
           - name: deluge-config
             localstorage: true

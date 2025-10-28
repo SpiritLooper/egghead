@@ -158,17 +158,18 @@ spec:
       {{- else if .ingress.oidc.BypassAuthenticationRule }}
       BypassAuthenticationRule: {{ .ingress.oidc.BypassAuthenticationRule }}
       {{- end }}
+      CookieNamePrefix: TraefikOidcAuth{{ nospace ( title .name ) }}
       CallbackUri: https://{{ .ingress.domain }}/oidc/callback
       Provider:
         # You could just write strings here for the values.
-        ClientId: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:providerClientId"
-        ClientSecret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:providerClientSecret"
+        ClientId: "urn:k8s:secret:{{ .ingress.oidc.secretRef }}:providerClientId"
+        ClientSecret: "urn:k8s:secret:{{ .ingress.oidc.secretRef }}:providerClientSecret"
         Url: "https://pocketid.egghead.infrao.top/"
         UsePkce: false
       Scopes: ["openid", "profile", "email"]
-      Secret: "urn:k8s:secret:{{ .ingress.oidc.secretref }}:pluginSecret"
+      Secret: "urn:k8s:secret:{{ .ingress.oidc.secretRef }}:pluginSecret"
       SessionCookie:
-        Domain: .egghead.infrao.top
+        SameSite: strict
 {{- end }}
 {{- end }}
 {{- end }}

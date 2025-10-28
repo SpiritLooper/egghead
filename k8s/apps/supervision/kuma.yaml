@@ -39,7 +39,7 @@ spec:
               PathPrefix(`/assets`) || 
               PathPrefix(`/api/status-page/heartbeat/`) ||
               Path(`/icon.svg`)
-            secretref: kuma-oidc-secret
+            secretRef: kuma-oidc-secret
         pvc:
           - name: uptime-kuma-data
             backup: false
