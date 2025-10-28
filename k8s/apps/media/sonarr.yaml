@@ -21,10 +21,8 @@ spec:
         volumeMounts:
           - mountPath: /config
             name: config
-          - mountPath: /downloads
-            name: torrents
-          - mountPath: /tv
-            name: series
+          - mountPath: /media-root
+            name: arr-media-root
         env:
           - name: PUID
             value: "1000"
@@ -36,12 +34,9 @@ spec:
           - name: config
             persistentVolumeClaim:
               claimName: sonarr-config
-          - name: series
+          - name: arr-media-root
             persistentVolumeClaim:
-              claimName: series
-          - name: torrents
-            persistentVolumeClaim:
-              claimName: torrents
+              claimName: arr-media-root
         service: 8989
         ingress:
           domain: sonarr.egghead.infrao.top

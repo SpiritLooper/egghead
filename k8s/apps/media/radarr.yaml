@@ -21,10 +21,8 @@ spec:
         volumeMounts:
           - mountPath: /config
             name: config
-          - mountPath: /downloads
-            name: torrents
-          - mountPath: /movies
-            name: movies
+          - mountPath: /media-root
+            name: arr-media-root
         env:
           - name: PUID
             value: "1000"
@@ -36,12 +34,9 @@ spec:
           - name: config
             persistentVolumeClaim:
               claimName: radarr-config
-          - name: movies
+          - name: arr-media-root
             persistentVolumeClaim:
-              claimName: movies
-          - name: torrents
-            persistentVolumeClaim:
-              claimName: torrents
+              claimName: arr-media-root
         service: 7878
         ingress:
           domain: radarr.egghead.infrao.top

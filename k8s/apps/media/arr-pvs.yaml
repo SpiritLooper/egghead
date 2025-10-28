@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: torrents
+  name: arr-media-root
   annotations:
     k8up.io/backup: false
 spec:
@@ -14,17 +14,17 @@ spec:
   storageClassName: nfs
   nfs:
     server: ohara.infrao.top
-    path: /mnt/raid/arr-stack/media/torrents/
+    path: /mnt/raid/arr-stack/media/
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: torrents
+  name: arr-media-root
   namespace: media
   annotations:
     k8up.io/backup: false
 spec:
-  volumeName: torrents
+  volumeName: arr-media-root
   storageClassName: nfs
   accessModes:
     - ReadWriteMany
@@ -58,72 +58,6 @@ metadata:
     k8up.io/backup: false
 spec:
   volumeName: media
-  storageClassName: nfs
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Mi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: series
-  annotations:
-    k8up.io/backup: false
-spec:
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
-    server: ohara.infrao.top
-    path: /mnt/raid/arr-stack/media/media/series/
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: series
-  namespace: media
-  annotations:
-    k8up.io/backup: false
-spec:
-  volumeName: series
-  storageClassName: nfs
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Mi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: movies
-  annotations:
-    k8up.io/backup: false
-spec:
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
-    server: ohara.infrao.top
-    path: /mnt/raid/arr-stack/media/media/movies/
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: movies
-  namespace: media
-  annotations:
-    k8up.io/backup: false
-spec:
-  volumeName: movies
   storageClassName: nfs
   accessModes:
     - ReadWriteMany

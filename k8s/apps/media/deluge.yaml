@@ -21,8 +21,8 @@ spec:
         volumeMounts:
           - mountPath: /config
             name: config
-          - mountPath: /downloads
-            name: downloads
+          - mountPath: /media-root
+            name: arr-media-root
         env:
           - name: PUID
             value: "1000"
@@ -33,9 +33,9 @@ spec:
           - name: DELUGE_LOGLEVEL
             value: "error"
         volumes:
-          - name: downloads
+          - name: arr-media-root
             persistentVolumeClaim:
-              claimName: torrents
+              claimName: arr-media-root
           - name: config
             persistentVolumeClaim:
               claimName: deluge-config
