@@ -18,9 +18,25 @@ spec:
     apps:
       - name: homer
         image: b4bz/homer:v25.10.1
+        podSpec:
+          initContainers:
+            - name: decode-favicon
+              image: busybox
+              command:
+                - sh
+                - -c
+                - >
+                  base64 -d /config/favicon.ico.b64 > /out/favicon.ico
+              volumeMounts:
+                - name: homer-icon
+                  mountPath: /out
+                - name: homer-iconb64
+                  mountPath: /config
         volumeMounts:
           - mountPath: /www/assets
             name: homer-config
+          - mountPath: /www/assets/icons
+            name: homer-icon
         env:
           - name: INIT_ASSETS
             value: "1"
@@ -32,10 +48,83 @@ spec:
           - name: homer-config
             configMap:
               name: homer-config
+          - name: homer-icon
+            emptyDir: {}
+          - name: homer-iconb64
+            configMap:
+              name: homer-icon
         service: 8080
         ingress:
           domain: egghead.infrao.top
     configmaps:
+      homer-icon:
+       favicon.ico.b64: |
+          AAABAAEAIBwAAAEAIACYDgAAFgAAACgAAAAgAAAAOAAAAAEAIAAAAAAAAA4AACMuAAAjLgAAAAAA
+          AAAAAAD//////////////////////Pz8/6enp/+CgoL/f39//7q6uv/////////////////r6+v/
+          s7Oz/5WVlf+Ojo7/kZGR/5qamv+3t7f/7e3t/////////////f39/6qqqv+AgID/gICA/6+vr//+
+          /v7////////////////////////////////////////////T09P/l5eX//j4+P/u7u7/j4+P/+rq
+          6v//////2NjY/5OTk/++vr7/5eXl//Hx8f/x8fH/5ubm/8PDw/+cnJz/2tra///////c3Nz/lZWV
+          //f39//09PT/kJCQ/9/f3//////////////////////////////////+/v7/xcXF/35+fv+/v7//
+          //////7+/v+ampr/4uLi/+zs7P+SkpL/5OTk/////////////v7+//7+/v///////////+bm5v+X
+          l5f/7u7u/9PT0/+jo6P///////////+0tLT/g4OD/8nJyf///////////////////////////9vb
+          2/+SkpL/6Ojo//v7+///////8vLy/4CAgP/h4eH/srKy/8HBwf/////////////////+/v7//v7+
+          /////////////////8PDw/+0tLT/1NTU/4eHh//5+fn//v7+//v7+//n5+f/j4+P/+Xl5f//////
+          ////////////////wsLC/7Ozs///////////////////////0tLS/4mJif99fX3/7Ozs/+zs7P/D
+          w8P/qKio/5aWlv+Tk5P/paWl/7u7u//j4+P/6urq/3x8fP+Li4v/3d3d///////+/v7/////////
+          //+np6f/0dHR///////////////////////k5OT/jo6O/9PT0//ExMT/qKio//X19f//////0dHR
+          /2tra/+np6f/dXV1/5KSkv/f39//uLi4/7CwsP/h4eH/goKC/39/f/+UlJT/a2tr/93d3f//////
+          7u7u/6CgoP/Gxsb/yMjI/4+Pj//v7+/////////////////////////////Y2Nj/oKCg/6ioqP+o
+          qKj/mZmZ//Ly8v/29vb/cXFx/729vf/BwcH/lJSU/8LCwv+Ojo7/iYmJ/8PDw/+Ghob/19fX/8XF
+          xf9+fn7/+/v7/+vr6/+UlJT/sbGx/6ysrP+oqKj/4uLi////////////////////////////////
+          //////////////////7+/v++vr7/k5OT/+np6f+Ojo7/rq6u/4mJif9wcHD/z8/P/66urv+np6f/
+          zs7O/29vb/+ZmZn/nZ2d/5eXl//m5ub/jo6O/8rKyv//////////////////////////////////
+          ///////////////////////////////////////////////Gxsb/kpKS/319ff+hoaH/5OTk/46O
+          jv/MzMz/mJiY/5GRkf/AwMD/kpKS//T09P+jo6P/jIyM/5CQkP/Q0ND/////////////////////
+          ///////////////////////////////////////////////////////////////////////R0dH/
+          XV1d/3Jycv+VlZX/gICA/6CgoP+oqKj/p6en/52dnf+BgYH/j4+P/2BgYP9qamr/2tra////////
+          ////////////////////////////////////////////////////////////////////////////
+          //////////////Hx8f91dXX/iIiI/+Li4v/9/f3//Pz8/4SEhP9vb2//9fX1//7+/v/i4uL/ioqK
+          /3Fxcf/q6ur/////////////////////////////////////////////////////////////////
+          ///////////////////////////19fX/kZGR/7m5uf/FxcX/f39//6Ghof/w8PD/p6en/5eXl//v
+          7+//r6+v/4ODg/+zs7P/tbW1/4KCgv/u7u7/////////////////////////////////////////
+          /////////////////////////////////////////////6ioqP+xsbH/xcXF/x0dHf8AAAD/BAQE
+          /3d3d//8/Pz//////46Ojv8ICAj/AAAA/wwMDP+lpaX/t7e3/5SUlP/9/f3/////////////////
+          ///////////////////////////////////////////////////////////d3d3/iIiI//j4+P90
+          dHT/AAAA/wAAAP8AAAD/JCQk/+Tk5P/29vb/QEBA/wAAAP8AAAD/AAAA/1NTU//39/f/ioqK/8zM
+          zP//////////////////////////////////////////////////////////////////////////
+          /6Ghof+/v7///////35+fv8AAAD/AAAA/wAAAP87Ozv/7u7u//r6+v9SUlL/AAAA/wAAAP8AAAD/
+          ZGRk///////Nzc3/j4+P////////////////////////////////////////////////////////
+          ///////////////29vb/iomJ/+7t7f//////3t3d/05NTP8WFRX/NjU0/728vP///////////8jH
+          x/8/Pj3/GhkZ/0hHR//T09P///////f39/+Hh4b/6urq////////////////////////////////
+          ////////////7e3t/6Wws/+arbL/nK6z/46hpv9WaG3/lKar/5aorf+Yqq//iJqf/2t9gv+Akpf/
+          mKqv/5aorf+WqK3/mKqu/4WWm/9wgYb/iJme/5iprv+WqKz/l6mu/1ttcv+RpKn/rsDF/6y+w/+u
+          vcH/4eTk//////////////////////+vsrP/E3CK/xOexP8Tm8H/FZ3D/xegw/8Wn8D/Fp/A/xaf
+          wP8XoMH/GaLD/xihwv8Wn8D/Fp/A/xafwP8Wn8D/F6DB/xmhwv8XoMH/Fp+//xafv/8Wn8D/F6DD
+          /xihxv8Xn8X/F6DG/xKMrf+AlZv//////////////////////+Xl5f+Oo6n/hKWu/4iosf9nho3/
+          ES1l/wwkn/8NJZ//DSWf/w0mnv8NJp7/DSae/w0mnv8NJp7/DSae/w0mnv8NJp3/DSad/w0mnf8N
+          Jp3/DSac/w0mnf8OKmv/YYGI/4urs/+Hp7D/iKSr/83R0v//////////////////////////////
+          ////////3tzc/4iHgv8tJ3f/DgD4/xEA//8RAP//EQD//xEA//8RAP//EQD//xEA//8RAP//EQD/
+          /xEA//8RAP//EQD//xEA//8RAP//DwD9/yEZgP9+fXj/2dfX////////////////////////////
+          /////////////////////9PT0/+NjY3/4ODe/3d1kP8JA6X/DQnA/w0Kv/8NCr7/DQq//w0Kv/8N
+          Cb3/DQm9/w0Jvf8NCb3/DQm9/w0Kv/8NCb7/DQq+/w0Jvv8JA6z/YF6F/97e3P+MjIz/zs7O////
+          ///////////////////r6+v/sbGx/6ioqP+0tLT/jo6O/+Tk5P//////vbu6/xVJW/8Xm8T/FYer
+          /xN+oP8TfqD/FIWo/xidxv8Yn8j/GJ/I/xifyP8YoMn/EneX/xaQtv8RbYv/FpO5/xFOY/+urKz/
+          /////+jo6P+RkZH/qamp/56env+lpaX/5eXl/4mJif+5ubn/zMzM/6Ghof/o6Oj//////+np6f+U
+          k5P/W2tv/xicv/8Vjaz/FIWj/xN/m/8XmLr/Hsr2/x/S//8f0v//H9L//x/Q/P8WlLT/GabL/xN+
+          mv8XnsH/WG1y/5CPjv/l5eX//////+zs7P+srKz/19fX/8TExP+Ghob/iYmJ//7+/v//////////
+          ///////k5OT/jo6O/83Nzf/r6en/V3iB/xSWuv8VkbL/HLnk/x/N+/8fz///H8///x/P//8fz///
+          H8///x/O/f8att//FJS3/1h+iP/p5+f/09PT/42Njf/f39///////////////////v7+/4mJif9/
+          f3//3Nzc//r6+v/+/v7//v7+/5CQkP/AwMD////////////l5OP/ZoKK/xuQsP8axfP/HtL//x/S
+          //8f0f//H9H//x/S//8e0f//GsXz/x2Wt/9qipP/5+Xl////////////wsLC/4+Pj//+/v7//v7+
+          //f39//S0tL/gYGB/9DQ0P+Kior/n5+f//7+/v//////uLi4/76+vv/////////////////08/L/
+          pq2v/0x/jv8jjKj/GaLI/xiu1/8Yr9j/GaTK/ySQrf9QhpX/rLS2//b09P////////////////+7
+          u7v/uLi4////////////mpqa/5CQkP/a2tr//////+7u7v+MjIz/6urq//39/f+lpaX/yMjI////
+          ////////////////////////8/Dw/8zMzP+mr7H/kaKn/5Gjp/+lr7L/zc3N//Tx8f//////////
+          /////////////////8zMzP+goKD/+fn5/+Tk5P+NjY3/8vLy/////////////////8DAwP9/f3//
+          hISE/5eXl//39/f/////////////////////////////////////////////////////////////
+          ////////////////////////////////////+fn5/6Kiov+CgoL/gICA/8jIyP///////////wAA
+          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       homer-config:
         config.yml: |-
           ---
