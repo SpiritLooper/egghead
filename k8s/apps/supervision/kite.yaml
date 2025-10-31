@@ -1,0 +1,52 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: kite
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://zxh326.github.io/kite
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kite
+spec:
+  interval: 10m
+  timeout: 5m
+  chart:
+    spec:
+      chart: kite
+      version: 0.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: kite
+      interval: 1h
+  releaseName: kite
+  targetNamespace: supervision
+  values:
+    db:
+      sqlite:
+        persistence:
+          pvc:
+            enabled: true
+    rbac:
+      rules:
+        - apiGroups: ["*"]
+          resources: ["*"]
+          verbs: ["*"]
+        - nonResourceURLs: ["*"]
+          verbs: ["*"]
+    ingress:
+      enabled: true
+      className: traefik
+      hosts:
+        - host: kite.egghead.infrao.top
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - hosts:
+          - kite.egghead.infrao.top
+
