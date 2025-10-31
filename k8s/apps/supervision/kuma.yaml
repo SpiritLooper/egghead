@@ -42,4 +42,4 @@ spec:
             secretRef: kuma-oidc-secret
         pvc:
           - name: uptime-kuma-data
-            backup: false
+            backup: true

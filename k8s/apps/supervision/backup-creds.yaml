@@ -1,0 +1,9 @@
+apiVersion: v1
+stringData:
+  ACCESS_KEY_ID: supervision-backup
+  ACCESS_SECRET_KEY: X3Yo8IeB&j7APKP8!gqw
+  restic-password: XAx87h^wtFT8*&4PHHQz
+kind: Secret
+metadata:
+  name: minio-creds
+  namespace: supervision
