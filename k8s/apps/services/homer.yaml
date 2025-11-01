@@ -222,9 +222,16 @@ spec:
                 - name: "Kite"
                   subtitle: "🪁 Kubernetes Dashboard"
                   logo: "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/kite-kubernetes.svg"
-                  tag: "k8s dashboard"
+                  tag: "dashboard"
                   tagstyle: "is-info"
                   url: "https://kite.egghead.infrao.top"
+                  target: "_blank" # optional html a tag target attribute
+                - name: "Traefik"
+                  subtitle: "🦦 Traefik Dashboard"
+                  logo: "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/traefik.svg"
+                  tag: "dashboard"
+                  tagstyle: "is-info"
+                  url: "https://traefik.egghead.infrao.top"
                   target: "_blank" # optional html a tag target attribute
                 - name: "Uptime Kuma"
                   subtitle: "🐻 Probe plateform"
