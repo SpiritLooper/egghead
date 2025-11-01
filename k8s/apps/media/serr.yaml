@@ -30,6 +30,8 @@ spec:
         value: Europe/Paris
     ingress:
       enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
       hosts:
         - host: seerr.egghead.infrao.top
           paths:

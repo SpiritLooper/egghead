@@ -97,6 +97,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .name }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
   {{- $middlewares := list }}
   {{- if .ingress.corspolicy }}
   {{- $middlewares = append $middlewares (printf "%s-%s-cors-header@kubernetescrd" $.Release.Namespace .name) }}
@@ -105,8 +107,6 @@ metadata:
   {{- $middlewares = append $middlewares (printf "%s-%s-oidc@kubernetescrd" $.Release.Namespace .name) }}
   {{- end }}
   {{- if $middlewares }}
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: {{ join "," $middlewares }}
   {{- end }}
 spec:

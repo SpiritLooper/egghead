@@ -49,6 +49,8 @@ spec:
   targetNamespace: ingress
   values:
     globalArguments: []
+    global:
+      checkNewVersion: false
     env:
       - name: TZ
         value: Europe/Paris
