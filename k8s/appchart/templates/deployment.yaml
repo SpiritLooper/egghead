@@ -59,10 +59,19 @@ spec:
   selector:
     app: {{ .name }}
   ports:
+  {{- if kindIs "slice" .service }}
+    {{- range .service }}
     - protocol: TCP
-      name: {{ .service | quote }}
+      name: "{{ . }}"
+      port: {{ . }}
+      targetPort: {{ . }}
+    {{- end }}
+  {{- else }}
+    - protocol: TCP
+      name: "{{ .service }}"
       port: {{ .service }}
       targetPort: {{ .service }}
+  {{- end }}
 {{- end }}
 
 ---
@@ -119,7 +128,7 @@ spec:
           service:
             name: {{ .name }}
             port:
-              number: {{ .service }}
+              number: {{ if kindIs "slice" .service }}{{ index .service 0 }}{{ else }}{{ .service }}{{ end }}
         path: /
         pathType: Prefix
   tls:
@@ -184,7 +193,7 @@ metadata:
   name: {{ $name }}
 data:
   {{- range $key, $value := $data }}
-  {{ $key }}: |
+  {{ $key }}: |-
     {{- $value | nindent 4 }}
   {{- end }}
 
