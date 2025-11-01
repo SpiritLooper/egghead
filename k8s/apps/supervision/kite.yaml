@@ -41,6 +41,8 @@ spec:
     ingress:
       enabled: true
       className: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
       hosts:
         - host: kite.egghead.infrao.top
           paths:

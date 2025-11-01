@@ -106,6 +106,7 @@ metadata:
   {{- end }}
   {{- if $middlewares }}
   annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: {{ join "," $middlewares }}
   {{- end }}
 spec:
