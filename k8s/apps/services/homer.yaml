@@ -144,7 +144,7 @@ spec:
           #   search: "Shift"
           footer: false # set false if you want to hide it.
 
-          columns: "3" # "auto" or number (must be a factor of 12: 1, 2, 3, 4, 6, 12)
+          columns: "4" # "auto" or number (must be a factor of 12: 1, 2, 3, 4, 6, 12)
           connectivityCheck: true # whether you want to display a message when the apps are not accessible anymore (VPN disconnected for example).
                                   # You should set it to true when using an authentication proxy, it also reloads the page when a redirection is detected when checking connectivity.
 

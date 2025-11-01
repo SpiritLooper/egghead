@@ -20,7 +20,7 @@ spec:
   chart:
     spec:
       chart: reloader
-      version: 2.2.*
+      version: 2.2.3
       sourceRef:
         kind: HelmRepository
         name: reloader
@@ -29,7 +29,6 @@ spec:
   targetNamespace: kube-system
   values:
     reloader:
-      ignoreConfigMaps: false
       ignoreCronJobs: true
       watchGlobally: true
       deployment:
