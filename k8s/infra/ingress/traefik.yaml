@@ -65,6 +65,12 @@ spec:
       enabled: true
       isDefaultClass: true
       name: "traefik"
+    ingressRoute:
+      dashboard:
+        enabled: true
+        matchRule: Host(`traefik.egghead.infrao.top`) && ( PathPrefix(`/dashboard`) || PathPrefix(`/api`) )
+        entryPoints:
+          - websecure
     experimental:
       plugins:
         traefik-oidc-auth:
