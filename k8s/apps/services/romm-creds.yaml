@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+stringData:
+  DB_USER: ENC[AES256_GCM,data:/QynYA==,iv:GjrI7imnGJenJ0sP7UqCoL+DSMDCQr3+nHuo6qzQe70=,tag:J4yy3I0XKbcZ66Rl6tGfjA==,type:str]
+  DB_PASSWD: ENC[AES256_GCM,data:zKMG9qckEpkvFMsGItrKJKdfrn8=,iv:YD+8KFnvU4QWJdu5BoPdbuOvqzWjESiHhkpVbNUGms8=,tag:T4x3JiS3ajPvUzYLKiTUTg==,type:str]
+  RETROACHIEVEMENTS_API_KEY: ENC[AES256_GCM,data:kJ0bQI4ivBQYl7tuz2KlVM9W4h99+Hynmg629yDLODg=,iv:LESJPcu4gDpiE+fxKfwmjTTPAgq7590C57kpknyFsNo=,tag:TWk8Wpr0ENUftsqM8i1R3A==,type:str]
+  ROMM_AUTH_SECRET_KEY: ENC[AES256_GCM,data:6F8XsmAJiNsqTasuxy67bGNmAUfxQt7u3kL6J57BrEH7ezOm/G8BW+2TIK98b4cp2dELvZ5pnuVnxIVZCsHNSA==,iv:ZiYdHy2aftWHYTS89bZVNDXCU/tCh54vPYE/fdFuR8w=,tag:/QpLMXKozbdHcaSAockO0Q==,type:str]
+  SCREENSCRAPER_USER: ENC[AES256_GCM,data:bIugBI6d+Pf7v1cW,iv:e9/U7SQkM1LzQOt69wVdxJR/SB7cucJtHsTqEmrgyaw=,tag:0IuEmrJXVJWiA3zzC8Wpuw==,type:str]
+  SCREENSCRAPER_PASSWORD: ENC[AES256_GCM,data:znuJtn/z49J4qKTUo3gkIrWs68w=,iv:uQdZ+GfaxTbZ5UjHSVJdqCYAYZO/CEs2ozqRfu+rFkM=,tag:uwp//1gp3Z7FZ/B+6ZmDQg==,type:str]
+  STEAMGRIDDB_API_KEY: ENC[AES256_GCM,data:SQ9DCAKLg/bb4/N582lWFkRZ5MuykFdy8vnoWT9KgJc=,iv:61zgw5WYRWMu6JhSjVj3Y4GqMvU6Il/XJcL0bxxDzGc=,tag:Zqu4F8L3aLbJfHVWNaIDcA==,type:str]
+metadata:
+  name: romm-creds
+  namespace: services
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpYUVQYmtFbVJiTGJJS3h0
+        aDUySTAvZnVjRTJ3L0hIS3l4cFJSbDNRblI4CjJzNTRCNGlOc3dpRTBVaXgwYy82
+        bXc5azRNVG95QWZtTTRrSTZuL0lyNUEKLS0tIE9kWjJxUmsvekZ6OFVMSkJ1UHNq
+        cU1RT3FWcGplWFJyTVlwNy9kVWloVW8KUJ8YKYBqpxEto6EieQKCiR/zK7azB4Ly
+        k7UPY0culy2bkD2stxxeLXY+3NbjYAe9XSo1KnYBVEE/noC979eg3g==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-11-02T17:04:36Z"
+  mac: ENC[AES256_GCM,data:uuNpufeFvsZDgnaegh9jDyLinSCzeFncrxqFU7Y7QdZfhuBLryYIyVcIqBNijMU9sgoT5LjXVZcVV4UEfaT/pmfB+BStNfNyMuTteE6haVvka8O6QzPNsl+jSe/Mvj7L5w5Or9hm2UoMIo83gi+oG0L6QJyGUI3HTYffLF4C5aQ=,iv:VRwNcZZt8gkCf9fGbrm3wGDt6IJkYKehDzzLcUGz3wA=,tag:jdSmdUyV7c7PfcUY026JcQ==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.11.0

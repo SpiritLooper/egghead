@@ -1,0 +1,40 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: romm-db
+spec:
+  replicas: 1
+  passwordSecretKeyRef:
+    name: romm-creds
+    key: DB_PASSWD
+    generate: false
+  rootPasswordSecretKeyRef:
+    name: mariadb-secret
+    key: ROOT_PASSWD
+    generate: true
+  username: romm
+  storage:
+    size: 2Gi
+---
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: backup-romm-db
+spec:
+  mariaDbRef:
+    name: romm-db
+  schedule:
+    cron: "45 4 * * *"
+    suspend: false
+  maxRetention: 120h # 5 days
+  storage:
+    s3:
+      bucket: services-backup
+      prefix: rommdb
+      endpoint: https://ohara.infrao.top:9004
+      accessKeyIdSecretKeyRef:
+        name: minio-creds
+        key: ACCESS_KEY_ID
+      secretAccessKeySecretKeyRef:
+        name: minio-creds
+        key: ACCESS_SECRET_KEY
