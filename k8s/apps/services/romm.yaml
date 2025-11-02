@@ -1,0 +1,87 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: romm
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: rommapp
+        image: rommapp/romm:4.3.2
+        containerSpec:
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+        volumeMounts:
+          - mountPath: /romm/assets
+            name: romm-assets
+          - mountPath: /romm/config
+            name: romm-config
+          - mountPath: /romm/library
+            name: romm-library
+          - mountPath: /romm/resources
+            name: romm-resources
+          - mountPath: /redis-data
+            name: romm-redis-data
+        env:
+          - name: DB_HOST
+            value: romm-db
+          - name: DB_NAME
+            value: romm
+          - name: OIDC_ENABLED
+            value: "true"
+          - name: OIDC_PROVIDER
+            value: "pocketid"
+          - name: OIDC_REDIRECT_URI
+            value: https://romm.egghead.infrao.top/api/oauth/openid
+          - name: OIDC_SERVER_APPLICATION_URL
+            value: https://pocketid.egghead.infrao.top/authorize
+          - name: TZ
+            value: Europe/Paris
+        envFrom:
+          - secretRef:
+              name: romm-creds
+        volumes:
+          - name: romm-assets
+            persistentVolumeClaim:
+              claimName: romm-assets
+          - name: romm-config
+            persistentVolumeClaim:
+              claimName: romm-config
+          - name: romm-library
+            persistentVolumeClaim:
+              claimName: romm-library-root
+          - name: romm-resources
+            persistentVolumeClaim:
+              claimName: romm-resources
+          - name: romm-redis-data
+            persistentVolumeClaim:
+              claimName: romm-redis-data
+        service: 8080
+        ingress:
+          domain: romm.egghead.infrao.top
+        pvc:
+          - name: romm-assets
+            localstorage: false
+            backup: true
+          - name: romm-config
+            localstorage: true
+            backup: true
+          - name: romm-redis-data
+            localstorage: true
+            backup: false
+          - name: romm-resources
+            localstorage: true
+            backup: false
+

@@ -1,3 +1,37 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: romm-library-root
+  annotations:
+    k8up.io/backup: true
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    server: ohara.infrao.top
+    path: /mnt/raid/romm-library/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: romm-library-root
+  namespace: services
+  annotations:
+    k8up.io/backup: true
+spec:
+  volumeName: romm-library-root
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+---
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
