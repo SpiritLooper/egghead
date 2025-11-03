@@ -1,4 +1,37 @@
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: romm-library-root
+  annotations:
+    k8up.io/backup: true
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    server: ohara.infrao.top
+    path: /mnt/raid/romm-library/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: romm-library-root
+  namespace: services
+  annotations:
+    k8up.io/backup: true
+spec:
+  volumeName: romm-library-root
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -16,8 +49,16 @@ spec:
       interval: 10m
   values:
     apps:
+      - name: romm-valkey
+        image: valkey/valkey:9.0.0-alpine
+        service: 6379
       - name: rommapp
         image: rommapp/romm:4.3.2
+        podSpec:
+          hostAliases:
+            - ip: "192.168.8.5"
+              hostnames:
+                - "pocketid.egghead.infrao.top"
         containerSpec:
           ports:
             - containerPort: 8080
@@ -35,10 +76,33 @@ spec:
           - mountPath: /redis-data
             name: romm-redis-data
         env:
-          - name: DB_HOST
-            value: romm-db
           - name: DB_NAME
-            value: romm
+            valueFrom:
+              secretKeyRef:
+                name: romm-database-app
+                key: dbname
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name:  romm-database-app
+                key: host
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name:  romm-database-app
+                key: user
+          - name: DB_PASSWD
+            valueFrom:
+              secretKeyRef:
+                name:  romm-database-app
+                key: password
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: romm-database-app
+                key: port
+          - name: DISABLE_USERPASS_LOGIN
+            value: "false"
           - name: OIDC_ENABLED
             value: "true"
           - name: OIDC_PROVIDER
@@ -46,7 +110,11 @@ spec:
           - name: OIDC_REDIRECT_URI
             value: https://romm.egghead.infrao.top/api/oauth/openid
           - name: OIDC_SERVER_APPLICATION_URL
-            value: https://pocketid.egghead.infrao.top/authorize
+            value: https://pocketid.egghead.infrao.top
+          - name: REDIS_HOST
+            value: romm-valkey
+          - name: ROMM_DB_DRIVER
+            value: postgresql
           - name: TZ
             value: Europe/Paris
         envFrom:

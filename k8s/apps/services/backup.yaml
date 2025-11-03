@@ -1,3 +1,42 @@
+####### Postgresql
+###
+###
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: minio-romm-backup-store
+  namespace: services
+spec:
+  configuration:
+    destinationPath: s3://services-backup/pgsql/romm/
+    endpointURL: https://ohara.infrao.top:9004
+    s3Credentials:
+      accessKeyId:
+        name: minio-creds
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: minio-creds
+        key: ACCESS_SECRET_KEY
+    wal:
+      compression: gzip
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: rommdb-backup
+spec:
+  schedule: "0 45 2 * * *"
+  cluster:
+    name: romm-database
+  immediate: true
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+###
+###
+##### Files
+###
+###
 ---
 apiVersion: k8up.io/v1
 kind: Schedule
