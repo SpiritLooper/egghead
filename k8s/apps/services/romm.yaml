@@ -102,7 +102,7 @@ spec:
                 name: romm-database-app
                 key: port
           - name: DISABLE_USERPASS_LOGIN
-            value: "false"
+            value: "true"
           - name: OIDC_ENABLED
             value: "true"
           - name: OIDC_PROVIDER
