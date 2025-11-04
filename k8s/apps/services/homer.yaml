@@ -233,6 +233,13 @@ spec:
                   tagstyle: "is-info"
                   url: "https://kite.egghead.infrao.top"
                   target: "_blank" # optional html a tag target attribute
+                - name: "Grafana"
+                  subtitle: "🍥 Universal Dashboarder"
+                  logo: "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/grafana.svg"
+                  tag: "graph"
+                  tagstyle: "is-warning"
+                  url: "https://grafana.egghead.infrao.top"
+                  target: "_blank" # optional html a tag target attribute
                 - name: "Prometheus WebUI"
                   subtitle: "📈 Metrics Queries"
                   logo: "https://cdn.jsdelivr.net/gh/selfhst/icons/svg/prometheus.svg"

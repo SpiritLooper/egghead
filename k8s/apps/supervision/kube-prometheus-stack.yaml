@@ -41,14 +41,52 @@ spec:
   values:
     alertmanager:
       enabled: false
-    grafana:
-      enabled: false
     kubeEtcd:
       enabled: false
     kubeScheduler:
       enabled: false
     kubeProxy:
       enabled: false
+    grafana:
+      enabled: true
+      defaultDashboardsTimezone: Europe/Paris
+      admin:
+        existingSecret: grafana-creds
+        userKey: adminUser
+        passwordKey: adminPass
+      grafana.ini:
+        analytics:
+          check_for_updates: false
+          reporting_enabled: false
+        news:
+          news_feed_enabled: false
+        metrics:
+          enabled: false
+        server:
+          domain: grafana.egghead.infrao.top
+          root_url: https://grafana.egghead.infrao.top/
+      initChownData:
+        enabled: false
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - grafana.egghead.infrao.top
+        tls:
+          - hosts:
+              - grafana.egghead.infrao.top
+      persistence:
+        enabled: true
+        annotations:
+          k8up.io/backup: "true"
+        type: pvc
+        storageClassName: local-path
+        size: 5Gi
+      sidecar:
+        datasources:
+          alertmanager:
+            enabled: false
     prometheus:
       prometheusSpec:
         retention: ""

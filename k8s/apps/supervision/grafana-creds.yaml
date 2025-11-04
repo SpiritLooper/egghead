@@ -1,0 +1,23 @@
+apiVersion: v1
+stringData:
+  adminUser: ENC[AES256_GCM,data:oyyOU7PL9yDd8RSJ,iv:KecDCSm/gjDpESvq8mwq9pbtCjRSQ6mVvILAUunPRio=,tag:tbfBnbq2SeTYGxxjJupQSQ==,type:str]
+  adminPass: ENC[AES256_GCM,data:VC/5bP8Pa2NL2CUTju9DXA11vXMHm8Y/RupUIV+EuXs=,iv:FpYkTBBAHdrlVXRALrMs9IXlGhl89dl2I3OuLiN5qsk=,tag:WYW5A9vSuFyqeRjofnaN5w==,type:str]
+kind: Secret
+metadata:
+  name: grafana-creds
+  namespace: supervision
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBPQXY0Wkt2VDk1UldTcHA4
+        Zm9zdzF2eDRHdzgvOWxCZ1EwN1BycFZNL1JFCmdqcEI2R2JseWM1N1cwUWxaQkhG
+        M2RVeHowZmZscUdPT2pCZjZ4bkl2QVUKLS0tIFBBWGR5L0dKNEQ4OU15MlEvckhh
+        YjBwNVZyamhrWmpWVUJVZC9qNldrZzQKDKNtqpFLQBBGtaFR9P5bbjTIO/K2S/5f
+        v6u7DzGeXzm8MsK6fc7eiMSAkmsr5TZapS9k5Uh8VrHxeZ25OlSAAA==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-11-04T16:09:50Z"
+  mac: ENC[AES256_GCM,data:Q70PjCMjfJQ2uVpyx2h/62ICRaDHiEZWW3v5xhGprID51+5a9MTpAmbKGPq+cqPuD4h1vs8VtkamEuam7ZylLVSXF5d3jwrZ+501RTUSPsy1C3OMhFhcXTffPWjfl50nNx4u5Na3rY202rSJtWOX/TrhI6sejG9EK3HpVPG8wOE=,iv:cM6ba3xMxP0+m+xVFIZsNgZyQAEiozbDKdnwBHOej4k=,tag:jx9u01h0HYfNXHYiJowlUw==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.11.0
