@@ -1,4 +1,23 @@
 ---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: prometheus-webui-oidc
+spec:
+  plugin:
+    traefik-oidc-auth:
+      CookieNamePrefix: TraefikOidcAuthPrometheus
+      CallbackUri: https://prometheus.egghead.infrao.top/oidc/callback
+      Provider:
+        ClientId: "urn:k8s:secret:prometheus-oidc-secret:providerClientId"
+        ClientSecret: "urn:k8s:secret:prometheus-oidc-secret:providerClientSecret"
+        Url: "https://pocketid.egghead.infrao.top/"
+        UsePkce: false
+      Scopes: ["openid", "profile", "email"]
+      Secret: "urn:k8s:secret:prometheus-oidc-secret:pluginSecret"
+      SessionCookie:
+        SameSite: strict
+---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
@@ -36,6 +55,7 @@ spec:
         ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: supervision-prometheus-webui-oidc@kubernetescrd
         hosts:
           - prometheus.egghead.infrao.top
         tls:
