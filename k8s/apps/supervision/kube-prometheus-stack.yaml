@@ -30,3 +30,14 @@ spec:
       enabled: false
     kubeProxy:
       enabled: false
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - prometheus.egghead.infrao.top
+        tls:
+          - hosts:
+              - prometheus.egghead.infrao.top
