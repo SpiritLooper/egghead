@@ -50,6 +50,20 @@ spec:
     kubeProxy:
       enabled: false
     prometheus:
+      prometheusSpec:
+        retention: ""
+        retentionSize: 50GiB
+        storageSpec:
+          volumeClaimTemplate:
+            metadata:
+              annotations:
+                k8up.io/backup: "false"
+            spec:
+              storageClassName: local-path
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 50.5Gi
       ingress:
         enabled: true
         ingressClassName: traefik
