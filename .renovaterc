@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": ["config:recommended", ":semanticCommitsDisabled"],
+  "commitMessagePrefix": "🎨 Renovate:",
 
   // this is handled through a specific github action (see .github/workflows/fluxcd.yaml)
   "ignorePaths": ["k8s/flux/flux-system/gotk-components.yaml"],
