@@ -24,6 +24,9 @@ spec:
     schedule: '45 3 * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
+    podSecurityContext: # For grafana files and future supervisions app
+      runAsUser: 0
+      runAsNonRoot: false
   check:
     schedule: '0 3 * * 1'
   prune:

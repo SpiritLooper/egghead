@@ -63,6 +63,9 @@ spec:
     schedule: '0 2 * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
+    podSecurityContext: # For pocket-id keys files
+      runAsUser: 1000
+      runAsNonRoot: true
   check:
     schedule: '0 2 * * 1'
   prune:

@@ -24,6 +24,9 @@ spec:
     schedule: '0 3 * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
+    podSecurityContext: # For many files restricted in all pvc
+      runAsUser: 0
+      runAsNonRoot: false
   check:
     schedule: '0 3 * * 1'
   prune:
