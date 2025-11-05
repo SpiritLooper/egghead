@@ -20,6 +20,7 @@ spec:
         name: minio-creds
         key: ACCESS_SECRET_KEY
   backup:
+    promURL: "http://kube-prometheus-stack-prometheus.supervision:9090"
     schedule: '0 3 * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2

@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: jellyfin
-        image: jellyfin/jellyfin:10.11.2
+        image: jellyfin/jellyfin:10.11.1
         podSpec:
           securityContext:
             privileged: true
