@@ -102,6 +102,8 @@ spec:
       persistence:
         data:
           enable: true
+          annotations:
+            k8up.io/backup: "false"
           type: persistentVolumeClaim
           storageClass: nfs
           accessMode: ReadWriteOnce
