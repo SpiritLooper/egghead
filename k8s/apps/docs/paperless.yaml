@@ -76,8 +76,10 @@ spec:
             backup: true
           - name: paperless-export
             backup: false
+            localstorage: true
           - name: paperless-consume
             backup: false
+            localstorage: true
 
       - name: paperless-redis
         image: redis:8.2.2-bookworm
