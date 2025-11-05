@@ -3,6 +3,8 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: romm-database
+  annotations:
+    k8up.io/backup: "false"
 spec:
   instances: 1
 
