@@ -11,24 +11,46 @@
   "kubernetes": { "managerFilePatterns": ["/k8s/.+\\.ya?ml$/"] },
   "minimumReleaseAge": "2 days",
   "packageRules": [
-    // allow minor updates if not 0.x
     {
       "matchUpdateTypes": ["minor"],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     },
-
-    // allow patch and pin, but no digest update 
-    {"matchUpdateTypes": ["patch"],"automerge": true},
+    { "matchUpdateTypes": ["patch"],"automerge": true },
     { "matchUpdateTypes": ["pin"], "enabled": true },
     { "matchUpdateTypes": ["digest"], "enabled": false },
-
-    // renovate spams too much, so only update once a month
-    { 
-        "matchPackageNames": ["renovate/renovate"], 
-        "automerge": true, 
-        "matchUpdateTypes": ["patch","minor"],
-        "schedule": ["* * 1 * *"]
+    {
+      "matchPackageNames": ["renovate/renovate"], 
+      "automerge": true, 
+      "matchUpdateTypes": ["patch","minor"],
+      "schedule": ["* * 1 * *"]
+    },
+    {
+      "matchManagers": ["kubernetes"],
+      "matchFileNames": ["k8s/.+\\.ya?ml$"],
+      "matchPaths": [
+        "spec.values.controllers.main.containers.main.image.tag"
+      ],
+      "overrideDatasource": "docker",
+      "overrideDepName": "ghcr.io/immich-app/immich-microservices"
+    },
+    {
+      "matchManagers": ["kubernetes"],
+      "matchFileNames": ["k8s/.+\\.ya?ml$"],
+      "matchPaths": [
+        "spec.values.server.controllers.main.containers.main.image.tag"
+      ],
+      "overrideDatasource": "docker",
+      "overrideDepName": "ghcr.io/immich-app/immich-server"
+    },
+    {
+      "matchManagers": ["kubernetes"],
+      "matchFileNames": ["k8s/.+\\.ya?ml$"],
+      "matchPaths": [
+        "spec.values.machine-learning.controllers.main.containers.main.image.tag"
+      ],
+      "overrideDatasource": "docker",
+      "overrideDepName": "ghcr.io/immich-app/immich-machine-learning"
     }
   ]
 }
