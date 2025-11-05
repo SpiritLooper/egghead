@@ -1,52 +1,93 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":semanticCommitsDisabled"],
+  "extends": [
+    "config:recommended",
+    ":semanticCommitsDisabled"
+  ],
   "commitMessagePrefix": "🎨 Renovate:",
-
-  // this is handled through a specific github action (see .github/workflows/fluxcd.yaml)
-  "ignorePaths": ["k8s/flux/flux-system/gotk-components.yaml"],
-
-  "flux": { "managerFilePatterns": ["/k8s/.+\\.ya?ml$/"] },
-  "helm-values": { "managerFilePatterns": ["/k8s/.+\\.ya?ml$/"] },
-  "kubernetes": { "managerFilePatterns": ["/k8s/.+\\.ya?ml$/"] },
+  "ignorePaths": [
+    "k8s/flux/flux-system/gotk-components.yaml"
+  ],
+  "flux": {
+    "managerFilePatterns": [
+      "/k8s/.+\\.ya?ml$/"
+    ]
+  },
+  "helm-values": {
+    "managerFilePatterns": [
+      "/k8s/.+\\.ya?ml$/"
+    ]
+  },
+  "kubernetes": {
+    "managerFilePatterns": [
+      "/k8s/.+\\.ya?ml$/"
+    ]
+  },
   "minimumReleaseAge": "2 days",
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor"],
+      "matchUpdateTypes": [
+        "minor"
+      ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     },
-    { "matchUpdateTypes": ["patch"],"automerge": true },
-    { "matchUpdateTypes": ["pin"], "enabled": true },
-    { "matchUpdateTypes": ["digest"], "enabled": false },
     {
-      "matchPackageNames": ["renovate/renovate"], 
-      "automerge": true, 
-      "matchUpdateTypes": ["patch","minor"],
-      "schedule": ["* * 1 * *"]
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true
     },
     {
-      "matchManagers": ["kubernetes"],
-      "matchFileNames": ["k8s/.+\\.ya?ml$"],
-      "matchPaths": [
+      "matchUpdateTypes": [
+        "pin"
+      ],
+      "enabled": true
+    },
+    {
+      "matchUpdateTypes": [
+        "digest"
+      ],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": [
+        "renovate/renovate"
+      ],
+      "automerge": true,
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "schedule": [
+        "* * 1 * *"
+      ]
+    },
+    {
+      "matchManagers": [
+        "kubernetes"
+      ],
+      "matchFileNames": [
         "spec.values.controllers.main.containers.main.image.tag"
       ],
       "overrideDatasource": "docker",
       "overrideDepName": "ghcr.io/immich-app/immich-microservices"
     },
     {
-      "matchManagers": ["kubernetes"],
-      "matchFileNames": ["k8s/.+\\.ya?ml$"],
-      "matchPaths": [
+      "matchManagers": [
+        "kubernetes"
+      ],
+      "matchFileNames": [
         "spec.values.server.controllers.main.containers.main.image.tag"
       ],
       "overrideDatasource": "docker",
       "overrideDepName": "ghcr.io/immich-app/immich-server"
     },
     {
-      "matchManagers": ["kubernetes"],
-      "matchFileNames": ["k8s/.+\\.ya?ml$"],
-      "matchPaths": [
+      "matchManagers": [
+        "kubernetes"
+      ],
+      "matchFileNames": [
         "spec.values.machine-learning.controllers.main.containers.main.image.tag"
       ],
       "overrideDatasource": "docker",
