@@ -82,5 +82,5 @@ spec:
             localstorage: true
 
       - name: paperless-redis
-        image: redis:8.2.2-bookworm
+        image: redis:8.2.3-bookworm
         service: 6379
