@@ -295,6 +295,13 @@ spec:
             - name: "Administration"
               icon: "fas fa-user-tie"
               items:
+                - name: "Knock-Up-Stream"
+                  subtitle: "🕸 OpenWRT UI"
+                  logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/openwrt.svg"
+                  tag: "Network Manager"
+                  tagstyle: "is-outlined is-danger"
+                  url: "https://knock-up-stream.infrao.top/cgi-bin/luci/"
+                  target: "_blank" # optional html a tag target attribute
                 - name: "Pocket ID"
                   subtitle: "👮 OIDC Provider"
                   logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/pocket-id.svg"
