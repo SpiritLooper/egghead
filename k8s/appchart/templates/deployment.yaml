@@ -166,10 +166,10 @@ spec:
   routes:
     - match: Host(`{{ .ingress.domain }}`) && PathPrefix(`/metrics`)
       kind: Rule
+      priority: 15000
       services:
         - name: noop@internal
           kind: TraefikService
-  priority: 15000
 {{- end }}
 ---
 {{- if .ingress.corspolicy }}
