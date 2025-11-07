@@ -96,6 +96,16 @@ spec:
             namespace: ingress
         entryPoints:
           - websecure
+    metrics:
+      prometheus:
+        service:
+          enabled: true
+          labels: 
+            app: traefik
+        serviceMonitor:
+          enabled: true
+          additionalLabels:
+            release: kube-prometheus-stack
     experimental:
       plugins:
         traefik-oidc-auth:
