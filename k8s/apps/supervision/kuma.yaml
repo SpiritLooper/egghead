@@ -37,6 +37,7 @@ spec:
             BypassAuthenticationRule: >- 
               PathPrefix(`/status`) ||
               PathPrefix(`/assets`) || 
+              PathPrefix(`/upload`) || 
               PathPrefix(`/api/status-page/heartbeat/`) ||
               Path(`/icon.svg`)
             secretRef: kuma-oidc-secret
