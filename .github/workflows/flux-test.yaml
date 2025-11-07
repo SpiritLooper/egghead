@@ -15,4 +15,4 @@ jobs:
       - name: Run flux-local test
         uses: docker://ghcr.io/allenporter/flux-local:v7
         with:
-          args: test --enable-helm --all-namespaces --path k8s/flux -v
+          args: test --enable-helm --all-namespaces --path k8s/flux --api-versions monitoring.coreos.com/v1 -v
