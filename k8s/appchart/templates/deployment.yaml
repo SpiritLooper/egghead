@@ -127,6 +127,7 @@ metadata:
   name: {{ .name }}
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.priority: "10000"
   {{- $middlewares := list }}
   {{- if .ingress.corspolicy }}
   {{- $middlewares = append $middlewares (printf "%s-%s-cors-header@kubernetescrd" $.Release.Namespace .name) }}
@@ -153,6 +154,32 @@ spec:
   tls:
   - hosts:
     - {{ .ingress.domain }}
+---
+{{- if .monitoring  }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .name }}-metrics-block
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.priority: "15000"
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: {{ .ingress.domain }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: missing-service
+            port:
+              number: 9111
+        path: /metrics
+        pathType: Exact
+  tls:
+  - hosts:
+    - {{ .ingress.domain }}
+{{- end }}
 ---
 {{- if .ingress.corspolicy }}
 apiVersion: traefik.io/v1alpha1
