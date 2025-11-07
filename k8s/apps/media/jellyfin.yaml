@@ -64,6 +64,7 @@ spec:
               type: Directory
             name: dri
         service: 8096
+        monitoring: true
         ingress:
           domain: jellyfin.egghead.infrao.top
         pvc:

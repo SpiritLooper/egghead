@@ -55,6 +55,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .name }}
+  labels:
+    app: {{ .name }}
 spec:
   selector:
     app: {{ .name }}
@@ -72,6 +74,23 @@ spec:
       port: {{ .service }}
       targetPort: {{ .service }}
   {{- end }}
+{{- end }}
+
+---
+# Service monitoring generation
+{{- if .monitoring }}
+apiVersion: v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .name }}
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  endpoints:
+  - port: {{ if kindIs "slice" .service }}{{ index .service 0 | quote }}{{ else }}{{ .service | quote }}{{ end }}
 {{- end }}
 
 ---
