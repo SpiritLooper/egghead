@@ -156,29 +156,20 @@ spec:
     - {{ .ingress.domain }}
 ---
 {{- if .monitoring  }}
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: {{ .name }}-metrics-block
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.priority: "15000"
+  name: {{ .name }}-metrics-noop
 spec:
-  ingressClassName: traefik
-  rules:
-  - host: {{ .ingress.domain }}
-    http:
-      paths:
-      - backend:
-          service:
-            name: missing-service
-            port:
-              number: 9111
-        path: /metrics
-        pathType: Exact
-  tls:
-  - hosts:
-    - {{ .ingress.domain }}
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{ .ingress.domain }}`) && PathPrefix(`/metrics`)
+      kind: Rule
+      services:
+        - name: noop@internal
+          kind: TraefikService
+  priority: 15000
 {{- end }}
 ---
 {{- if .ingress.corspolicy }}
