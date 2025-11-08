@@ -23,7 +23,7 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 600Mi
+              memory: 700Mi
             requests:
               cpu: 100m
               memory: 560Mi
@@ -93,9 +93,9 @@ spec:
         containerSpec:
           resources:
             limits:
-              cpu: 4m
+              cpu: 40m
               memory: 8Mi
             requests:
-              cpu: 4m
+              cpu: 40m
               memory: 8Mi
         service: 6379

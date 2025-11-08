@@ -30,8 +30,8 @@ spec:
         containerSpec:
           resources:
             limits:
-              cpu: 1m
+              cpu: 10m
               memory: 13Mi
             requests:
-              cpu: 1m
+              cpu: 10m
               memory: 13Mi
