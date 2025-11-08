@@ -35,10 +35,10 @@ spec:
     resources:
       limits:
         cpu: 25m
-        memory: 50Mi
+        memory: 60Mi
       requests:
         cpu: 1m
-        memory: 42Mi
+        memory: 55Mi
     extraEnv:
       - name: TZ
         value: Europe/Paris
