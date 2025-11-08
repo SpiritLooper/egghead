@@ -27,3 +27,11 @@ spec:
           - secretRef:
               name: cloudflare-api-token
               optional: false
+        podSpec:
+          resources:
+            limits:
+              cpu: 1m
+              memory: 13Mi
+            requests:
+              cpu: 1m
+              memory: 13Mi
