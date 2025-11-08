@@ -21,10 +21,10 @@ spec:
         containerSpec:
           resources:
             limits:
-              cpu: 4m
+              cpu: 40m
               memory: 200Mi
             requests:
-              cpu: 2m
+              cpu: 20m
               memory: 190Mi
         volumeMounts:
           - mountPath: /config

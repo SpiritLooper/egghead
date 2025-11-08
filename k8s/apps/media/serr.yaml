@@ -30,7 +30,7 @@ spec:
         value: Europe/Paris
     resources:
       limits:
-        cpu: 30m
+        cpu: 100m
         memory: 300Mi
       requests:
         cpu: 20m
