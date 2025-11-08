@@ -29,6 +29,13 @@ spec:
     additionalEnv:
       - name: TZ
         value: Europe/Paris
+    resources:
+      limits:
+        cpu: 100m
+        memory: 80Mi
+      requests:
+        cpu: 2m
+        memory: 80Mi
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -52,3 +59,10 @@ spec:
     additionalEnv:
       - name: TZ
         value: Europe/Paris
+    resources:
+      limits:
+        cpu: 100m
+        memory: 40Mi
+      requests:
+        cpu: 1m
+        memory: 40Mi
