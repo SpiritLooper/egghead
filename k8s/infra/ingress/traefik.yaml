@@ -96,6 +96,13 @@ spec:
             namespace: ingress
         entryPoints:
           - websecure
+    resources:
+      limits:
+        cpu: 10m
+        memory: 100Mi
+      requests:
+        cpu: 5m
+        memory: 80Mi
     metrics:
       prometheus:
         service:

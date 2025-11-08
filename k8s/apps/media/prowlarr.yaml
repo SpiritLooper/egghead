@@ -18,6 +18,14 @@ spec:
     apps:
       - name: prowlarr
         image: linuxserver/prowlarr:version-2.1.5.5216
+        containerSpec:
+          resources:
+            limits:
+              cpu: 4m
+              memory: 200Mi
+            requests:
+              cpu: 2m
+              memory: 190Mi
         volumeMounts:
           - mountPath: /config
             name: config

@@ -18,6 +18,14 @@ spec:
     apps:
       - name: sonarr
         image: linuxserver/sonarr:4.0.16
+        containerSpec:
+          resources:
+            limits:
+              cpu: 10m
+              memory: 250Mi
+            requests:
+              cpu: 5m
+              memory: 250Mi
         volumeMounts:
           - mountPath: /config
             name: config

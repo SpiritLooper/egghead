@@ -18,6 +18,14 @@ spec:
     apps:
       - name: flaresolverr
         image: ghcr.io/flaresolverr/flaresolverr:v3.4.4
+        containerSpec:
+          resources:
+            limits:
+              cpu: 10m
+              memory: 40Mi
+            requests:
+              cpu: 1m
+              memory: 40Mi
         env:
           - name: TZ
             value: Europe/Paris

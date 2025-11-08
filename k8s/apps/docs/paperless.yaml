@@ -19,6 +19,14 @@ spec:
     apps:
       - name: paperless-ngx
         image: ghcr.io/paperless-ngx/paperless-ngx:2.19.5
+        containerSpec:
+          resources:
+            limits:
+              cpu: 500m
+              memory: 600Mi
+            requests:
+              cpu: 100m
+              memory: 560Mi
         volumeMounts:
           - name: paperless-data
             mountPath: /usr/src/paperless/data
@@ -80,7 +88,14 @@ spec:
           - name: paperless-consume
             backup: false
             localstorage: true
-
       - name: paperless-redis
         image: redis:8.2.3-bookworm
+        containerSpec:
+          resources:
+            limits:
+              cpu: 4m
+              memory: 8Mi
+            requests:
+              cpu: 4m
+              memory: 8Mi
         service: 6379

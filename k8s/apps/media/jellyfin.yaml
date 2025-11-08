@@ -21,6 +21,14 @@ spec:
         podSpec:
           securityContext:
             privileged: true
+        containerSpec:
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 500Mi
         volumeMounts:
           - mountPath: /config
             name: config

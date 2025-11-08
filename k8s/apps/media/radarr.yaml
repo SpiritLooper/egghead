@@ -18,6 +18,14 @@ spec:
     apps:
       - name: radarr
         image: linuxserver/radarr:5.28.0
+        containerSpec:
+          resources:
+            limits:
+              cpu: 6m
+              memory: 250Mi
+            requests:
+              cpu: 2m
+              memory: 200Mi
         volumeMounts:
           - mountPath: /config
             name: config

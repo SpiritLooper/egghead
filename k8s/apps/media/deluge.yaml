@@ -18,6 +18,14 @@ spec:
     apps:
       - name: deluge
         image: linuxserver/deluge:2.2.0
+        containerSpec:
+          resources:
+            limits:
+              cpu: 200m
+              memory: 1.5Gi
+            requests:
+              cpu: 3m
+              memory: 150Mi
         volumeMounts:
           - mountPath: /config
             name: config
