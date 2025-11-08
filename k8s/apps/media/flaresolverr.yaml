@@ -21,11 +21,11 @@ spec:
         containerSpec:
           resources:
             limits:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 1000m
+              memory: 1000Mi
             requests:
               cpu: 1m
-              memory: 40Mi
+              memory: 100Mi
         env:
           - name: TZ
             value: Europe/Paris
