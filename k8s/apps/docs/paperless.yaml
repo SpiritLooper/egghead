@@ -23,10 +23,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 700Mi
+              memory: 1200Mi
             requests:
               cpu: 100m
-              memory: 560Mi
+              memory: 1000Mi
         volumeMounts:
           - name: paperless-data
             mountPath: /usr/src/paperless/data
