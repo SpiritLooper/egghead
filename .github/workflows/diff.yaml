@@ -40,6 +40,7 @@ jobs:
             diff hr
             --path /github/workspace/pr/k8s/flux
             --path-orig /github/workspace/main/k8s/flux
+            --api-versions monitoring.coreos.com/v1
             --all-namespaces
             --output-file hr.diff
       - name: diff
