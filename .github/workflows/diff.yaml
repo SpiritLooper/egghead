@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
 
       - name: Run flux-local ks diff
-        uses: docker://ghcr.io/allenporter/flux-local:v7
+        uses: docker://ghcr.io/allenporter/flux-local:v8
         with:
           args: >-
             diff ks
@@ -34,7 +34,7 @@ jobs:
             --all-namespaces
             --output-file ks.diff
       - name: Run flux-local hr diff
-        uses: docker://ghcr.io/allenporter/flux-local:v7
+        uses: docker://ghcr.io/allenporter/flux-local:v8
         with:
           args: >-
             diff hr

@@ -13,6 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Run flux-local test
-        uses: docker://ghcr.io/allenporter/flux-local:v7
+        uses: docker://ghcr.io/allenporter/flux-local:v8
         with:
           args: test --enable-helm --all-namespaces --path k8s/flux --api-versions monitoring.coreos.com/v1 -v
