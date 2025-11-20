@@ -24,10 +24,11 @@
     ]
   },
   "minimumReleaseAge": "2 days",
-  "regexManagers": [
+  "customManagers": [
     {
+      "customType": "regex",
       "description": "Process inline comments for helm values like '# renovate: depName=ghcr.io/owner/image'",
-      "fileMatch": [
+      "managerFilePatterns": [
         "/k8s/.+\\.ya?ml$/"
       ],
       "matchStrings": [
