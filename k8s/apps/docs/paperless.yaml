@@ -89,7 +89,7 @@ spec:
             backup: false
             localstorage: true
       - name: paperless-redis
-        image: redis:8.2.3-bookworm
+        image: redis:8.4.0-bookworm
         containerSpec:
           resources:
             limits:
