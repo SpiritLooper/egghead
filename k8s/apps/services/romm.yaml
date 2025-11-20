@@ -53,7 +53,7 @@ spec:
         image: valkey/valkey:9.0.0-alpine
         service: 6379
       - name: rommapp
-        image: rommapp/romm:4.4.0
+        image: rommapp/romm:4.4.1
         podSpec:
           hostAliases:
             - ip: "192.168.8.5"
