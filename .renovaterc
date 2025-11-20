@@ -24,6 +24,18 @@
     ]
   },
   "minimumReleaseAge": "2 days",
+  "regexManagers": [
+    {
+      "description": "Process inline comments for helm values like '# renovate: depName=ghcr.io/owner/image'",
+      "fileMatch": [
+        "/k8s/.+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "#\\s*renovate:\\s*depName=(?<depName>.*?)\\s*\\n\\s*tag:\\s*(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
@@ -64,34 +76,10 @@
       ]
     },
     {
-      "matchManagers": [
-        "kubernetes"
+      "matchPackageNames": [
+        "ghcr.io/immich-app/immich-server"
       ],
-      "matchFileNames": [
-        "spec.values.controllers.main.containers.main.image.tag"
-      ],
-      "overrideDatasource": "docker",
-      "overrideDepName": "ghcr.io/immich-app/immich-microservices"
-    },
-    {
-      "matchManagers": [
-        "kubernetes"
-      ],
-      "matchFileNames": [
-        "spec.values.server.controllers.main.containers.main.image.tag"
-      ],
-      "overrideDatasource": "docker",
-      "overrideDepName": "ghcr.io/immich-app/immich-server"
-    },
-    {
-      "matchManagers": [
-        "kubernetes"
-      ],
-      "matchFileNames": [
-        "spec.values.machine-learning.controllers.main.containers.main.image.tag"
-      ],
-      "overrideDatasource": "docker",
-      "overrideDepName": "ghcr.io/immich-app/immich-machine-learning"
+      "versioning": "semver"
     }
   ]
 }
