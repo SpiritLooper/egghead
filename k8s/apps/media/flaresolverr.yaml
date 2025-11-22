@@ -19,6 +19,13 @@ spec:
       - name: flaresolverr
         image: ghcr.io/flaresolverr/flaresolverr:v3.4.5
         containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 8191
+          livenessProbe:
+            httpGet:
+              port: 8191
+              path: /health
           resources:
             limits:
               cpu: 1000m

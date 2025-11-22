@@ -22,6 +22,13 @@ spec:
           securityContext:
             privileged: true
         containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 8096
+          livenessProbe:
+            httpGet:
+              port: 8096
+              path: /System/Ping
           resources:
             limits:
               cpu: "2"

@@ -18,6 +18,10 @@ spec:
     apps:
       - name: beszel
         image: henrygd/beszel:0.16.1
+        containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 8080
         volumeMounts:
           - mountPath: /beszel_data
             name: data

@@ -18,6 +18,14 @@ spec:
     apps:
       - name: pocketid
         image: ghcr.io/pocket-id/pocket-id:v1.15.0
+        containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 1411
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 1411
         volumeMounts:
           - mountPath: /app/data
             name: pocketid-data

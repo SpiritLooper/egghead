@@ -60,6 +60,9 @@ spec:
               hostnames:
                 - "pocketid.egghead.infrao.top"
         containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 8080
           ports:
             - containerPort: 8080
               name: http
