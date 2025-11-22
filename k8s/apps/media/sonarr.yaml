@@ -19,9 +19,12 @@ spec:
       - name: sonarr
         image: linuxserver/sonarr:4.0.16
         containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 8989
           resources:
             limits:
-              cpu: 100m
+              cpu: 500m
               memory: 250Mi
             requests:
               cpu: 50m
