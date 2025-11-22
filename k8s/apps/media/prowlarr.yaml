@@ -19,9 +19,12 @@ spec:
       - name: prowlarr
         image: linuxserver/prowlarr:2.3.0
         containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 9696
           resources:
             limits:
-              cpu: 40m
+              cpu: 500m
               memory: 200Mi
             requests:
               cpu: 20m
