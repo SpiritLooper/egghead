@@ -21,7 +21,7 @@ spec:
         containerSpec:
           readinessProbe:
             httpGet:
-              port: 8080
+              port: 8090
         volumeMounts:
           - mountPath: /beszel_data
             name: data
