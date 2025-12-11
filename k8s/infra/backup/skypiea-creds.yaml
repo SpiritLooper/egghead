@@ -1,0 +1,26 @@
+apiVersion: v1
+stringData:
+  SSH_KEY: ENC[AES256_GCM,data:k8HmBg2UlyhtHjO4mypljOguBmj6Z0dj6tNvubc3JlVPz9y8mhjRTrGxtdP8KpOJ7k47/6bH8wgQI3piUZeWLqJuNUkvVyuW20o0vDSnIUyVXG6FRnCy13VJ+uC+zD4zQiYfwV2rhnj4AmWCAiR7KEVMEl/4aaW5Zm0PwGep/3G4jLQiHmwRFrndFbo5l6cBz2u6YU26JTHjfB9DxIUGmKwcBiikrQWWlu2xwpWGU+GL0HIBrvWLM7l09e2I/kvb3l0usyQiX6q4qwXsKWySbbmucluwmUtgxFGhL4szQKXOLXJ7dCLTJVItGuHgMPGGvqepLQCDA+/I6t42INxc3hhJGNkgq/L1t6cUwGGFvdq6/EkVU7wZGcvZHqnrNQRixt7ycseymMes7qSwIUe7SxaBK2kXyjFAPjjROLHVfjyMIeVlU30OpC+ppKE6Z2MTg4QuVcvfUgSjCXyoovUa01eWxyvu6pYzY6XctqpkFUAE77Lx6UIAcaYtwLMDbqNnNsyLoly9X38TGhPxMdDLIfX1hjlhgXgZ1TKjxpalBEo/lgE=,iv:AN9b1L/CTCkN9J7FhPBFYnfxf0wnRXkCLJVpXVEUv20=,tag:4614Bm3AOAMas2/wJyROgw==,type:str]
+  SSH_USER: ENC[AES256_GCM,data:EQFbNv5LORPxXBaPIA==,iv:1fhvMOWslm5Lex6dArfqOpjrSmPc1bbo7aaSGolcBoI=,tag:iMzAwK7XFuwRY/KIUuIrkw==,type:str]
+  ACCESS_KEY_ID: ENC[AES256_GCM,data:UyB5v+Mw08zyWQtAS/A=,iv:XKtOU1eWe722R9OkKHE9HCdsS7EDyPp/yE6kEVlOIrA=,tag:xDYyiZFBUYHBjFSSBPLTYw==,type:str]
+  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:L8qEDcS3o66dOPN+++Y6sGROrMOeiiRs160sVgAbr9c=,iv:PvAlOJtmfSQWVYzFQDsImojpW1/qCAbCR/1EJ7zE31A=,tag:kBNp+0BINQvf6pvZFTxcLw==,type:str]
+  restic-password: ENC[AES256_GCM,data:5hR5hZQzsK5MRalOM55Gr22XBMq14XxGkpnE4wCwB+Q=,iv:vG0RulBoY7nSR9gcKgkjxd3GLDNPQ5dh8oiJB7VSxuI=,tag:Dp7zOl8GX7+8r/NLGJXPsg==,type:str]
+kind: Secret
+metadata:
+  name: skypiea-creds
+  namespace: backup
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWWGRhUGVkSWxWRmpSTzZq
+        VWVlclcwNzlYeHlaUUZlT3pwZnlFTHFuSUVNCnhlalh3YVVoRk0vM0Y3ZGwrNEZO
+        Wnl6MEtaMXlRNlNNMjJWUzY4Ymg2UXcKLS0tIGQ5Mk1kZjREdmoxNVBtZEZWbWYy
+        dkRmbFZUZXNjUFN5SFBxK3VnWUtRUEUKyMnCbIG6UIzK7QhyFr2uF7B8nKYJgjk6
+        ACeVX1CE36LekuHc+DLLGWbWgHOc1QLXI3mtqkUQaKXKqWS5CdvMrw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-12-11T17:39:31Z"
+  mac: ENC[AES256_GCM,data:UJHT3WabphQ+73INKtQ9nfzxn+SIcxIyhUoUw8NhKYmo80CN/6VUkiGUt40azsR9bJiy5XNHOAVQpsibCxG9HNx+W4fp6zwVpcXvs7jFwOd2/Go4sU6MLRLmeaElXaR4s1DY4VMt33Pam2WlQg0jWBICrlRWKYl5c54EOaN+kPg=,iv:yWHeqwenl3O/dlUI759b8hkmC80Zw7WG3ZA3e2SU9A8=,tag:JyIWlDq8eGX+O8fzlCeCNg==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.11.0

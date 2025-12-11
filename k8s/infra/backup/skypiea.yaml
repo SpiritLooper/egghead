@@ -1,0 +1,117 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-skypiea-to-ohara
+spec:
+  schedule: "0 5 * * *" # Every day at 05:00 AM
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: restic-backup
+            image: alpine:latest
+            imagePullPolicy: IfNotPresent
+            env:
+              # --- Restic / MinIO Configuration ---
+              - name: RESTIC_REPOSITORY
+                value: "s3:https://ohara.infrao.top/skypiea-backup"
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: skypiea-creds
+                    key: ACCESS_KEY_ID
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: skypiea-creds
+                    key: ACCESS_SECRET_KEY
+              - name: RESTIC_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: skypiea-creds
+                    key: restic-password
+              # --- SSH / VPS Configuration ---
+              - name: SSH_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: skypiea-creds
+                    key: SSH_USER
+              - name: VPS_HOST
+                value: "skypiea.infrao.top"
+            
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                set -e # Stop script on error
+                
+                echo "--- 1. Installing dependencies ---"
+                apk add --no-cache openssh-client restic
+
+                echo "--- 2. SSH Configuration ---"
+                mkdir -p ~/.ssh
+                # Copy key from Secret mount to .ssh directory
+                cp /etc/secret/SSH_KEY ~/.ssh/id_ed25519
+                chmod 600 ~/.ssh/id_ed25519
+                # Avoid "Are you sure..." prompt for automation
+                echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+                echo "--- 3. Repo Initialization (if necessary) ---"
+                restic init || echo "Repository already exists, continuing."
+
+                # ======================================================
+                # PART A: DATABASE BACKUP (Streaming)
+                # ======================================================
+                echo "--- 4. Backing up Authentik DB ---"
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$VPS_HOST "sudo /usr/local/bin/backup-authentik-db.sh" \
+                  | restic backup --stdin --stdin-filename authentik.sql --tag db --tag authentik
+
+                echo "--- 5. Backing up Netbird DB ---"
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$VPS_HOST "sudo /usr/local/bin/backup-netbird-db.sh" \
+                  | restic backup --stdin --stdin-filename netbird.sql --tag db --tag netbird
+
+                # ======================================================
+                # PART B: VOLUME BACKUP (SFTP via Sudo)
+                # ======================================================
+                echo "--- 6. Backing up Volume Files ---"
+                
+                # Define volumes root path
+                VOL_ROOT="/var/lib/docker/volumes"
+                
+                # Use -o sftp.command to execute sudo on the VPS side
+                # This allows reading root files without logging in as root
+                restic -o sftp.command="sudo /usr/lib/openssh/sftp-server" backup \
+                  --tag files \
+                  --exclude "**/*.db-wal" \
+                  --exclude "**/*.db-shm" \
+                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/authentik-custom-templates/_data \
+                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/authentik-media/_data \
+                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/netbird-mgmt/_data \
+                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/netbird-signal/_data \
+                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/traefik-letsencrypt-data/_data
+
+                # ======================================================
+                # PART C: CLEANUP (PRUNE)
+                # ======================================================
+                echo "--- 7. Pruning old snapshots ---"
+                # Keep the last 7 snapshots (global policy)
+                restic forget --keep-last 7 --prune
+
+                echo "--- Backup completed successfully ---"
+
+            volumeMounts:
+            - name: ssh-key-vol
+              mountPath: "/etc/secret"
+              readOnly: true
+
+          restartPolicy: OnFailure
+          volumes:
+          - name: ssh-key-vol
+            secret:
+              secretName: skypiea-creds
+              items:
+                - key: SSH_KEY
+                  path: SSH_KEY
