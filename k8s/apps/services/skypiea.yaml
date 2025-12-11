@@ -58,16 +58,7 @@ spec:
                 chmod 600 ~/.ssh/id_ed25519
                 # Avoid "Are you sure..." prompt for automation
                 echo "StrictHostKeyChecking no" >> ~/.ssh/config
-                cat <<EOF >> ~/.ssh/config
-                Host vps-root
-                    HostName $VPS_HOST
-                    User $SSH_USER
-                    IdentityFile ~/.ssh/id_ed25519
-                    StrictHostKeyChecking no
-                    # C'est cette ligne qui donne les droits root pour la lecture !
-                    RemoteCommand sudo /usr/lib/openssh/sftp-server
-                    RequestTTY no
-                EOF
+
                 echo "--- 2b. Waiting for DNS resolution (DIG) ---"              
                 until [ -n "$(dig +short $VPS_HOST)" ]; do
                     echo "Waiting for DNS resolution of $VPS_HOST..."
@@ -94,29 +85,9 @@ spec:
                   | restic backup --stdin --stdin-filename netbird.sql --tag db --tag netbird
 
                 # ======================================================
-                # PART B: VOLUME BACKUP (SFTP via Sudo)
+                # PART B: CLEANUP (PRUNE)
                 # ======================================================
-                echo "--- 6. Backing up Volume Files ---"
-                
-                # Define volumes root path
-                VOL_ROOT="/var/lib/docker/volumes"
-                
-                # Use -o sftp.command to execute sudo on the VPS side
-                # This allows reading root files without logging in as root
-                restic -o sftp.command="sudo /usr/lib/openssh/sftp-server" backup \
-                  --tag files \
-                  --exclude "**/*.db-wal" \
-                  --exclude "**/*.db-shm" \
-                  sftp:vps-root:$VOL_ROOT/authentik-custom-templates/_data \
-                  sftp:vps-root:$VOL_ROOT/authentik-media/_data \
-                  sftp:vps-root:$VOL_ROOT/netbird-mgmt/_data \
-                  sftp:vps-root:$VOL_ROOT/netbird-signal/_data \
-                  sftp:vps-root:$VOL_ROOT/traefik-letsencrypt-data/_data
-
-                # ======================================================
-                # PART C: CLEANUP (PRUNE)
-                # ======================================================
-                echo "--- 7. Pruning old snapshots ---"
+                echo "--- 6. Pruning old snapshots ---"
                 # Keep the last 7 snapshots (global policy)
                 restic forget --keep-last 7 --prune
 
