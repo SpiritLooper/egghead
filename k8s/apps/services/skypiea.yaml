@@ -68,8 +68,6 @@ spec:
                 RESOLVED_IP=$(dig +short $VPS_HOST | tail -n1)
                 echo "DNS resolved successfully: $VPS_HOST -> $RESOLVED_IP"
 
-                VPS_HOST=$RESOLVED_IP
-
                 echo "--- 3. Repo Initialization (if necessary) ---"
                 restic init || echo "Repository already exists, continuing."
 
@@ -77,12 +75,12 @@ spec:
                 # PART A: DATABASE BACKUP (Streaming)
                 # ======================================================
                 echo "--- 4. Backing up Authentik DB ---"
-                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$VPS_HOST "sudo /usr/local/bin/backup-authentik-db.sh" \
-                  | restic backup --stdin --stdin-filename authentik.sql --tag db --tag authentik
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-authentik-db.sh" \
+                  | restic backup --stdin --stdin-filename authentik.sql --tag db --tag authentik --host $VPS_HOST
 
                 echo "--- 5. Backing up Netbird DB ---"
-                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$VPS_HOST "sudo /usr/local/bin/backup-netbird-db.sh" \
-                  | restic backup --stdin --stdin-filename netbird.sql --tag db --tag netbird
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-netbird-db.sh" \
+                  | restic backup --stdin --stdin-filename netbird.sql --tag db --tag netbird --host $VPS_HOST
 
                 # ======================================================
                 # PART B: CLEANUP (PRUNE)
