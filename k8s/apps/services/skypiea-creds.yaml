@@ -8,7 +8,6 @@ stringData:
 kind: Secret
 metadata:
   name: skypiea-creds
-  namespace: backup
 sops:
   age:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
