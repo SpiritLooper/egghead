@@ -18,7 +18,7 @@ spec:
             env:
               # --- Restic / MinIO Configuration ---
               - name: RESTIC_REPOSITORY
-                value: "s3:https://ohara.infrao.top/skypiea-backup:9004"
+                value: "s3:https://ohara.infrao.top:9004/skypiea-backup"
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
                   secretKeyRef:
@@ -41,7 +41,7 @@ spec:
                     name: skypiea-creds
                     key: SSH_USER
               - name: VPS_HOST
-                value: "skypiea.infrao.top"
+                value: "skypiea.infrao.top."
             
             command: ["/bin/sh", "-c"]
             args:
@@ -49,7 +49,7 @@ spec:
                 set -e # Stop script on error
                 
                 echo "--- 1. Installing dependencies ---"
-                apk add --no-cache openssh-client restic
+                apk add --no-cache openssh-client restic bind-tools
 
                 echo "--- 2. SSH Configuration ---"
                 mkdir -p ~/.ssh
@@ -58,6 +58,12 @@ spec:
                 chmod 600 ~/.ssh/id_ed25519
                 # Avoid "Are you sure..." prompt for automation
                 echo "StrictHostKeyChecking no" >> ~/.ssh/config
+                
+                echo "--- 2b. Waiting for DNS resolution ---"
+                until nslookup $VPS_HOST; do
+                    echo "Waiting for DNS resolution of $VPS_HOST..."
+                    sleep 2
+                done
 
                 echo "--- 3. Repo Initialization (if necessary) ---"
                 restic init || echo "Repository already exists, continuing."
