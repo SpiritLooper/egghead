@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: backup-skypiea-to-ohara
+  namespace: flux-system
 spec:
   schedule: "0 5 * * *" # Every day at 05:00 AM
   successfulJobsHistoryLimit: 1
