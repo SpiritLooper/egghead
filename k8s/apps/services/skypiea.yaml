@@ -41,7 +41,7 @@ spec:
                     name: skypiea-creds
                     key: SSH_USER
               - name: VPS_HOST
-                value: "skypiea.infrao.top."
+                value: "skypiea.infrao.top"
             
             command: ["/bin/sh", "-c"]
             args:
@@ -67,6 +67,8 @@ spec:
                 
                 RESOLVED_IP=$(dig +short $VPS_HOST | tail -n1)
                 echo "DNS resolved successfully: $VPS_HOST -> $RESOLVED_IP"
+
+                VPS_HOST=$RESOLVED_IP
 
                 echo "--- 3. Repo Initialization (if necessary) ---"
                 restic init || echo "Repository already exists, continuing."
