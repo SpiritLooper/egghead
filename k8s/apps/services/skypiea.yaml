@@ -58,7 +58,16 @@ spec:
                 chmod 600 ~/.ssh/id_ed25519
                 # Avoid "Are you sure..." prompt for automation
                 echo "StrictHostKeyChecking no" >> ~/.ssh/config
-                
+                cat <<EOF >> ~/.ssh/config
+                Host vps-root
+                    HostName $VPS_HOST
+                    User $SSH_USER
+                    IdentityFile ~/.ssh/id_ed25519
+                    StrictHostKeyChecking no
+                    # C'est cette ligne qui donne les droits root pour la lecture !
+                    RemoteCommand sudo /usr/lib/openssh/sftp-server
+                    RequestTTY no
+                EOF
                 echo "--- 2b. Waiting for DNS resolution (DIG) ---"              
                 until [ -n "$(dig +short $VPS_HOST)" ]; do
                     echo "Waiting for DNS resolution of $VPS_HOST..."
@@ -94,15 +103,15 @@ spec:
                 
                 # Use -o sftp.command to execute sudo on the VPS side
                 # This allows reading root files without logging in as root
-                restic -o sftp.command="sudo /usr/lib/openssh/sftp-server" backup \
+                restic -r -o sftp.command="sudo /usr/lib/openssh/sftp-server" backup \
                   --tag files \
                   --exclude "**/*.db-wal" \
                   --exclude "**/*.db-shm" \
-                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/authentik-custom-templates/_data \
-                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/authentik-media/_data \
-                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/netbird-mgmt/_data \
-                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/netbird-signal/_data \
-                  sftp:$SSH_USER@$VPS_HOST:$VOL_ROOT/traefik-letsencrypt-data/_data
+                  sftp:vps-root:$VOL_ROOT/authentik-custom-templates/_data \
+                  sftp:vps-root:$VOL_ROOT/authentik-media/_data \
+                  sftp:vps-root:$VOL_ROOT/netbird-mgmt/_data \
+                  sftp:vps-root:$VOL_ROOT/netbird-signal/_data \
+                  sftp:vps-root:$VOL_ROOT/traefik-letsencrypt-data/_data
 
                 # ======================================================
                 # PART C: CLEANUP (PRUNE)
