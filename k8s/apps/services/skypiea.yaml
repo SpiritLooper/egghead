@@ -18,7 +18,7 @@ spec:
             env:
               # --- Restic / MinIO Configuration ---
               - name: RESTIC_REPOSITORY
-                value: "s3:https://ohara.infrao.top/skypiea-backup"
+                value: "s3:https://ohara.infrao.top/skypiea-backup:9004"
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
                   secretKeyRef:
