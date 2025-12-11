@@ -103,7 +103,7 @@ spec:
                 
                 # Use -o sftp.command to execute sudo on the VPS side
                 # This allows reading root files without logging in as root
-                restic -r -o sftp.command="sudo /usr/lib/openssh/sftp-server" backup \
+                restic -o sftp.command="sudo /usr/lib/openssh/sftp-server" backup \
                   --tag files \
                   --exclude "**/*.db-wal" \
                   --exclude "**/*.db-shm" \
