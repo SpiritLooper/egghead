@@ -8,6 +8,8 @@ spec:
   dnsNames:
     - egghead.infrao.top
     - "*.egghead.infrao.top"
+    - egghead.cp0.infrao.top
+    - "*.egghead.cp0.infrao.top"
   issuerRef:
     name: cloudflare
     kind: Issuer
@@ -20,6 +22,7 @@ spec:
   secretName: knock-up-stream-infrao-top-tls
   dnsNames:
     - knock-up-stream.infrao.top
+    - knock-up-stream.cp0.infrao.top
   issuerRef:
     name: cloudflare
     kind: Issuer
@@ -32,6 +35,7 @@ spec:
   secretName: ohara-infrao-top-tls
   dnsNames:
     - ohara.infrao.top
+    - ohara.cp0.infrao.top
   issuerRef:
     name: cloudflare
     kind: Issuer
