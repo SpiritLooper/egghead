@@ -18,6 +18,7 @@ spec:
               image: renovate/renovate:42.29.3
               args:
                 - SpiritLooper/egghead
+                - SpiritLooper/skypiea
               envFrom:
                 - configMapRef:
                     name: renovate-env
