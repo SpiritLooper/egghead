@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: backup-openwrt-to-ohara
 spec:
-  schedule: "0 5 * * *" # Every day at 05:00 AM
+  schedule: "0 6 * * *" # Every day at 06:00 AM
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 3
   concurrencyPolicy: Forbid
@@ -74,7 +74,7 @@ spec:
                 # ======================================================
                 # PART A: OPENWRT BACKUP
                 # ======================================================
-                BACKUP_DEST=sysupgrade -b /tmp/backup.tar.gz
+                BACKUP_DEST=/tmp/backup.tar.gz
                 echo "--- 4. Backing up OpenWRT configuration ---"
 
                 ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sysupgrade -b ${BACKUP_DEST}"
