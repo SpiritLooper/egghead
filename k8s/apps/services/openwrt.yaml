@@ -78,7 +78,7 @@ spec:
                 echo "--- 4. Backing up OpenWRT configuration ---"
 
                 ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sysupgrade -b ${BACKUP_DEST}"
-                scp -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP:${BACKUP_DEST} ${BACKUP_DEST}
+                scp -O -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP:${BACKUP_DEST} ${BACKUP_DEST}
                 restic backup -v ${BACKUP_DEST} --tag openwrt --tag config --host $OPENWRT_HOST
 
                 # ======================================================
