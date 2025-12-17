@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
+data:
+  skypiea.server: |
+    skypiea.infrao.top:53 {
+        forward . 192.168.8.1
+    }
