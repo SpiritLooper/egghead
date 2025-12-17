@@ -6,5 +6,7 @@ metadata:
 data:
   skypiea.server: |
     skypiea.infrao.top:53 {
+        errors
+        cache 30
         forward . 192.168.8.1
     }
