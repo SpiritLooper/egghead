@@ -51,6 +51,9 @@ spec:
     globalArguments: []
     global:
       checkNewVersion: false
+    additionalArguments: 
+      - --entryPoints.websecure.transport.respondingTimeouts.writeTimeout=1800s
+      - --entryPoints.websecure.transport.respondingTimeouts.idleTimeout=1800s
     env:
       - name: TZ
         value: Europe/Paris
