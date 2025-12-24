@@ -15,7 +15,7 @@ spec:
               claimName: renovate-cache
           containers:
             - name: renovate
-              image: renovate/renovate:42.64.1
+              image: renovate/renovate:42.66.0
               args:
                 - SpiritLooper/egghead
                 - SpiritLooper/skypiea
