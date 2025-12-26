@@ -21,6 +21,10 @@ spec:
         podSpec:
           securityContext:
             privileged: true
+            runAsUser: 0 
+            supplementalGroups:
+              - 26
+              - 303
         containerSpec:
           readinessProbe:
             httpGet:
