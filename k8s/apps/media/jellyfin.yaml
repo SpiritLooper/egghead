@@ -18,14 +18,13 @@ spec:
     apps:
       - name: jellyfin
         image: jellyfin/jellyfin:10.11.5
-        podSpec:
+        containerSpec:
           securityContext:
             privileged: true
-            runAsUser: 0 
-            supplementalGroups:
-              - 26
-              - 303
-        containerSpec:
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            seccompProfile: 
+              type: Unconfined
           readinessProbe:
             httpGet:
               port: 8096
