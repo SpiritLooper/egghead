@@ -8,7 +8,7 @@ spec:
   interval: 1h
   url: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
   ref:
-    tag: 0.0.32
+    tag: 0.0.33
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
