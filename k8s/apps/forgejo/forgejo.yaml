@@ -30,6 +30,8 @@ spec:
         - host: forgejo.egghead.infrao.top
           paths:
             - path: /
+              pathType: Prefix
+              port: http
       tls:
         - hosts:
             - forgejo.egghead.infrao.top
