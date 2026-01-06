@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: forgejo-admin-secret
+type: Opaque
+stringData:
+  username: ENC[AES256_GCM,data:bcWreoXf9cQpM0LG,iv:xrX0sMAuZXoFCLfLH3qe/NxNJpVQIV5cktAZnKFYFKE=,tag:bYB/4flAIzuy7AsnPqwM2g==,type:str]
+  password: ENC[AES256_GCM,data:153IVtX5jiVp2zc6546LPWinuF5xr5WCVjA2s6y9pVM=,iv:kIuP3+wVw73aG0yM9As4ev4YQKYo0WdGtToG9xoTmc8=,tag:XKTW2VgyL9Ht1mh/9mOgwA==,type:str]
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqNVhLeWhxaEFnS0xQbncx
+        SkJIOENqd1d4a2V4cmcyd2R1VTl5TXY2Mm5VCjVyeUVkaE1EMExmbVkrSHhXNm9R
+        M0s0ZkdCZGJBOGE0d2lMdXlGTkVhNVUKLS0tIDM3bmpzYXBxUUdEb3dqMHE0Rlpp
+        SE1vOHZkcjQvV0YzcThXaUMvcHNJSFkKs9WjbVBZaP/431Jp54uip1+LVacmpAL1
+        GdpikpTk92EydA0DVhBdbTkNID24mr69glXw/4jZtrEsv/YERbc3hw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-01-06T18:07:05Z"
+  mac: ENC[AES256_GCM,data:2jSmArMwtXtcmvmqPchsM2R93EykV+kPKCQdV8ETjmOIIGYqbCXVKVaY25YXIDSfKXHY8wSePPEtBsyVaE/Tv6koFLHQS0vAvJKjRPpoY6KoQauQB5KV1kb4aObNxx17Gudf9lHGE1180/n3sTOSucOH5qMqtKAyCX8bT/aZhjo=,iv:9GZCq8KdOTK51lERQuR2H0/kEX3dx4pSN6NXYRdPdiw=,tag:+oiR92pFZ+U2PlH3dWJhCg==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.11.0
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: forgejo-oauth-secret
+type: Opaque
+stringData:
+  key: ENC[AES256_GCM,data:vgdgPu05qhP6ZcIJNK+EboCUoIkL13HfxQPKzYExNkm49llN,iv:GRgjHhfGVzecl3g++/sh3Sbe8VKgCOvMwB+vfsinJAk=,tag:qjE9qVF25RUyDGyjjnKz6g==,type:str]
+  secret: ENC[AES256_GCM,data:cqthSC4072UdJtliZamDUongH2udYb5K5aIUFavt494=,iv:DbvFwriVqNLOcZE8YR9I8CS6cJoBO+YciUi1YZBuiBI=,tag:5rdFeYKTlxorwrdLRLjLxg==,type:str]
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqNVhLeWhxaEFnS0xQbncx
+        SkJIOENqd1d4a2V4cmcyd2R1VTl5TXY2Mm5VCjVyeUVkaE1EMExmbVkrSHhXNm9R
+        M0s0ZkdCZGJBOGE0d2lMdXlGTkVhNVUKLS0tIDM3bmpzYXBxUUdEb3dqMHE0Rlpp
+        SE1vOHZkcjQvV0YzcThXaUMvcHNJSFkKs9WjbVBZaP/431Jp54uip1+LVacmpAL1
+        GdpikpTk92EydA0DVhBdbTkNID24mr69glXw/4jZtrEsv/YERbc3hw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-01-06T18:07:05Z"
+  mac: ENC[AES256_GCM,data:2jSmArMwtXtcmvmqPchsM2R93EykV+kPKCQdV8ETjmOIIGYqbCXVKVaY25YXIDSfKXHY8wSePPEtBsyVaE/Tv6koFLHQS0vAvJKjRPpoY6KoQauQB5KV1kb4aObNxx17Gudf9lHGE1180/n3sTOSucOH5qMqtKAyCX8bT/aZhjo=,iv:9GZCq8KdOTK51lERQuR2H0/kEX3dx4pSN6NXYRdPdiw=,tag:+oiR92pFZ+U2PlH3dWJhCg==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.11.0
