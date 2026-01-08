@@ -39,6 +39,7 @@ spec:
       ssh:
         type: LoadBalancer
         port: 2222
+        nodePort: 2222
     deployment:
       env:
         - name: TZ
