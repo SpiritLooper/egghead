@@ -1,0 +1,24 @@
+apiVersion: v1
+stringData:
+  CONFIG_NAME: ENC[AES256_GCM,data:ad+tsy/lbTeRgKAixXeDxPRi,iv:LyO1AMCaxI+ipPgiCPNHKi6tivbp5yBWwiBxfCBoDvQ=,tag:2atz7TjZ5qOYUcEFAJxLZg==,type:str]
+  CONFIG_INSTANCE: ENC[AES256_GCM,data:NnUmuS4ymUWgpe2a/wFm/m5+VQGFqNkI,iv:xlXnusOy3NH6D5LBw6FacQYGHaFBMCYFDmOCoTRMii4=,tag:6O2/n2Q49edbItqFN0zg/g==,type:str]
+  CONFIG_TOKEN: ENC[AES256_GCM,data:t6eQMMF0H69tQaK1GKtjh/3H9vSvvO/qfIMui4hwbneMWi9aPWDCww==,iv:k/iwlVCYuw+AyASjcCzZmi6hS5GrJ/uYsgC88uGmUmU=,tag:lCH+gMeKoIINqTZkd2xylg==,type:str]
+kind: Secret
+metadata:
+  name: act-runner-creds
+  namespace: forgejo
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBOQzBoNjIySzk2OTlOMjhF
+        a2t3aE5uRWIxZUtKSW9XQ1IvREluTUNGaVVjCmxGUC9WK3g5MUppMERrYWVobjZG
+        cXhxeFRyK01KZlo0NzZLMFY1RVdPOWMKLS0tIEZZTEFTWkpKVWZ1UHZ1OG9RS0RN
+        V1FwRzRtQ21wZVQzalFYSXExOTdKQ2MKWuxNu+r76mAUwd99bTCu6UdrlQxbQoYM
+        9wAQGDydchUU5sAaNAnpfr8nA3bXQSApapB5/WEoiuc4Cpog+KYppA==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-01-08T20:39:47Z"
+  mac: ENC[AES256_GCM,data:WWwjf/n2j4T4IPhG+o2xfgrnXlrXuppzIr/oDp51aNuaUFRluD0OW44TBG7eSgTDstQ9pjgOA6HDjs2HF3FXKj8LUUdAXgJI9Jvq+NLfAR7sB6fF1910IqlDbhUbfeDKuQojdBI56RZBOVMTbviHs00t2mWF5gK+/MsGHqXKLTg=,iv:50Jbk4LO4HBHw2nWN5Z5VFd15pMtvqLz0b7lkPSl0/8=,tag:XAYMgRGdWwacaTmW4F3wAw==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.11.0
