@@ -37,9 +37,9 @@ spec:
             - forgejo.egghead.infrao.top
     service:
       ssh:
-        type: LoadBalancer
-        port: 2222
-        nodePort: 2222
+        type: NodePort
+        port: 30022
+        nodePort: 30022
     deployment:
       env:
         - name: TZ
@@ -52,7 +52,7 @@ spec:
         existingSecret: forgejo-admin-secret
       config:
         server:
-          SSH_LISTEN_PORT: 2222
+          SSH_LISTEN_PORT: 30022
       oauth:
         - name: PocketID
           existingSecret: forgejo-oauth-secret
