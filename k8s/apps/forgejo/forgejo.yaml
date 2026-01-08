@@ -50,7 +50,8 @@ spec:
       admin:
         existingSecret: forgejo-admin-secret
       config:
-        SSH_LISTEN_PORT: 2222
+        server:
+          SSH_LISTEN_PORT: 2222
       oauth:
         - name: PocketID
           existingSecret: forgejo-oauth-secret
