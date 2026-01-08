@@ -35,6 +35,10 @@ spec:
       tls:
         - hosts:
             - forgejo.egghead.infrao.top
+    service:
+      ssh:
+        type: LoadBalancer
+        port: 2222
     deployment:
       env:
         - name: TZ
@@ -45,6 +49,8 @@ spec:
     gitea:
       admin:
         existingSecret: forgejo-admin-secret
+      config:
+        SSH_LISTEN_PORT: 2222
       oauth:
         - name: PocketID
           existingSecret: forgejo-oauth-secret
