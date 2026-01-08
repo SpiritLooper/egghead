@@ -53,6 +53,7 @@ spec:
       config:
         server:
           SSH_LISTEN_PORT: 30022
+          SSH_PORT: 30022
       oauth:
         - name: PocketID
           existingSecret: forgejo-oauth-secret
