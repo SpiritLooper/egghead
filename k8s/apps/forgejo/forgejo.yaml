@@ -44,6 +44,8 @@ spec:
       env:
         - name: TZ
           value: Europe/Paris
+    strategy: 
+      type: Recreate
     persistence:
       claimName: forgejo-data
       storageClass: local-path
