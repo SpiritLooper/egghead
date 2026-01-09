@@ -8,7 +8,7 @@ spec:
   interval: 1h
   url: oci://code.forgejo.org/forgejo-helm/forgejo
   ref:
-    tag: 15.0.3
+    tag: 15.0.4
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
