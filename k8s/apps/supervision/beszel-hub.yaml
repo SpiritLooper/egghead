@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: beszel
-        image: henrygd/beszel:0.18.2
+        image: henrygd/beszel:0.18.3
         containerSpec:
           readinessProbe:
             httpGet:
