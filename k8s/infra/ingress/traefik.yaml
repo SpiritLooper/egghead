@@ -72,21 +72,23 @@ spec:
         externalTrafficPolicy: Local
     ports:
       web:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
       websecure:
-        forwardedHeaders:
-          trustedIPs:
-            - "127.0.0.1/8"
-            - "::1/128"
-            - 192.168.8.0/24
-            - 192.168.16.0/24
-            - 192.168.32.0/24
-            - "10.42.0.0/16"
-            - "10.43.0.0/16"
+        http:
+          forwardedHeaders:
+            trustedIPs:
+              - "127.0.0.1/8"
+              - "::1/128"
+              - 192.168.8.0/24
+              - 192.168.16.0/24
+              - 192.168.32.0/24
+              - "10.42.0.0/16"
+              - "10.43.0.0/16"
     ingressClass:
       enabled: true
       isDefaultClass: true
