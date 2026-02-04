@@ -48,7 +48,6 @@ spec:
   releaseName: traefik
   targetNamespace: ingress
   values:
-    globalArguments: []
     global:
       checkNewVersion: false
     additionalArguments: 
