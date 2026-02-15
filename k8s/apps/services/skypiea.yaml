@@ -81,11 +81,15 @@ spec:
                 echo "--- 5. Backing up Netbird DB ---"
                 ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-netbird-db.sh" \
                   | restic backup --stdin --stdin-filename netbird.sql --tag db --tag netbird --host $VPS_HOST
+                
+                echo "--- 6. Backing up Netbird Managment DB ---"
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-netbird-mgmt-db.sh" \
+                  | restic backup --stdin --stdin-filename netbird-mgmt.tar --tag db --tag netbird --tag mgmt --host $VPS_HOST
 
                 # ======================================================
                 # PART B: CLEANUP (PRUNE)
                 # ======================================================
-                echo "--- 6. Pruning old snapshots ---"
+                echo "--- 7. Pruning old snapshots ---"
                 # Keep the last 7 snapshots (global policy)
                 restic forget --keep-last 7 --prune
 
