@@ -20,7 +20,7 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters:
-        barmanObjectName: minio-immich-backup-store
+        barmanObjectName: garage-immich-backup-store
 
   bootstrap:
     initdb:

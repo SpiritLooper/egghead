@@ -1,24 +1,24 @@
 apiVersion: v1
 stringData:
-  ACCESS_KEY_ID: ENC[AES256_GCM,data:YrqxhmdxIRfGX+CysmzD,iv:G+fyYPbYkS+ZWgfhcZ+AEltj3NUV3w9avXSfYAbqzS0=,tag:Uqy1GvbrkHpZb63NNXSbpg==,type:str]
-  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:21/L0hQRd5ff8qWK6XCPpQ==,iv:Uv2Kzi3BzMGm7e1dR73IewWtWNALkGlecterjsU/SQM=,tag:H50RadIpFgR0JYOZ1rnsJA==,type:str]
-  restic-password: ENC[AES256_GCM,data:D6DnD/9PrFvVDXxhNBfcOA==,iv:ngXowTX+yT/Ui+lx1QbxfR/rjftT4qA4vHZ+Ylq76Sc=,tag:IwqwCIyqymvQq8rH6eecvw==,type:str]
+  ACCESS_KEY_ID: ENC[AES256_GCM,data:mxkrhW01ovubqA96W5yVw3buXoZXBwzCPqw=,iv:v1cwsYMnl7EgWVZF+EsTygrroQTnpIzvU9Q+bT0rbGs=,tag:B/K+P9I/csLCIJLVET0rJQ==,type:str]
+  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:6jXrEL5/KVKKgFLuo9iu+UgZmsv7HJE0GaDLO9Excn2qYk90fW2omeZrj4B1Xn3bcNVCREJi0CyS3KjK60zYRw==,iv:wuBspoJ1mXuDZN6uLVSX89TQzlb7NyBNhY6uhF4ZY60=,tag:Ete0nXzPB6Oj9TPleQaPwQ==,type:str]
+  restic-password: ENC[AES256_GCM,data:y9AlLhJl22S/HL+51LLaJw==,iv:oalZqYQE2XMLdVGmZ0RwSbfHP4SqA1ibX6zOjdcZgyk=,tag:qRL+edjN+R1UNpNDysOLng==,type:str]
 kind: Secret
 metadata:
-  name: minio-creds
+  name: garage-creds
   namespace: services
 sops:
   age:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBaNzhrcHdWTHQ5NFJkLzV4
-        Wko3UlN3NWZmVjljdUp2anVBVE4wbW9GTmpNCncrVVV2TU9Ga04veTZndDZiZnhF
-        THJHb3c4dndvUFIrRFFaNVdqam90V0EKLS0tIGtUZnpSbGUvSTNHMFJvMmQ2aTJt
-        Z2xKMUdtZlI3bVM1TG5QajRmQWRxazgKdrzYi3c+cbE+nohH0eJpiSuxLmy79nME
-        UtFeMWefra4+42HW/9pxpOOHQwEVODRtVX7a33uTCyS5fs/XzzleZg==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBrL2I2VlBUMmYwTGo4VzAx
+        dmtFNWlCczRiQ3RwSnBkb2ZpQXcyUHlVSTJnClNxR0x0YkNkRmMzMjMweTRUT0I0
+        ZCtkKzVCRkgvRU9yajRYa2M0aXlPdVUKLS0tIFhxNncyQnB0TW4wSWx3L0p6SER2
+        UXNpOTk4SjFaL2RLU0tSNy9XMUZuZ1kKyJ4O+uGBauuf8+FeNi6L17RsIrfMY7Rw
+        qRwOKe+YNyMYW4Rsk8tzx0G6mkawhByG2imQq2BNSGcgA8ucwmulig==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-10-12T16:20:35Z"
-  mac: ENC[AES256_GCM,data:yUYyN3EkGPKmAAs+3U5dX23sMkzTiX23Nmyflays7lY9pwgKMkYxgVNBn1MwHf3UPEQ6hY8PqF46AFVDxy4B1porVG1ShCM8wDKOtt6zu4gaDF6Pzt/cyLWGJLlsAiPtjp0/vuN0iLbJiMMteoJhxSJSdtB1l8wxI6uGI1EXSJs=,iv:gyrBj7tzAGj0EpgJZEdcaJkxjHyj3BeSAZcSP3WpINI=,tag:zniLVLtAhsVco0bpJEq3Fw==,type:str]
+  lastmodified: "2026-02-19T20:07:39Z"
+  mac: ENC[AES256_GCM,data:7Gyi1+WTXjf/jrL2PzTvQH1nU62GlnQ2GgX5X95DO6AEyvJyBp1A2LVkmoRwDmQcrNslxL8t4nZrCmRopdVjQHYC3MsB7CXdVlxHQCvaXcSx84btCQ2Hx65+KymG7JbQtAXBw1ClIt/+iplQYsq9P2BMlQH8yDKNbJft36TIX9I=,iv:A5haSOv8mVeiQP+/xGTxPYOOiaZWjcQuZEg6I7crJdY=,tag:89l9ofnXaVSb6UkXmTZpzA==,type:str]
   encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
   version: 3.11.0

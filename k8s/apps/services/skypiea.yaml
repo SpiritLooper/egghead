@@ -16,9 +16,9 @@ spec:
             image: alpine:latest
             imagePullPolicy: IfNotPresent
             env:
-              # --- Restic / MinIO Configuration ---
+              # --- Restic / Garage Configuration ---
               - name: RESTIC_REPOSITORY
-                value: "s3:https://ohara.infrao.top:9004/skypiea-backup"
+                value: "s3:https://ohara.infrao.top:3900/skypiea-backup"
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
                   secretKeyRef:
