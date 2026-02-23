@@ -40,8 +40,10 @@ spec:
                   secretKeyRef:
                     name: openwrt-creds
                     key: SSH_USER
-              - name: OPENWRT_HOST
-                value: "knock-up-stream.infrao.top"
+              - name: OPENWRT_HOSTS
+                value: >- 
+                  knock-up-stream.infrao.top
+                  cloud-end.cp0.infrao.top
             
             command: ["/bin/sh", "-c"]
             args:
@@ -59,27 +61,29 @@ spec:
                 # Avoid "Are you sure..." prompt for automation
                 echo "StrictHostKeyChecking no" >> ~/.ssh/config
 
-                echo "--- 2b. Waiting for DNS resolution (DIG) ---"              
-                until [ -n "$(dig +short $OPENWRT_HOST)" ]; do
-                    echo "Waiting for DNS resolution of $OPENWRT_HOST..."
-                    sleep 5
+                # ======================================================
+                # PART A: OPENWRT BACKUPS
+                # ======================================================
+                for OPENWRT_HOST in ${OPENWRT_HOSTS};
+                do
+                  echo "--- 2b. Waiting for DNS resolution (DIG) ---"              
+                  until [ -n "$(dig +short $OPENWRT_HOST)" ]; do
+                      echo "Waiting for DNS resolution of $OPENWRT_HOST..."
+                      sleep 5
+                  done
+                  
+                  RESOLVED_IP=$(dig +short $OPENWRT_HOST | tail -n1)
+                  echo "DNS resolved successfully: $OPENWRT_HOST -> $RESOLVED_IP"
+
+                  echo "--- 3. Repo Initialization (if necessary) ---"
+                  restic init || echo "Repository already exists, continuing."
+                  BACKUP_DEST=/tmp/backup.tar.gz
+                  echo "--- 4. Backing up OpenWRT configuration ---"
+
+                  ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sysupgrade -b ${BACKUP_DEST}"
+                  scp -O -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP:${BACKUP_DEST} ${BACKUP_DEST}
+                  restic backup -v ${BACKUP_DEST} --tag openwrt --tag config --host $OPENWRT_HOST
                 done
-                
-                RESOLVED_IP=$(dig +short $OPENWRT_HOST | tail -n1)
-                echo "DNS resolved successfully: $OPENWRT_HOST -> $RESOLVED_IP"
-
-                echo "--- 3. Repo Initialization (if necessary) ---"
-                restic init || echo "Repository already exists, continuing."
-
-                # ======================================================
-                # PART A: OPENWRT BACKUP
-                # ======================================================
-                BACKUP_DEST=/tmp/backup.tar.gz
-                echo "--- 4. Backing up OpenWRT configuration ---"
-
-                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sysupgrade -b ${BACKUP_DEST}"
-                scp -O -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP:${BACKUP_DEST} ${BACKUP_DEST}
-                restic backup -v ${BACKUP_DEST} --tag openwrt --tag config --host $OPENWRT_HOST
 
                 # ======================================================
                 # PART B: CLEANUP (PRUNE)
