@@ -309,9 +309,9 @@ spec:
                   tagstyle: "is-outlined is-danger"
                   url: "https://pocketid.egghead.infrao.top"
                   target: "_blank" # optional html a tag target attribute
-                - name: "Minio"
-                  subtitle: "💽 S3 Storage"
-                  logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/minio-light.svg"
+                - name: "Garage"
+                  subtitle: "🕷️ S3 Storage"
+                  logo: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/garage.svg"
                   tag: "storage"
                   tagstyle: "is-outlined is-warning"
                   url: "https://ohara.infrao.top"

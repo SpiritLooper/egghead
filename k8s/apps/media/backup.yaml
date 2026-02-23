@@ -8,16 +8,16 @@ spec:
   successfulJobsHistoryLimit: 2
   backend:
     repoPasswordSecretRef:
-      name: minio-creds
+      name: garage-creds
       key: restic-password
     s3:
-      endpoint: https://ohara.infrao.top:9004
+      endpoint: https://ohara.infrao.top:3900
       bucket: arr-stack-backup/media/
       accessKeyIDSecretRef:
-        name: minio-creds
+        name: garage-creds
         key: ACCESS_KEY_ID
       secretAccessKeySecretRef:
-        name: minio-creds
+        name: garage-creds
         key: ACCESS_SECRET_KEY
   backup:
     promURL: http://prometheus-pushgateway.supervision:9091

@@ -17,4 +17,4 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters:
-        barmanObjectName: minio-romm-backup-store
+        barmanObjectName: garage-romm-backup-store

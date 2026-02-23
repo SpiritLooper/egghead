@@ -1,24 +1,24 @@
 apiVersion: v1
 stringData:
-  ACCESS_KEY_ID: ENC[AES256_GCM,data:KXc+ZfSxzPbnNTkS4/ixQy0Z,iv:gq+bvhq9+coNh4vahsw+uXr0F/IVDLX9rtJp87q1H68=,tag:Ann2Mw86nHvcwyWhzlPn5g==,type:str]
-  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:XFR+Yw1aQqk36QacOdxCpvxzy6V+BPHwmYa0KUjCWoTsfhxHYtVuIo4yXloFhvScMqSYIqh73owDjHt4BgAmGg==,iv:swljMJIwjRYQanUsWlVEVjpRQTkn9k301COXUq3iO7M=,tag:DBVf7SWar7E0MFtnsLA+Ag==,type:str]
-  restic-password: ENC[AES256_GCM,data:daDPqhBFqxezie72RyWhQHusHVU=,iv:UWmz+b51BxNu9xpxWVEfSVfhl6b2vu/4ljAx7W9cDaw=,tag:PyLN5SPiNzisrB42v/y+jQ==,type:str]
+  ACCESS_KEY_ID: ENC[AES256_GCM,data:aogvip0UnGk0mjzemMxAORw+HvKGcXanEoc=,iv:Eoalf8d7/wzhw3sSOBmIKLOqaBs5ZjuVfO4ltDCoTCA=,tag:QIX15mVy5UFfF0WV4UZBJw==,type:str]
+  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:DNO1c5F7BC5WJAvsCxzLNm+wYB0wQxROkiv0fnoBbdmBfTA6qfmIe8AVyEAp3dpkjadeYhUOzuRQQw6WFc0YaQ==,iv:IW0AETQJpLEpXpOB01Yy+Ak0LEbshP3Av5bzgjxLyPQ=,tag:PJezc5v7cMZoDAqZt7bg7w==,type:str]
+  restic-password: ENC[AES256_GCM,data:+bQm3qBQWngdzJCicMx3gBqtEa4=,iv:l140CCXFsPBHsoeLyJwGmWLyD2ueo0zyUeSUKSjN36g=,tag:FlXtQzmAQoHwbD+SPU2T0A==,type:str]
 kind: Secret
 metadata:
-  name: minio-creds
+  name: garage-creds
   namespace: supervision
 sops:
   age:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKVmRXOTU1UTRmMitzKzBk
-        UmhsRjBwUUk4NnkwMjJHdG1KL1RyMFlwMmg4CkdDQTkxYTd1SEl0cGFwUExObjY1
-        OU56RGdCSUk1b3huY2JrQk0yS3NObTQKLS0tIDNJbUhjaU9XUmEyWVNCemtCek40
-        UzUyZEwzSGZTRUc2RVNWVXE4QWIrZ28KLGuqHItQPZzoXgmXz1syL1Vu2eSn8WBV
-        KOIoGDKIKoAGct1/ixWrPPEUjM8XMJNY61pOlTTpearc4qI7s+Tx8w==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBGS2lSc3pXajgxMXNJMEdF
+        blliMzVVUkxzbUdTaUhLcXpUM0tyVG80QkdjCkpmdFBTU0E2WDNpdThndlZNVlU2
+        alBndTc5UkNCYXZtOStnamxkZmphcEkKLS0tIGRLY1BGcUZ2Sk1aZkwrQ1NrRDlz
+        bmtvUWRpcDBrME9teUlGSU1tZ2U0b00Kaf1hj+z6OzNrhc6eI3/+IaDvi6mdsIlk
+        218ZiRcAVp1uKS5Q/24w0f332ejqyVcVWMxsp+U/osJy8HesC4ngHQ==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-11-01T16:14:51Z"
-  mac: ENC[AES256_GCM,data:PL5t+2h2aKJizqUwJebMcz+HZ5cC+zwOQLu49oPmvTekC14hXy1sV/OlAlDOY8KfWYl/eXBfRsdk+wwsMeZtgKS8qDM6KOf5qmCMk5uekwIHabOqYrSGT70bKADn4Kb1u7bfAN/76+EXf4T2bSVLmYpXKu/eHbxC63PLNuM6DgY=,iv:Qv5qfr3dLoHV5+FAwPaJKGWYhSc8Cb6FlG0cqbi50Uo=,tag:0i+4MRZJrrryGjFVs+E8eQ==,type:str]
+  lastmodified: "2026-02-19T20:21:32Z"
+  mac: ENC[AES256_GCM,data:1lXgVusD3RUaLumrTp0cQ0yOdtN0DRs6MOVA/b0NHLJ/virfex+EP/mCABd9l9kWlZkzJpBVP5ioQ24i78HYUdBGT2VfKixXlIaHKXo4NpMUzIc3f3JqES0f9e5H+qygSG+3BCTC3EOMcP3vbloJj16uuVnmDDiosut+6Jo9Ce8=,iv:8hnf3pcKyQczkw7e/iYuoS4Kz8F2/qJaSdSsUEk2Iw4=,tag:2RfatpffS61fHBG10FtwiQ==,type:str]
   encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
   version: 3.11.0

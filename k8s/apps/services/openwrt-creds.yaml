@@ -1,10 +1,10 @@
 apiVersion: v1
 stringData:
-  ACCESS_KEY_ID: ENC[AES256_GCM,data:OPDcVQHJl4FEoO/OOos=,iv:anJUuz2HPnCW1umuelBM5sVKg9WHIk9rEvOt/2B/TSQ=,tag:6+MwUrCAjNCBXYaGOSX2mA==,type:str]
-  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:PVrEylUl7Kz3Gwqwx0Puph9yq0tkXEfaauScPZmHWxI=,iv:kzUdUzTh1Ywa7VZjeObUAGnxWfALiDfozZO2vIcbgsI=,tag:pMGj+wzt8griq1GWCye4vw==,type:str]
-  SSH_KEY: ENC[AES256_GCM,data:qMGdLz2N+X0GyQ9qfYC/n9DKb3K7DEyMQLb8d+eMYuMJJVJV64MFOsNFqlwUgaHja4DBG6pwpB0ets5ljI0Tyq0wfKBMLD+8rWqyDyAqDaCLUT6uqDqCSji21I67+DW2KY/jFtarj/zFR+FsmxfGHAGyO+pOxi/MsDqjSoSxVwqJdOMrWp6F9PUGUJWvejfcsMSNrheMIlBWFJl0wukgd/S1FjyCDf0c4ev5MiBJVCEo1xV3b1CoJb1DT6t4qDTbukCME7sAbbyy/SVGEJGXTNBJP4ojdMrMSVBcWmuzbj6pJ2fZE3HFySGwFvl1H44/fKC20yABoWENvIFnKhc9YXx3ZliYz6N5mVVoy2ojTgrtV/6gK7D5z6kCJyWm9QimQ5fyZteq2vDpt/NkaE3BdF9uawI9qOsi4VPuS+20IDhRbwCzzV0wCKQWCX4e2bN21gczaGgn4EmVfLtMlwZ1fUlVwrS6bMKFTz24wVQ83d993G94OzBujKV6XR86Ik/MABilarlZzdAcr6LsAyve0rwVUahF0nd9D4jl5rPxD7w0J0g=,iv:x7sEjd0mVEtBTOwvqJ8tPxgYM/32vSdOchCRqhMF24c=,tag:EnhWhcp/3Jp4f5V7tRdKpQ==,type:str]
-  SSH_USER: ENC[AES256_GCM,data:h0u7gQ==,iv:qyY89LPLB+4tan18nhvZ/5sIW8hUTeB6VfTNo1YeK9c=,tag:7g28j1kZtP9QmGcRkj2qcg==,type:str]
-  restic-password: ENC[AES256_GCM,data:wz58wQagOV0gp0YhoBrX719PtvhyjngS4AGR1uuPT9o=,iv:958fbNK7z/7SLUADgfLnXRi2PYB0NvpcNaLtPAhAPU0=,tag:ZVf93svpT2W7aNjdOKjPMA==,type:str]
+  ACCESS_KEY_ID: ENC[AES256_GCM,data:uNDnJR85Gz6xdq/rPyGesQZIKHDr5746/ns=,iv:yo9hgdGQ8rjsnpS0sreEs7PiZgDurjrvm8HkIdmKIfs=,tag:vTXVwvysYLBrgjV1EJ/DdQ==,type:str]
+  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:/KEDI8RFzcUd9nghW4eqYkNsFnWLBIC4TX0sLWos6spqp3nKb+iA/r0Dx5rUk0VbpcyzLT156m/GSK8NWp0MGw==,iv:ucC5JWw22ySCvNGI+oydb/acGU/fFqz3U62raYcV7Ec=,tag:1LsikB0bahCqwqiqv38EAw==,type:str]
+  SSH_KEY: ENC[AES256_GCM,data:+f6/ARb+Xczwf59XrWf0pGL+39BuzigrRKFDmjjc3VmkclhIudYXczGhedjIMmk8u/Z9oTCVJKPCHCq5h7WKAqLT6RhFRY3R+VYx+KvQFjrUPYVQJz0xmQKmY5wi/pr7cLd2hIuxZHyeBcRyJPJpaWfSbX+zrCtaQqxSgTFSqzGb65wC/rscYpiVetnrJy7Cwdoe3DajdHS0OLi93oohauVz7BaMVKuJwF0trMVBvbQv4AqNMqFEx9mYUWy9kOzwDIB3EdZaJxUNbrzDVbXDptIdnXXggmPKLKbViQ5VQ0uYA42qFNfxXx3AZSs0/7kFXqZKKq0Q/rnOanHItZl5b9k9d000z5Rr5h+TxMClv9n/HCxLwWlXNWAXCOSXNrKuFd8GcqU3HI0DAM10xgkpvreNLvBkp7+PqNeBgnR3jYLMCF82B15CwGHDt0zgHO/mJcsGimDbhqm+H3KQMg/YY+tj9sH/b732UL+lZ5H8mv2CuW26AL2upaUZF8QKSOcP7dBqXQ6ExckBGyKzt8HegFcWtbfPaXt4tU/VqSSlAROaxUQ=,iv:yTSXLGpIjkdMk56XAYQIneSXbsr6RtnwSysDgMq14LI=,tag:qeEN0sWhbpND/lHiuXY+0Q==,type:str]
+  SSH_USER: ENC[AES256_GCM,data:N2tBAg==,iv:DCYU/F3FhdWuhwRDMgmx2lLz+oK5yV6X7YoFI3uH6Jw=,tag:ZzCHulpjXsyivZp5cWS41w==,type:str]
+  restic-password: ENC[AES256_GCM,data:a8Sv/6efPq9VohsmJSNCZL1VmEm4QAmRrhdlpzbTJYA=,iv:FoTHVgTubLC7pg53TW3MD3Vhju1PQ1W/ReNses0Mv2c=,tag:Kjr3SsOxfsRoMZjO+/uWHw==,type:str]
 kind: Secret
 metadata:
   name: openwrt-creds
@@ -13,13 +13,13 @@ sops:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFWDJFNWdOaHBmd2Z6SjBE
-        dGEvMXdWSm5GQ2xzZGhmMWNORVhNM243K2xFCkpGemJCVXBjZi9uRnRSNVltSDRN
-        QkgrZncrZlovVHNLTjFiZG81ZXZkVG8KLS0tIEdaeTEzMWxOc1NCQmY3R3BpLzZm
-        c0ZKTldPc3d6TExBeE02amoxUzJVdmMKNmvHe9ULQYY9Znlz3uDnj+xC21XL3+jQ
-        iaAtnjWDCDWsP/NjfIHlc/bX9orVQO/Bi3ogfWAhfbGC6reRGfzHYw==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFN3FxZlNDQS8vZEtiRHg0
+        TkRjeFZ1YnpiYythN0thbkZ5SEgwTCtncEJjClZjT0h2SHEyVjlhVUk2V3ptSkVt
+        OUdPdFBqVjFMbzBCS0c3eU9meUZUOE0KLS0tIDFrR3hKb3hKdDFaYXBHTFpLMkJX
+        dlNGWWFOUENIeDRqTnVVWGJ6a1RJK0kKp2suBkS4VUtVtwjTqVQvD3+QZ97YRb7e
+        8pXY1mnZT1KqihqK7Wv0UNCmf0LydQ8RJJU6yV8UdynTX6bYu2yp3w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-12-14T13:13:38Z"
-  mac: ENC[AES256_GCM,data:Hnys/dQZ/6dMK3bbOLpFrHwvhkC1HWfUsOjC3en9ES++JFe4FecsKX+Fk2kvgjbIH4DcNe8w4Fp4tfsVuygBM6HnmL1WLadwo+rIg3+eyrwN6Ib1TYKYhq6l8Jtcc34lfmthbLQ1kqiHfSC3VmO6w4Um/IUUdgmzexPHY2qKGiw=,iv:EfRPiCAnci2t+7pJhy+W+El5Ra20fsiY/5nNkx+tisU=,tag:rqj7RQOdD56djwkcKMl9sw==,type:str]
+  lastmodified: "2026-02-19T20:09:26Z"
+  mac: ENC[AES256_GCM,data:flrsaqzmViALkFAAbt/uQ05OXFQtSf4fZiikRRaPWhFbHsCcoPgs0SNW7ttvPLChQpcns2m5CRNN+S/Bi1U0UInpm9mXKa25RMk5zpcwc+oh7y3yExJkMQNtODbHql0/zp57bR0csOCW0w2OULqb31SV3p8baUfXSqBoWt0DhyM=,iv:ys3nnm7YZhmyIWsXr0+fnscmQzAagfpwMI4EKulty7I=,tag:0pllW6/XpqtqhNIb28Vh5g==,type:str]
   encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
   version: 3.11.0

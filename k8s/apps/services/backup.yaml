@@ -4,18 +4,18 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: minio-romm-backup-store
+  name: garage-romm-backup-store
   namespace: services
 spec:
   configuration:
     destinationPath: s3://services-backup/pgsql/romm/
-    endpointURL: https://ohara.infrao.top:9004
+    endpointURL: https://ohara.infrao.top:3900
     s3Credentials:
       accessKeyId:
-        name: minio-creds
+        name: garage-creds
         key: ACCESS_KEY_ID
       secretAccessKey:
-        name: minio-creds
+        name: garage-creds
         key: ACCESS_SECRET_KEY
     wal:
       compression: gzip
@@ -47,16 +47,16 @@ spec:
   successfulJobsHistoryLimit: 2
   backend:
     repoPasswordSecretRef:
-      name: minio-creds
+      name: garage-creds
       key: restic-password
     s3:
-      endpoint: https://ohara.infrao.top:9004
+      endpoint: https://ohara.infrao.top:3900
       bucket: services-backup/services/
       accessKeyIDSecretRef:
-        name: minio-creds
+        name: garage-creds
         key: ACCESS_KEY_ID
       secretAccessKeySecretRef:
-        name: minio-creds
+        name: garage-creds
         key: ACCESS_SECRET_KEY
   backup:
     promURL: http://prometheus-pushgateway.supervision:9091

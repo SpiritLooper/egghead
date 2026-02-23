@@ -4,7 +4,7 @@ kind: PersistentVolume
 metadata:
   name: romm-library-root
   annotations:
-    k8up.io/backup: true
+    k8up.io/backup: false
 spec:
   capacity:
     storage: 1Mi
@@ -22,7 +22,7 @@ metadata:
   name: romm-library-root
   namespace: services
   annotations:
-    k8up.io/backup: true
+    k8up.io/backup: false
 spec:
   volumeName: romm-library-root
   storageClassName: nfs
