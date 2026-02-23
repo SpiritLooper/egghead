@@ -43,7 +43,7 @@ spec:
               - name: OPENWRT_HOSTS
                 value: >- 
                   knock-up-stream.infrao.top
-                  cloud-end.cp0.infrao.top
+                  cloud-end.infrao.top
             
             command: ["/bin/sh", "-c"]
             args:
