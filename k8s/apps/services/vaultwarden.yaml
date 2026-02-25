@@ -19,7 +19,7 @@ spec:
   values:
     apps:
       - name: vaultwarden
-        image: vaultwarden/server:1.35.3
+        image: vaultwarden/server:1.35.4
         containerSpec:
           readinessProbe:
             httpGet:
