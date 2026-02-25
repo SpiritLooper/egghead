@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: pocketid
-        image: ghcr.io/pocket-id/pocket-id:v2.2.0
+        image: ghcr.io/pocket-id/pocket-id:v2.3.0
         containerSpec:
           readinessProbe:
             httpGet:
