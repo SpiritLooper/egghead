@@ -24,6 +24,10 @@ spec:
       containers:
         - name: {{ .name }}
           image: {{ .image }}
+          {{- if .args }}
+          args:
+            {{- toYaml .args | nindent 12 }}
+          {{- end }}
           {{- if .env }}
           env:
             {{- toYaml .env | nindent 12 }}

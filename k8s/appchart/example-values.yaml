@@ -20,6 +20,11 @@ apps:
       strategy:
         type: Recreate
 
+    # args pass throug container
+    args:
+      - --help
+      - --version
+
     # env vars
     env:
       - name: key
