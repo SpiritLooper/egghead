@@ -65,7 +65,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Add Comment
-        uses: mshick/add-pr-comment@v2
+        uses: mshick/add-pr-comment@v3
         with:
           message: |
             ${{ steps.diff.outputs.diff }}
