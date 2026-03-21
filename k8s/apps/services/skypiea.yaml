@@ -74,17 +74,17 @@ spec:
                 # ======================================================
                 # PART A: DATABASE BACKUP (Streaming)
                 # ======================================================
-                echo "--- 4. Backing up Authentik DB ---"
-                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-authentik-db.sh" \
-                  | restic backup --stdin --stdin-filename authentik.sql --tag db --tag authentik --host $VPS_HOST
+                echo "--- 4. Backing up Pocket ID ---"
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-pocketid-db.sh" \
+                  | restic backup --stdin --stdin-filename pocketid.tar --tag db --tag pocketid --host $VPS_HOST
 
                 echo "--- 5. Backing up Netbird DB ---"
                 ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-netbird-db.sh" \
                   | restic backup --stdin --stdin-filename netbird.sql --tag db --tag netbird --host $VPS_HOST
                 
-                echo "--- 6. Backing up Netbird Managment DB ---"
-                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-netbird-mgmt-db.sh" \
-                  | restic backup --stdin --stdin-filename netbird-mgmt.tar --tag db --tag netbird --tag mgmt --host $VPS_HOST
+                echo "--- 6. Backing up Netbird /var/lib/netbird data ---"
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-netbird-data.sh" \
+                  | restic backup --stdin --stdin-filename netbird-var.tar --tag db --tag netbird --tag data --host $VPS_HOST
 
                 # ======================================================
                 # PART B: CLEANUP (PRUNE)
