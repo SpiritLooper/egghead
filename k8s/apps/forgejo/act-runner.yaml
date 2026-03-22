@@ -34,5 +34,5 @@ spec:
             envs:
               TZ: Europe/Paris
             labels:
-              - node-24:docker://node:24-trixie-slim
+              - node-24:docker://node:24-trixie
               - nixos-latest:docker://nixos/nix
