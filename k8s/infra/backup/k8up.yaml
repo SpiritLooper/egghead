@@ -20,7 +20,7 @@ spec:
       chart: k8up
       # /!\ Always upgrade CRDS before upgrading helm release
       # https://github.com/k8up-io/k8up/tree/master/charts/k8up
-      version: "4.8.6"
+      version: "4.8.7"
       sourceRef:
         kind: HelmRepository
         name: k8up
