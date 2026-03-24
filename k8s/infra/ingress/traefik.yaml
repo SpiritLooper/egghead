@@ -88,6 +88,7 @@ spec:
               - 192.168.32.0/24
               - "10.42.0.0/16"
               - "10.43.0.0/16"
+              - "100.99.0.0/16"
     ingressClass:
       enabled: true
       isDefaultClass: true
