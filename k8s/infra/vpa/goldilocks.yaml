@@ -16,7 +16,7 @@ metadata:
 spec:
   interval: 10m
   timeout: 20m
-  releaseName: vpa
+  releaseName: goldilocks
   targetNamespace: vpa
   chart:
     spec:
