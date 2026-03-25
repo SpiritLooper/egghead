@@ -32,13 +32,17 @@ spec:
         persistence:
           pvc:
             enabled: true
+    secret:
+      create: false
+      eexistingSecret: kite-creds
     rbac:
       rules:
         - apiGroups: ["*"]
           resources: ["*"]
-          verbs: ["*"]
+          verbs: ["get","list","watch"]
         - nonResourceURLs: ["*"]
-          verbs: ["*"]
+          verbs: ["get","list","watch"]
+    host: https://kite.egghead.infrao.top
     ingress:
       enabled: true
       className: traefik

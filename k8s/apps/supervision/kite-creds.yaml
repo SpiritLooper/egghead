@@ -1,0 +1,24 @@
+apiVersion: v1
+stringData:
+  JWT_SECRET: ENC[AES256_GCM,data:AE9tmybXC9PnpG5Ff55+zx/xRvzafFr5zL6NYzzlQ70Rgm3j8/7yZmqvv+E=,iv:2x9NNZEsdRAeKmonRG+FJZ3fjfWS805+Z1i6czujNtQ=,tag:1y4Pv/JhwlnZmMWQ3uPrww==,type:str]
+  KITE_ENCRYPT_KEY: ENC[AES256_GCM,data:rPRcyhLjLf6uXdOzrHF4SJvvN5l6NwZy7b+EqInrGMWeQc+BFjKjs1kwUTM=,iv:2iFhY1rdaHKU4FbV4Pa7F6Q7L+FhN5mfReOUmGh61/k=,tag:JL0OakC7PyuZqZ3sm40KCg==,type:str]
+  DB_TYPE: ENC[AES256_GCM,data:c/RkZh+F,iv:dBPgm8UJrtEyPnVReJfgewBs1GWluzHmBiY38t/worU=,tag:qv+CnD3cKri5MwmQvH+pMg==,type:str]
+kind: Secret
+metadata:
+  name: kite-creds
+  namespace: supervision
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqd3NzaEdpSlZ0ck9EUFox
+        OEFGcVhqMU1pNE1leWZDcWNmUEVEdDdwYmhNCkFEYXdqTWpBOWxUV3dGd1p3cmoy
+        VFpCT1ZydTJyVTZDWEhDSm9nL0VyeUUKLS0tIGEzREJYc0NsZFMrUEQ0L28rRmNX
+        a0pMc1UwSTM2QmpPMDQwNVhVczA2Z2cK6vYU61TFQmgisSo4sMW6GMCK8/nxrqbY
+        qsrfApDsZfSrkACMgBBUa4JrqE5pciPOuRebwd+9AHjDnBrkM7SW5w==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-25T18:49:33Z"
+  mac: ENC[AES256_GCM,data:o372onFhEq9xH1XzXe+7LcL8Ym/eC/bVNRCKGzERL3T/u6TY1RGdmjKabW1lLp0Cw+pYSI/ArKCwPwPErA3iWfBd1XJOxCY7yXH4G2HHK1JcG9Rlx8vDTwbLz12sHc9vljmYCznPMrxa1SSSC1enhnqueB+HjwQtf9ZailiU+W0=,iv:apQgSDbKaBfLMYlq/nm9thc0Y0UqPnQgd/BKRJmAMsg=,tag:CvsYEIpgOKIpVzvFwpnA/w==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.12.2
