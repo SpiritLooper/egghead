@@ -29,6 +29,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: autoscaler
+        namespace: flux-system
   values:
     admissionController:
       replicas: 1

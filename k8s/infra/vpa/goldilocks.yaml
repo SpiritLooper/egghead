@@ -25,6 +25,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: fairwinds
+        namespace: flux-system
   values:
     controller:
       enabled: true
