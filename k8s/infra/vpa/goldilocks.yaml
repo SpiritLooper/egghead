@@ -12,10 +12,12 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: goldilocks
-  namespace: flux-system
+  namespace: vpa
 spec:
   interval: 10m
   timeout: 20m
+  releaseName: vpa
+  targetNamespace: vpa
   chart:
     spec:
       chart: goldilocks
