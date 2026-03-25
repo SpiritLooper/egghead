@@ -1,0 +1,34 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: autoscaler
+spec:
+  interval: 24h
+  url: https://kubernetes.github.io/autoscaler
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vpa
+spec:
+  interval: 10m
+  timeout: 20m
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  chart:
+    spec:
+      chart: vertical-pod-autoscaler
+      version: "0.8.1"
+      sourceRef:
+        kind: HelmRepository
+        name: autoscaler
+  values:
+    admissionController:
+      replicas: 1
+    recommender:
+      replicas: 1
+    updater:
+      replicas: 1
