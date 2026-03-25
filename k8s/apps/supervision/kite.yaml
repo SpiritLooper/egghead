@@ -34,7 +34,7 @@ spec:
             enabled: true
     secret:
       create: false
-      eexistingSecret: kite-creds
+      existingSecret: kite-creds
     rbac:
       rules:
         - apiGroups: ["*"]
