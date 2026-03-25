@@ -32,7 +32,7 @@ spec:
       mountOptions:
         - nfsvers=4.2
     storageClass:
-      defaultClass: true
+      defaultClass: false
       reclaimPolicy: Retain
       name: nfs
       pathPattern: "${.PVC.namespace}/${.PVC.name}"

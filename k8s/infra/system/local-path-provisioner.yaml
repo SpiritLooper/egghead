@@ -25,4 +25,5 @@ spec:
   targetNamespace: kube-system
   values:
     storageClass:
+      defaultClass: true
       provisionerName: local-path
