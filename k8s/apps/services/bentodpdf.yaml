@@ -42,12 +42,16 @@ spec:
         volumeMounts:
           - name: nginx-tmp
             mountPath: /etc/nginx/tmp
+          - name: nginx-tmp2
+            mountPath: /var/lib/nginx/tmp
           - name: nginx-cache
             mountPath: /var/cache/nginx
           - name: nginx-run
             mountPath: /var/run
         volumes:
           - name: nginx-tmp
+            emptyDir: {}
+          - name: nginx-tmp2
             emptyDir: {}
           - name: nginx-cache
             emptyDir: {}
