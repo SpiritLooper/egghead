@@ -177,7 +177,7 @@ spec:
                   tag: "pdf"
                   tagstyle: "is-info"
                   keywords: "documents pdf tools" # optional keyword used for searching purpose
-                  url: "https://paperless.egghead.infrao.top"
+                  url: "https://pdf.egghead.infrao.top"
                   target: "_blank"
                 - name: "Paperless-ngx"
                   logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg"
