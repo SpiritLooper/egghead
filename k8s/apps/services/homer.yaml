@@ -171,6 +171,14 @@ spec:
             - name: "Application"
               icon: "fas fa-desktop"
               items:
+                - name: "BentoPDF"
+                  logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/bentopdf.svg"
+                  subtitle: " PDF tools"
+                  tag: "pdf"
+                  tagstyle: "is-info"
+                  keywords: "documents pdf tools" # optional keyword used for searching purpose
+                  url: "https://paperless.egghead.infrao.top"
+                  target: "_blank"
                 - name: "Paperless-ngx"
                   logo: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless-ngx.svg"
                   subtitle: "📝 Manage your document"
