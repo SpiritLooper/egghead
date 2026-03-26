@@ -18,6 +18,9 @@ spec:
     apps:
       - name: pocketid
         image: ghcr.io/pocket-id/pocket-id:v2.4.0
+        deploymentSpec:
+          strategy:
+            type: Recreate
         containerSpec:
           readinessProbe:
             httpGet:
