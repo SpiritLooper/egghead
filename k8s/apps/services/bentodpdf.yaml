@@ -44,14 +44,18 @@ spec:
               drop:
                 - ALL
         volumeMounts:
-          - name: nginx-lib
-            mountPath: /var/lib/nginx/
+          - name: nginx-tmp
+            mountPath: /var/lib/nginx/tmp
+          - name: nginx-logs
+            mountPath: /var/lib/nginx/logs
           - name: nginx-cache
             mountPath: /var/cache/nginx
           - name: nginx-run
             mountPath: /var/run
         volumes:
-          - name: nginx-lib
+          - name: nginx-tmp
+            emptyDir: {}
+          - name: nginx-logs
             emptyDir: {}
           - name: nginx-cache
             emptyDir: {}
