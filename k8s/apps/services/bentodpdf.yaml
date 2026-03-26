@@ -44,6 +44,8 @@ spec:
               drop:
                 - ALL
         volumeMounts:
+          - name: nginx-etc-tmp
+            mountPath: /etc/nginx/tmp
           - name: nginx-tmp
             mountPath: /var/lib/nginx/tmp
           - name: nginx-logs
@@ -53,6 +55,8 @@ spec:
           - name: nginx-run
             mountPath: /var/run
         volumes:
+          - name: nginx-etc-tmp
+            emptyDir: {}
           - name: nginx-tmp
             emptyDir: {}
           - name: nginx-logs
