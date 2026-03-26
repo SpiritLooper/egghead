@@ -39,6 +39,20 @@ spec:
             capabilities:
               drop:
                 - ALL
+        volumeMounts:
+          - name: nginx-tmp
+            mountPath: /etc/nginx/tmp
+          - name: nginx-cache
+            mountPath: /var/cache/nginx
+          - name: nginx-run
+            mountPath: /var/run
+        volumes:
+          - name: nginx-tmp
+            emptyDir: {}
+          - name: nginx-cache
+            emptyDir: {}
+          - name: nginx-run
+            emptyDir: {}
         service: 8080
         ingress:
           domain: pdf.egghead.infrao.top
