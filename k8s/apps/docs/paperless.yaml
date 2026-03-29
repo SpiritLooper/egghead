@@ -28,11 +28,11 @@ spec:
               port: 8000
           resources:
             limits:
-              cpu: 2
-              memory: 2000Mi
+              cpu: 250m
+              memory: 2200Mi
             requests:
-              cpu: 100m
-              memory: 1000Mi
+              cpu: 25m
+              memory: 1900Mi
         volumeMounts:
           - name: paperless-data
             mountPath: /usr/src/paperless/data
@@ -99,9 +99,9 @@ spec:
         containerSpec:
           resources:
             limits:
-              cpu: 40m
-              memory: 8Mi
+              cpu: 25m
+              memory: 250Mi
             requests:
-              cpu: 40m
-              memory: 8Mi
+              cpu: 25m
+              memory: 250Mi
         service: 6379
