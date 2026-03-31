@@ -1,0 +1,78 @@
+---
+- name: K3s | Créer les répertoires nécessaires
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop:
+    - /etc/rancher/k3s
+    - /etc/systemd/system/k3s.service.d
+    - /var/lib/rancher/k3s/agent/etc/kubelet.conf.d
+
+- name: K3s | Déployer la configuration
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: /etc/rancher/k3s/config.yaml
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Redémarrer k3s
+
+- name: K3s | Déployer le systemd slice
+  ansible.builtin.template:
+    src: k3s.slice.j2
+    dest: /etc/systemd/system/k3s.slice
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Recharger systemd
+
+- name: K3s | Déployer l'override systemd (TimeoutStopSec + KillMode)
+  ansible.builtin.template:
+    src: k3s-override.conf.j2
+    dest: /etc/systemd/system/k3s.service.d/override.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Recharger systemd
+    - Redémarrer k3s
+
+- name: K3s | Déployer le kubelet drop-in (limites d'éviction)
+  ansible.builtin.template:
+    src: 10-limits-workload.conf.j2
+    dest: /var/lib/rancher/k3s/agent/etc/kubelet.conf.d/10-limits-workload.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Redémarrer k3s
+
+- name: K3s | Télécharger le script d'installation officiel
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: /tmp/install-k3s.sh
+    mode: "0755"
+    force: true
+
+- name: K3s | Installer k3s via le script officiel
+  ansible.builtin.shell:
+    cmd: sh /tmp/install-k3s.sh
+    executable: /bin/bash
+    creates: /usr/local/bin/k3s
+  environment:
+    INSTALL_K3S_EXEC: "server"
+  notify: Recharger systemd
+
+- name: K3s | Supprimer le script temporaire
+  ansible.builtin.file:
+    path: /tmp/install-k3s.sh
+    state: absent
+
+- name: K3s | Activer et démarrer le service
+  ansible.builtin.systemd:
+    name: k3s
+    enabled: true
+    state: started
+    daemon_reload: true

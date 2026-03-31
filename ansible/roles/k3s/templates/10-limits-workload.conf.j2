@@ -1,0 +1,8 @@
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+enforceNodeAllocatable:
+  - pods
+evictionHard:
+  memory.available: "{{ k3s_kubelet_eviction_memory }}"
+  nodefs.available: "{{ k3s_kubelet_eviction_nodefs }}"
+  nodefs.inodesFree: "{{ k3s_kubelet_eviction_inodes }}"

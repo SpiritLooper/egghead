@@ -1,0 +1,54 @@
+---
+- name: Update apt cache and upgrade packages
+  apt:
+    update_cache: true
+    upgrade: dist
+
+- name: Set up authorized keys for {{ target_user }}
+  authorized_key:
+    user: "{{ target_user }}"
+    state: present
+    key: "{{ item }}"
+  loop: "{{ ssh_public_keys }}"
+
+- name: Disable password authentication in sshd_config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+  notify: Restart SSH
+
+- name: Allow {{ target_user }} to sudo
+  lineinfile:
+    path: /etc/sudoers.d/{{ target_user }}
+    line: '{{ target_user }} ALL=(ALL) PASSWD: ALL'
+    create: true
+    mode: 0440
+    validate: 'visudo -cf %s'
+
+- name: set timezone to Europe/Paris
+  timezone:
+    name: Europe/Paris
+
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Install some tools
+  apt:
+    name:
+      - jq
+      - htop
+      - git
+      - vim
+      - dnsutils
+      - logrotate
+    state: present
+
+- name: Remove unsed some tools
+  apt:
+    name:
+      - cron
+    state: absent

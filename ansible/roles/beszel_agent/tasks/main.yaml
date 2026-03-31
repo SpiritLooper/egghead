@@ -1,0 +1,85 @@
+---
+- name: Beszel Agent | Vérifier que la clé publique est définie
+  ansible.builtin.assert:
+    that:
+      - beszel_agent_key | length > 0
+    fail_msg: >
+      La variable 'beszel_agent_key' est obligatoire.
+      Récupérez-la dans le Hub Beszel > "Add System" > onglet Binary.
+
+# ── Téléchargement du script officiel ────────────────────────────────────────
+
+- name: Beszel Agent | Télécharger le script d'installation officiel
+  ansible.builtin.get_url:
+    url: https://get.beszel.dev
+    dest: /tmp/install-agent.sh
+    mode: "0755"
+    force: true
+
+# ── Construction des arguments du script ─────────────────────────────────────
+
+- name: Beszel Agent | Construire les arguments du script
+  ansible.builtin.set_fact:
+    _beszel_script_args: >-
+      -k "{{ beszel_agent_key }}"
+      --auto-update true
+
+# ── Vérification de l'état actuel ────────────────────────────────────────────
+
+- name: Beszel Agent | Collecter les informations sur les services
+  ansible.builtin.service_facts:
+
+- name: Beszel Agent | Vérifier si l'agent est déjà installé
+  ansible.builtin.stat:
+    path: /etc/systemd/system/beszel-agent.service
+  register: _beszel_service_file
+
+# ── Installation ──────────────────────────────────────────────────────────────
+
+- name: Beszel Agent | Lancer le script d'installation officiel
+  ansible.builtin.shell:
+    cmd: "/tmp/install-agent.sh {{ _beszel_script_args }}"
+    executable: /bin/bash
+  register: _beszel_install_result
+  changed_when: "'already installed' not in _beszel_install_result.stdout"
+  when: not _beszel_service_file.stat.exists
+
+- name: Beszel Agent | Afficher la sortie de l'installation
+  ansible.builtin.debug:
+    var: _beszel_install_result.stdout_lines
+  when:
+    - not _beszel_service_file.stat.exists
+    - _beszel_install_result is defined
+
+# ── Mise à jour si déjà installé ─────────────────────────────────────────────
+
+- name: Beszel Agent | Mettre à jour l'agent si déjà installé
+  when: _beszel_service_file.stat.exists
+  block:
+    - name: Beszel Agent | Lancer la mise à jour du binaire
+      ansible.builtin.command:
+        cmd: /opt/beszel-agent/beszel-agent update
+      register: _beszel_update_result
+      changed_when: "'Successfully updated' in _beszel_update_result.stdout"
+      failed_when: false
+
+    - name: Beszel Agent | Redémarrer le service si mis à jour
+      ansible.builtin.systemd:
+        name: beszel-agent
+        state: restarted
+      when: "'Successfully updated' in _beszel_update_result.stdout"
+
+# ── S'assurer que le service est actif ───────────────────────────────────────
+
+- name: Beszel Agent | S'assurer que le service est activé et démarré
+  ansible.builtin.systemd:
+    name: beszel-agent
+    enabled: true
+    state: started
+
+# ── Nettoyage ─────────────────────────────────────────────────────────────────
+
+- name: Beszel Agent | Supprimer le script d'installation temporaire
+  ansible.builtin.file:
+    path: /tmp/install-agent.sh
+    state: absent

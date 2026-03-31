@@ -1,0 +1,17 @@
+tls-san:
+  - "{{ k3s_tls_san }}"
+
+disable:
+  - traefik
+  - metrics-server
+  - local-storage
+
+disable-cloud-controller: true
+disable-helm-controller: true
+disable-network-policy: true
+
+cluster-cidr: "{{ k3s_cluster_cidr }}"
+service-cidr: "{{ k3s_service_cidr }}"
+
+flannel-ipv6-masq: false
+flannel-iface: "{{ k3s_flannel_iface }}"

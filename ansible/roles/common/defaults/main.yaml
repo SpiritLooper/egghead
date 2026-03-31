@@ -1,0 +1,5 @@
+ssh_port: 22
+ssh_public_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIWuwg7ESCWyACfzUDjSb1rg1e4s8IXPv0o9LnwSJUy spiritlooper@hp-13x-spectre
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICQBjBZesl5T/5rSLsGk8amLEyIvs3HnGflNbIScPxe9 spiritlooper@pc-fix
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIlbtT9eNWByclc9CdKF0nhtCAUEcSCJ8BQscENUXEkN u0_a332@localhost

@@ -1,0 +1,19 @@
+---
+- name: Upgrade all packages on the VPS
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Upgrade all packages to latest version
+      ansible.builtin.apt:
+        upgrade: dist
+
+    - name: Remove unused dependencies
+      ansible.builtin.apt:
+        autoremove: true
+        purge: true
