@@ -40,7 +40,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: "40.0.0-ea.3"
+      version: "39.0.7"
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -123,4 +123,4 @@ spec:
       plugins:
         traefik-oidc-auth:
           moduleName: github.com/sevensolutions/traefik-oidc-auth
-          version: "v0.18.0"
+          version: "v0.16.0"
