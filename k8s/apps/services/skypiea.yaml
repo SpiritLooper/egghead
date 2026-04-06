@@ -86,6 +86,14 @@ spec:
                 ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-netbird-data.sh" \
                   | restic backup --stdin --stdin-filename netbird-var.tar --tag db --tag netbird --tag data --host $VPS_HOST
 
+                echo "--- 7. Backing up Netbird DB ---"
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-ovumcy-db.sh" \
+                  | restic backup --stdin --stdin-filename ovumcy.sql --tag db --tag ovumcy --host $VPS_HOST
+                
+                echo "--- 8. Backing up ovumcy /app/data ---"
+                ssh -i ~/.ssh/id_ed25519 $SSH_USER@$RESOLVED_IP "sudo /usr/local/bin/backup-ovumcy-data.sh" \
+                  | restic backup --stdin --stdin-filename ovumcy-appdata.tar --tag db --tag ovumcy --tag data --host $VPS_HOST
+
                 # ======================================================
                 # PART B: CLEANUP (PRUNE)
                 # ======================================================
