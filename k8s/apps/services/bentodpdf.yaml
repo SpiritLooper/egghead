@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: bentopdf
-        image: ghcr.io/alam00000/bentopdf-simple:2.8.1
+        image: ghcr.io/alam00000/bentopdf-simple:2.8.2
         podSpec:
           securityContext:
             runAsNonRoot: true
