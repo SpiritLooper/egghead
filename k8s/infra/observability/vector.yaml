@@ -45,20 +45,24 @@ spec:
           inputs:
             - egghead_journald
           source: |
-            .host = .host ?? .HOSTNAME ?? "unknown"
-            .service = .SYSLOG_IDENTIFIER ?? .unit ?? "unknown"
-            .message = .message ?? ._COMM ?? ""
-            del(._BOOT_ID, ._MACHINE_ID, ._SYSTEMD_CGROUP, ._TRANSPORT)
+            .host = string(.host) ?? "unknown"
+            .service = string(.SYSLOG_IDENTIFIER) ?? string(.unit) ?? "unknown"
+            .message = string(.message) ?? string(._COMM) ?? ""
+            del(._BOOT_ID)
+            del(._MACHINE_ID)
+            del(._SYSTEMD_CGROUP)
+            del(._TRANSPORT)
         k8s_normalized:
           type: remap
           inputs:
             - egghead_k3s
           source: |
-            .host = .kubernetes.node_name ?? .host ?? "unknown"
-            .namespace = .kubernetes.pod_namespace ?? "unknown"
-            .pod = .kubernetes.pod_name ?? "unknown"
-            .container = .kubernetes.container_name ?? "unknown"
-            del(.kubernetes.pod_labels, .kubernetes.pod_annotations)
+            .host = string(.kubernetes.node_name) ?? "unknown"
+            .namespace = string(.kubernetes.pod_namespace) ?? "unknown"
+            .pod = string(.kubernetes.pod_name) ?? "unknown"
+            .container = string(.kubernetes.container_name) ?? "unknown"
+            del(.kubernetes.pod_labels)
+            del(.kubernetes.pod_annotations)
       sinks:
         vlogs_container:
           type: elasticsearch
