@@ -45,7 +45,7 @@ spec:
           inputs:
             - egghead_journald
           source: |
-            .service = string(_SYSTEMD_UNIT) ?? "unknown"
+            .service = string(._SYSTEMD_UNIT) ?? "unknown"
             .message = string(.message) ?? string(._COMM) ?? ""
             del(._MACHINE_ID)
             del(._SYSTEMD_CGROUP)
