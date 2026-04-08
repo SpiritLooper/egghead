@@ -29,6 +29,14 @@ spec:
       tag: 0.54.0-debian
     service:
       enabled: false
+    extraVolumes:
+      - name: journald-runtime
+        hostPath:
+        path: "/run/systemd/journal"
+    extraVolumeMounts: 
+      - name: journald-runtime
+        mountPath: "/run/systemd/journal"
+        readOnly: true
     customConfig:
       data_dir: /vector-data-dir
       api:
