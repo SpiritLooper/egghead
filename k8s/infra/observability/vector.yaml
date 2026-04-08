@@ -27,11 +27,13 @@ spec:
     image:
       repository: docker.io/timberio/vector
       tag: 0.54.0-alpine
+    service:
+      enabled: false
     customConfig:
       data_dir: /vector-data-dir
       api:
         enabled: false
-        address: 0.0.0.0:8686
+#       address: 0.0.0.0:8686
       sources:
         egghead_k3s:
           type: kubernetes_logs
