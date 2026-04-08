@@ -29,7 +29,7 @@ spec:
         tag: v1.49.0
       persistentVolume:
         annotations: 
-          k8up.io/backup: false
+          k8up.io/backup: "false"
         storageClassName: local-path
         size: 30Gi
       ingress:
@@ -38,7 +38,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
         hosts:
           - name: vmlogs.egghead.infrao.top
-            paths:
+            path:
               - /
             port: http
         tls:
