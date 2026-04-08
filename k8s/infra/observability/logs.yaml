@@ -1,0 +1,46 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: victoria-logs-single
+  namespace: victoriametrics
+spec:
+  interval: 1h
+  url: oci://ghcr.io/victoriametrics/helm-charts/victoria-logs-single
+  ref:
+    tag: 0.11.31
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: victoria-logs
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: victoria-logs-single
+    namespace: victoriametrics
+  values:
+    server:
+      image:
+        repository: victoriametrics/victoria-logs
+        tag: v1.49.0
+      persistentVolume:
+        annotations: 
+          k8up.io/backup: false
+        storageClassName: local-path
+        size: 30Gi
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - host: vmlogs.egghead.infrao.top
+            paths:
+              - path: /
+        tls:
+          - hosts:
+            - vmlogs.egghead.infrao.top
+    dashboards:
+      enabled: true
