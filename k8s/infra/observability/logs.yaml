@@ -37,7 +37,7 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
         hosts:
-          - host: vmlogs.egghead.infrao.top
+          - name: vmlogs.egghead.infrao.top
             paths:
               - /
             port: http
