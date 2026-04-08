@@ -32,8 +32,8 @@ spec:
     customConfig:
       data_dir: /vector-data-dir
       api:
-        enabled: false
-#       address: 0.0.0.0:8686
+        enabled: true
+        address: 0.0.0.0:8686
       sources:
         egghead_k3s:
           type: kubernetes_logs
@@ -48,7 +48,6 @@ spec:
             .host = .host ?? .HOSTNAME ?? "unknown"
             .service = .SYSLOG_IDENTIFIER ?? .unit ?? "unknown"
             .message = .message ?? ._COMM ?? ""
-            # Drop noisy systemd fields to save storage
             del(._BOOT_ID, ._MACHINE_ID, ._SYSTEMD_CGROUP, ._TRANSPORT)
         k8s_normalized:
           type: remap
@@ -59,12 +58,11 @@ spec:
             .namespace = .kubernetes.pod_namespace ?? "unknown"
             .pod = .kubernetes.pod_name ?? "unknown"
             .container = .kubernetes.container_name ?? "unknown"
-            # Drop heavy k8s metadata you don't need
             del(.kubernetes.pod_labels, .kubernetes.pod_annotations)
       sinks:
         vlogs_container:
           type: elasticsearch
-          endpoints: 
+          endpoints:
             - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
             - k8s_normalized
@@ -74,7 +72,7 @@ spec:
           query:
             _msg_field: message
             _time_field: timestamp
-            _stream_fields: host,container_name
+            _stream_fields: host,namespace,pod,container
         vlogs_systemd:
           type: elasticsearch
           endpoints:
@@ -87,4 +85,4 @@ spec:
           query:
             _msg_field: message
             _time_field: timestamp
-            _stream_fields: host,container_name
+            _stream_fields: host,service
