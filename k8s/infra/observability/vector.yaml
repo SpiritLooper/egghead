@@ -39,7 +39,8 @@ spec:
       sinks:
         vlogs:
           type: elasticsearch
-          endpoints: http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
+          endpoints: 
+            - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
             - egghead_k3s
             - egghead_journald
