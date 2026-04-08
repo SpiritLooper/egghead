@@ -1,0 +1,52 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: vectordotdev
+  namespace: victoriametrics
+spec:
+  interval: 1h
+  url: oci://ghcr.io/vectordotdev/helm-charts/vector
+  ref:
+    tag: 0.51.0
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  namespace: victoriametrics
+  name: vector
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: vectordotdev
+    namespace: victoriametrics
+  values:
+    role: "Agent"
+    image:
+      repository: docker.io/timberio/vector
+      tag: 0.54.0-alpine
+    customConfig:
+      data_dir: /vector-data-dir
+      api:
+        enabled: false
+      sources:
+        egghead_k3s:
+          type: kubernetes_logs
+        egghead_journald:
+          type: journald
+      sinks:
+        vlogs:
+          type: elasticsearch
+          endpoints: http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
+          inputs:
+            - egghead_k3s
+            - egghead_journald
+          compression: gzip
+          healthcheck:
+            enabled: false
+          query:
+            _msg_field: message
+            _time_field: timestamp
+            _stream_fields: host,container_name
