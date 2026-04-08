@@ -32,7 +32,7 @@ spec:
     extraVolumes:
       - name: journald-runtime
         hostPath:
-        path: "/run/systemd/journal"
+          path: "/run/systemd/journal"
     extraVolumeMounts: 
       - name: journald-runtime
         mountPath: "/run/systemd/journal"
