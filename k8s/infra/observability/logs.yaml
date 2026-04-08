@@ -39,7 +39,8 @@ spec:
         hosts:
           - host: vmlogs.egghead.infrao.top
             paths:
-              - path: /
+              - /
+            port: http
         tls:
           - hosts:
             - vmlogs.egghead.infrao.top
