@@ -45,10 +45,8 @@ spec:
           inputs:
             - egghead_journald
           source: |
-            .host = string(.host) ?? "unknown"
-            .service = string(.SYSLOG_IDENTIFIER) ?? string(.unit) ?? "unknown"
+            .service = string(_SYSTEMD_UNIT) ?? "unknown"
             .message = string(.message) ?? string(._COMM) ?? ""
-            del(._BOOT_ID)
             del(._MACHINE_ID)
             del(._SYSTEMD_CGROUP)
             del(._TRANSPORT)
@@ -57,7 +55,7 @@ spec:
           inputs:
             - egghead_k3s
           source: |
-            .host = string(.kubernetes.node_name) ?? "unknown"
+            .host = string(.kubernetes.pod_node_name) ?? "egghead"
             .namespace = string(.kubernetes.pod_namespace) ?? "unknown"
             .pod = string(.kubernetes.pod_name) ?? "unknown"
             .container = string(.kubernetes.container_name) ?? "unknown"
