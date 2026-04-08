@@ -39,14 +39,48 @@ spec:
           type: kubernetes_logs
         egghead_journald:
           type: journald
+      transforms:
+        journald_normalized:
+          type: remap
+          inputs:
+            - egghead_journald
+          source: |
+            .host = .host ?? .HOSTNAME ?? "unknown"
+            .service = .SYSLOG_IDENTIFIER ?? .unit ?? "unknown"
+            .message = .message ?? ._COMM ?? ""
+            # Drop noisy systemd fields to save storage
+            del(._BOOT_ID, ._MACHINE_ID, ._SYSTEMD_CGROUP, ._TRANSPORT)
+        k8s_normalized:
+          type: remap
+          inputs:
+            - egghead_k3s
+          source: |
+            .host = .kubernetes.node_name ?? .host ?? "unknown"
+            .namespace = .kubernetes.pod_namespace ?? "unknown"
+            .pod = .kubernetes.pod_name ?? "unknown"
+            .container = .kubernetes.container_name ?? "unknown"
+            # Drop heavy k8s metadata you don't need
+            del(.kubernetes.pod_labels, .kubernetes.pod_annotations)
       sinks:
-        vlogs:
+        vlogs_container:
           type: elasticsearch
           endpoints: 
             - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
-            - egghead_k3s
-            - egghead_journald
+            - k8s_normalized
+          compression: gzip
+          healthcheck:
+            enabled: false
+          query:
+            _msg_field: message
+            _time_field: timestamp
+            _stream_fields: host,container_name
+        vlogs_systemd:
+          type: elasticsearch
+          endpoints:
+            - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
+          inputs:
+            - journald_normalized
           compression: gzip
           healthcheck:
             enabled: false
