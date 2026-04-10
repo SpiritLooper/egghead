@@ -17,6 +17,9 @@ spec:
     metadata:
       labels:
         app: {{ .name }}
+        {{- if .excludeShipLogs }}
+        vector.dev/exclude: "true"
+        {{- end }}
     spec:
       {{- if .podSpec }}
       {{- toYaml .podSpec | nindent 6 }}

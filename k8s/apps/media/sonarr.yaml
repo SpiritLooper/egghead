@@ -18,6 +18,7 @@ spec:
     apps:
       - name: sonarr
         image: linuxserver/sonarr:4.0.17
+        excludeShipLogs: true
         containerSpec:
           readinessProbe:
             httpGet:

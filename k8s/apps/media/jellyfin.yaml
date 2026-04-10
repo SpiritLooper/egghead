@@ -18,6 +18,7 @@ spec:
     apps:
       - name: jellyfin
         image: jellyfin/jellyfin:10.11.8
+        excludeShipLogs: true
         containerSpec:
           securityContext:
             privileged: true

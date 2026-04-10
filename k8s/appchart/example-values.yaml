@@ -4,6 +4,7 @@ apps:
     # here is what a very simple app can look like:
   - name: simple-echo
     image: traefik/whoami:latest
+    excludeShipLogs: true
     service: 80
     ingress:
       domain: echo.domain.com
