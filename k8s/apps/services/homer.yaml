@@ -18,6 +18,7 @@ spec:
     apps:
       - name: homer
         image: b4bz/homer:v26.4.1
+        excludeShipLogs: true
         podSpec:
           initContainers:
             - name: decode-favicon

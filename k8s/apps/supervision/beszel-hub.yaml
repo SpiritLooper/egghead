@@ -18,6 +18,7 @@ spec:
     apps:
       - name: beszel
         image: henrygd/beszel:0.18.7
+        excludeShipLogs: true
         containerSpec:
           readinessProbe:
             httpGet:

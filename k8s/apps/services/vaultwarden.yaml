@@ -20,6 +20,7 @@ spec:
     apps:
       - name: vaultwarden
         image: vaultwarden/server:1.35.4
+        excludeShipLogs: true
         containerSpec:
           readinessProbe:
             httpGet:

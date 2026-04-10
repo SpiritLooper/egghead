@@ -53,6 +53,7 @@ spec:
         image: valkey/valkey:9.0.3-alpine
         service: 6379
       - name: rommapp
+        excludeShipLogs: true
         image: rommapp/romm:4.8.1
         podSpec:
           hostAliases:
