@@ -1,0 +1,23 @@
+apiVersion: v1
+stringData:
+  QUI__SESSION_SECRET: ENC[AES256_GCM,data:G8OF27H/UQ+LrHIHdin8RWoIBOlk7uMzzIdDzrSeAfBkgvRvRpbjtAQIq2PtyVtWkIoviCFJT9InnHWxvnvPUA==,iv:9ykIEbHE+hIWbRzyfF2X9SJpal8GsLQeiyuXEsYNTTA=,tag:wYUI3KjCPBYnkphjaBhuIg==,type:str]
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: qui-creds
+  namespace: media
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAwc290YkkvVncrSkt6V2w4
+        SUtjcjN2NzBnTmZ2TXVteGFTNExwM0w3MlFZCkI3Y2k5TUdWbXJJblhMR1ZMajBP
+        Ti9TOE91V1Yzb2h0QTM3blR2NXRVNzQKLS0tIG9VbGh1RjM1MHYvV08zWVFtWHRD
+        MFprN3F2aUNCMjJ0MGRtRE5lVVJpaDAKlXzq6oMcjFhWY4tv0JA8aCSIP5fMhZPF
+        tMReZSmScvnn/rKyzzmybfulHykgcy4E6YzmXDIeNe8JnwaeH2PfoQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-04-10T18:34:12Z"
+  mac: ENC[AES256_GCM,data:/2rvi35P3pWP46k6gDpNrCgJEt/2WLaGZQ7Gf0H+2qNqOefGVPHvvGmTHUA9Vx53+YinNrfH+6O6HoliTthZiai3rzg1Nl+ZYSRShzQkc67MPrbuI+XsfSOfF+3FFwL8t1M5og2YVUkibFc39qNiSd6vS5cck58BIN3IGD1upI4=,iv:JEs1EyMxDKM/hreQj4EmzDfZ4L+k6OAWn9igVMTbHEw=,tag:BA5qoWas2CedjFXcOPqq+A==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.12.2
