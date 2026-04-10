@@ -28,6 +28,8 @@ spec:
             value: "true"
           - name: QUI__I_ACKNOWLEDGE_THIS_IS_A_BAD_IDEA
             value: "true"
+          - name: QUI__AUTH_DISABLED_ALLOWED_CIDRS 
+            value: "192.168.8.0/24"
           - name: QUI__CHECK_FOR_UPDATES
             value: "false"
           # - name: QUI__CORS_ALLOWED_ORIGINS
