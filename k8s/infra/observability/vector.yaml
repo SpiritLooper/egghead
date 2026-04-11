@@ -53,7 +53,7 @@ spec:
               nkey: UDVHQU3IJW2OAIW4SBQRMRPNKGXB3LNM3AYH3TYSYXQ4HHH2R5B4R6MX
               seed: "${VECTOR_NATS_SEED}"
           tls:
-            nabled: true
+            enabled: true
           url: nats://logs.skypiea.infrao.top:443
       transforms:
         journald_normalized:
