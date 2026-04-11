@@ -14,7 +14,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   namespace: victoriametrics
-  name: vector
+  name: vector-egghead
 spec:
   interval: 10m
   timeout: 5m
@@ -43,19 +43,6 @@ spec:
         egghead_journald:
           type: journald
           journal_directory: /var/log/journal
-        skypiea_logs:
-          type: nats
-          connection_name: egghead_vector
-          subject: skypiea.logs
-          auth:
-            strategy: nkey
-            nkey:
-              nkey: UDVHQU3IJW2OAIW4SBQRMRPNKGXB3LNM3AYH3TYSYXQ4HHH2R5B4R6MX
-              seed: "${VECTOR_NATS_SEED}"
-          tls:
-            enabled: true
-            server_name: logs.skypiea.infrao.top 
-          url: nats://logs.skypiea.infrao.top:443
       transforms:
         journald_normalized:
           type: remap
@@ -78,13 +65,6 @@ spec:
             .container = string(.kubernetes.container_name) ?? "unknown"
             del(.kubernetes.pod_labels)
             del(.kubernetes.pod_annotations)
-        skypiea_normalized:
-          type: remap
-          inputs:
-            - skypiea_logs
-          source: |
-            .host = string(.kubernetes.pod_node_name) ?? "skypiea"
-            .container = string(.container_name) ?? "unknown"
       sinks:
         vlogs_container:
           type: elasticsearch
@@ -99,19 +79,6 @@ spec:
             _msg_field: message
             _time_field: timestamp
             _stream_fields: host,namespace,pod,container
-        vlogs_container_nats:
-          type: elasticsearch
-          endpoints:
-            - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
-          inputs:
-            - skypiea_normalized
-          compression: gzip
-          healthcheck:
-            enabled: false
-          query:
-            _msg_field: message
-            _time_field: timestamp
-            _stream_fields: host,container
         vlogs_systemd:
           type: elasticsearch
           endpoints:
@@ -125,3 +92,67 @@ spec:
             _msg_field: message
             _time_field: timestamp
             _stream_fields: host,service
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  namespace: victoriametrics
+  name: vector-skypiea
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: vectordotdev
+    namespace: victoriametrics
+  values:
+    role: "Agent"
+    image:
+      repository: docker.io/timberio/vector
+      tag: 0.54.0-debian
+    service:
+      enabled: false
+    envFrom:
+      - secretRef:
+          name: vector-creds
+    customConfig:
+      data_dir: /vector-data-dir
+      api:
+        enabled: true
+        address: 0.0.0.0:8686
+      sources:
+        skypiea_logs:
+          type: nats
+          connection_name: egghead_vector
+          subject: skypiea.logs
+          auth:
+            strategy: nkey
+            nkey:
+              nkey: UDVHQU3IJW2OAIW4SBQRMRPNKGXB3LNM3AYH3TYSYXQ4HHH2R5B4R6MX
+              seed: "${VECTOR_NATS_SEED}"
+          tls:
+            enabled: true
+            server_name: logs.skypiea.infrao.top 
+          url: nats://logs.skypiea.infrao.top:443
+      transforms:
+        skypiea_normalized:
+          type: remap
+          inputs:
+            - skypiea_logs
+          source: |
+            .host = string(.kubernetes.pod_node_name) ?? "skypiea"
+            .container = string(.container_name) ?? "unknown"
+      sinks:
+        vlogs_container_nats:
+          type: elasticsearch
+          endpoints:
+            - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
+          inputs:
+            - skypiea_normalized
+          compression: gzip
+          healthcheck:
+            enabled: false
+          query:
+            _msg_field: message
+            _time_field: timestamp
+            _stream_fields: host,container
