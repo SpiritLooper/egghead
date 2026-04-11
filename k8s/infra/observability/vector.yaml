@@ -54,6 +54,7 @@ spec:
               seed: "${VECTOR_NATS_SEED}"
           tls:
             enabled: true
+            server_name: logs.skypiea.infrao.top 
           url: nats://logs.skypiea.infrao.top:443
       transforms:
         journald_normalized:
