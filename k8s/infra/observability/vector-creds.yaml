@@ -1,22 +1,22 @@
 apiVersion: v1
 stringData:
-  VECTOR_NATS_SEED: ENC[AES256_GCM,data:wocLl8JxSyuNkxja4fk/2xwgPa7+dAOr0QnGYGzPhAWkPKp/MXZTGWV55IppqCUXc+v//S28buTbGA==,iv:xp1YpRb7mRg5/qcFBDS2cmc575a8LuHnDawqxI5x/RI=,tag:RywDi7ULmDzgpUdwngIJaA==,type:str]
+  VECTOR_NATS_SEED: ENC[AES256_GCM,data:2S1U1r0nDPyPPEHu8TAPQyK0Vx8ZSX1X4MPf5yseSzzr3ElcUkL/qGLsHlaqdO9emUv8U6ZAjWnVxA==,iv:SNH00uGwgqfS1h3UmnnayUoRz5I8ARKk8TD22Amqft4=,tag:Ni2lxIQ/rIzys4i8anflkw==,type:str]
 kind: Secret
 metadata:
   name: vector-creds
-  namespace: media
+  namespace: victoriametrics
 sops:
   age:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3aWNLbms5b2xONFhnSEpN
-        VzBQLzdDZ0NaM2x3ckFIMUcxcFh6T09rNkJvCm5TS3hmYlE2RzdKTUljRFJGT0FC
-        eldTUUJtM3k2NUZrRnlmZXVMVmZxMEkKLS0tIDBwbTRZVG4rSGU3d0lnZ0hwZGxx
-        eFZobjYxQVVza3p2TkpZeW5Rcy9QZlkKO58k+CT/xePGHb3/havGtvwxgMKmxrej
-        VdXBpNyOu1OsqMIzKWFoaPN8tbG3Cp8mfOVTKJSsq157Pen5ffEwpw==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlZFM1UTR4QVMvdkFrRWsy
+        WGNOR0FvT1FnNm53UkRJSVRGT1FQV1dHUm1ZCjFrY3ZaMjJIYlFITnNGVVZ2dVR1
+        OENVS3NDNGt3Nm5DTWNxUlVEdjF6RjAKLS0tIGxvVUgrOStnQ01FNnBLMStLbkY3
+        TCtsN203bjZsdTM3enNZNklpUCtIdjgKdJ6lZg+W9pupv6mEIjWjrUf2vTZZoOIK
+        tQMNGVz6dCf34Z7JwYfUgGHH24wHxYYPHhnTxs20R0gmG4++5xGrqg==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-04-11T09:41:42Z"
-  mac: ENC[AES256_GCM,data:EWqhZu86PG3RaYdUfhcwZFyw/Kj79hvH7eM+MmfuR4LSHzKntkiJKtIqvOVJUBw+TbCsTn2VLFbuWb9NDik+TuAOV2gdGpjjvA4CLsTEpe+NBiI4RkDpxVlBwTOXvvHgmyl2Rstbkqvwel7njfreLvmCxrEfkIeCqahXNMic92E=,iv:V0HDexza77y98cjhSjzmN9IQL8/Y+YANGi1aSjNsE5E=,tag:8Pwin9hclce8yDWX+TviXQ==,type:str]
+  lastmodified: "2026-04-11T09:46:15Z"
+  mac: ENC[AES256_GCM,data:xDX2vC4Yc+DQO/vOlRTJQKhqpXoBeSby7BpW+iFVqUFNCrXCJ3wKa/xhLdo0tT3PTyHaFM3nJ/P29Xgsd+rr+mSLgeWgir3eKGK1mFGMEFftC6FLoEYzdwkeur5qnJ/jV5/Me40QxlOufweQj93cKXxu1t7t6VxAYLGnpWcxZUk=,iv:qLSp2kb09Xl3TRFm4bYR6zOASe5h7g9wcihubskjblo=,tag:iS9P6pFwlYLhE5o2aYjx9w==,type:str]
   encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
   version: 3.12.2
