@@ -1,0 +1,22 @@
+apiVersion: v1
+stringData:
+  VECTOR_NATS_SEED: ENC[AES256_GCM,data:wocLl8JxSyuNkxja4fk/2xwgPa7+dAOr0QnGYGzPhAWkPKp/MXZTGWV55IppqCUXc+v//S28buTbGA==,iv:xp1YpRb7mRg5/qcFBDS2cmc575a8LuHnDawqxI5x/RI=,tag:RywDi7ULmDzgpUdwngIJaA==,type:str]
+kind: Secret
+metadata:
+  name: vector-creds
+  namespace: media
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3aWNLbms5b2xONFhnSEpN
+        VzBQLzdDZ0NaM2x3ckFIMUcxcFh6T09rNkJvCm5TS3hmYlE2RzdKTUljRFJGT0FC
+        eldTUUJtM3k2NUZrRnlmZXVMVmZxMEkKLS0tIDBwbTRZVG4rSGU3d0lnZ0hwZGxx
+        eFZobjYxQVVza3p2TkpZeW5Rcy9QZlkKO58k+CT/xePGHb3/havGtvwxgMKmxrej
+        VdXBpNyOu1OsqMIzKWFoaPN8tbG3Cp8mfOVTKJSsq157Pen5ffEwpw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-04-11T09:41:42Z"
+  mac: ENC[AES256_GCM,data:EWqhZu86PG3RaYdUfhcwZFyw/Kj79hvH7eM+MmfuR4LSHzKntkiJKtIqvOVJUBw+TbCsTn2VLFbuWb9NDik+TuAOV2gdGpjjvA4CLsTEpe+NBiI4RkDpxVlBwTOXvvHgmyl2Rstbkqvwel7njfreLvmCxrEfkIeCqahXNMic92E=,iv:V0HDexza77y98cjhSjzmN9IQL8/Y+YANGi1aSjNsE5E=,tag:8Pwin9hclce8yDWX+TviXQ==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.12.2

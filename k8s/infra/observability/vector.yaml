@@ -29,6 +29,9 @@ spec:
       tag: 0.54.0-debian
     service:
       enabled: false
+    envFrom:
+      - secretRef:
+          name: vector-creds
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -40,6 +43,18 @@ spec:
         egghead_journald:
           type: journald
           journal_directory: /var/log/journal
+        skypiea_logs:
+          type: nats
+          connection_name: egghead_vector
+          subject: skypiea.logs
+          auth:
+            strategy: nkey
+            nkey:
+              nkey: UDVHQU3IJW2OAIW4SBQRMRPNKGXB3LNM3AYH3TYSYXQ4HHH2R5B4R6MX
+              seed: "${VECTOR_NATS_SEED}"
+          tls:
+            nabled: true
+          url: nats://logs.skypiea.infrao.top:443
       transforms:
         journald_normalized:
           type: remap
@@ -62,6 +77,13 @@ spec:
             .container = string(.kubernetes.container_name) ?? "unknown"
             del(.kubernetes.pod_labels)
             del(.kubernetes.pod_annotations)
+        skypiea_normalized:
+          type: remap
+          inputs:
+            - skypiea_logs
+          source: |
+            .host = string(.kubernetes.pod_node_name) ?? "skypiea"
+            .container = string(.container_name) ?? "unknown"
       sinks:
         vlogs_container:
           type: elasticsearch
@@ -76,6 +98,19 @@ spec:
             _msg_field: message
             _time_field: timestamp
             _stream_fields: host,namespace,pod,container
+        vlogs_container_nats:
+          type: elasticsearch
+          endpoints:
+            - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
+          inputs:
+            - skypiea_normalized
+          compression: gzip
+          healthcheck:
+            enabled: false
+          query:
+            _msg_field: message
+            _time_field: timestamp
+            _stream_fields: host,container
         vlogs_systemd:
           type: elasticsearch
           endpoints:
