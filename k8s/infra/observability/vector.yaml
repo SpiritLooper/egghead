@@ -133,7 +133,7 @@ spec:
           tls:
             enabled: true
             server_name: logs.skypiea.infrao.top 
-          url: nats://logs.skypiea.infrao.top:443
+          url: nats://logs.skypiea.infrao.top:4222
       transforms:
         skypiea_normalized:
           type: remap
