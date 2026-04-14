@@ -144,6 +144,52 @@ spec:
             . = parse_json!(.message)
             .host = string(.kubernetes.pod_node_name) ?? "skypiea"
             .container = string(.container_name) ?? "unknown"
+            # Normalize message field
+            if container_name == "unknown" && service == "unknown" {
+              raw_message = string(._msg) ?? string(.message) ?? ""
+
+              # Guard: check that the message starts with "[UFW" as 1st word
+              words = split(raw_message, " ")
+              words[0] = to_string(words[0])
+
+              if length(words) < 1 || !starts_with(words[0], "[UFW") {
+                .parsed = false
+                .skip_reason = "Not a UFW log entry"
+              } else {
+                # Extract UFW action from the tag e.g. [UFW BLOCK]
+                action_parsed, action_err = parse_regex(raw_message, r'^\[UFW\s+(?P<ufw_action>\w+)\]')
+
+                if action_err != null {
+                  .parse_error = action_err
+                  .parsed = false
+                } else {
+                  .service = "ufw"
+                  .action = action_parsed.ufw_action  # "BLOCK", "ALLOW", etc.
+
+                  # Parse key=value pairs from the rest of the message
+                  # UFW logs are structured as KEY=VALUE pairs after the tag
+                  kv_parsed, kv_err = parse_key_value(raw_message, key_value_delimiter: "=", field_delimiter: " ", whitespace: "strict")
+
+                  if kv_err != null {
+                    .parse_error = kv_err
+                    .parsed = false
+                  } else {
+                    .in_interface  = string(kv_parsed.IN)    ?? null   # "ens3"
+                    .out_interface = string(kv_parsed.OUT)   ?? null   # "" (empty = local)
+                    .src.ip        = string(kv_parsed.SRC)   ?? null   # "87.251.64.159"
+                    .dst.ip        = string(kv_parsed.DST)   ?? null   # "51.178.54.234"
+                    .proto         = string(kv_parsed.PROTO) ?? null   # "TCP"
+                    .src.port      = to_int(kv_parsed.SPT)   ?? null   # 61000
+                    .dst.port      = to_int(kv_parsed.DPT)   ?? null   # 41878
+                    .ttl           = to_int(kv_parsed.TTL)   ?? null   # 241
+                    .mac           = string(kv_parsed.MAC)   ?? null   # "fa:16:3e:..."
+                    .length        = to_int(kv_parsed.LEN)   ?? null   # 44
+                    .parsed        = true
+                  }
+                }
+              }
+            }
+
             if .container_name == "garage" {
                 .message = strip_ansi_escape_codes!(.message)
 
