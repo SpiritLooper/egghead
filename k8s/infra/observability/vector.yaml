@@ -124,15 +124,6 @@ spec:
     initContainers:
       - name: geoip-updater
         image: ghcr.io/maxmind/geoipupdate:latest
-        args:
-          - |
-            cat > /etc/GeoIP.conf <<EOF
-            AccountID ${GEOIPUPDATE_ACCOUNT_ID}
-            LicenseKey ${GEOIPUPDATE_LICENSE_KEY}
-            EditionIDs GeoLite2-City
-            DatabaseDirectory /geoip
-            EOF
-            geoipupdate -f /etc/GeoIP.conf
         env:
           - name: GEOIPUPDATE_ACCOUNT_ID
             valueFrom:
