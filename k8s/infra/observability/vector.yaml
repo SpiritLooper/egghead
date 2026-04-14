@@ -145,7 +145,7 @@ spec:
             .host = string(.kubernetes.pod_node_name) ?? "skypiea"
             .container = string(.container_name) ?? "unknown"
             # Normalize message field
-            if container_name == "unknown" && service == "unknown" {
+            if .container_name == "unknown" && .service == "unknown" {
               raw_message = string(._msg) ?? string(.message) ?? ""
 
               # Guard: check that the message starts with "[UFW" as 1st word
