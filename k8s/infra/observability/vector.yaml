@@ -109,7 +109,7 @@ spec:
     role: "Stateless-Aggregator"
     image:
       repository: docker.io/timberio/vector
-      tag: 0.54.0-debian
+      tag: nightly-debian
     service:
       enabled: false
     envFrom:
