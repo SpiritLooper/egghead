@@ -140,8 +140,147 @@ spec:
           inputs:
             - skypiea_logs
           source: |
+            . = parse_json!(.message)
             .host = string(.kubernetes.pod_node_name) ?? "skypiea"
             .container = string(.container_name) ?? "unknown"
+            if .container_name == "garage" {
+              .message = strip_ansi_escape_codes(.message)
+
+              parsed, err = parse_regex(
+                .message,
+                r'^(?P<timestamp>\S+)\s+(?P<level>\w+)\s+(?P<component>[^:]+::[^\:]+):\s+(?P<msg>.*)$'
+              )
+
+              if err == null {
+                .timestamp = parse_timestamp!(parsed.timestamp, "%+")
+                .level = downcase!(parsed.level)
+                .component = parsed.component
+                .message = parsed.msg
+              }
+
+              ip_match, err = parse_regex(.message, r'(?P<ip>\d+\.\d+\.\d+\.\d+|\[::ffff:[^\]]+\])')
+              if err == null {
+                .ip = ip_match.ip
+              }
+
+              http_match, err = parse_regex(.message, r'(?P<method>GET|POST|PUT|DELETE|HEAD)\s+(?P<path>/\S+)')
+              if err == null {
+                .http.method = http_match.method
+                .http.path = http_match.path
+              }
+
+              status_match, err = parse_regex(.message, r'Response:\s+error\s+(?P<status>\d{3})')
+              if err == null {
+                .http.status = to_int!(status_match.status)
+              }
+
+              .structured.raw = .message
+            } else if .container_name == "traefik" {
+
+              parsed, err = parse_json(.message)
+
+              if err == null {
+                .parsed = parsed
+              }
+
+              if exists(.parsed.time) {
+                .timestamp = parse_timestamp!(.parsed.time, "%+")
+              }
+
+              if exists(.parsed.level) {
+                .level = downcase(to_string(.parsed.level) ?? "info")
+              }
+
+              if exists(.parsed.message) && .parsed.message != "" {
+                .message = .parsed.message
+              }
+
+              if exists(.parsed.RequestMethod) && exists(.parsed.RequestPath) {
+                .http.method = .parsed.RequestMethod
+                .http.path = .parsed.RequestPath
+                .http.host = .parsed.RequestHost
+                .http.status = to_int!(.parsed.DownstreamStatus)
+
+                .network.client_ip = .parsed.ClientHost
+                .network.client_port = to_int!(.parsed.ClientPort)
+
+                .backend.service = .parsed.ServiceName
+                .message =
+                  (to_string(.parsed.ClientHost) ?? "?") + " " +
+                  (to_string(.parsed.RequestMethod) ?? "?") + " " +
+                  (to_string(.parsed.RequestHost) ?? "?") + " " +
+                  (to_string(.parsed.RequestPath) ?? "?")     
+              }
+
+            } else if .container_name == "doco-cd" {
+
+              parsed, err = parse_json(.message)
+
+              if err == null {
+                .parsed = parsed
+              }
+
+              if exists(.parsed.time) {
+                .timestamp = parse_timestamp!(.parsed.time, "%+")
+              }
+
+              if exists(.parsed.level) {
+                .level = downcase(to_string(.parsed.level) ?? "info")
+              }
+
+              if exists(.parsed.msg) {
+                .message = to_string!(.parsed.msg)
+              }
+
+              msg = to_string(.message)
+
+              if contains(msg, "polling repository") {
+                .event.type = "poll"
+              } else if contains(msg, "deploying stack") {
+                .event.type = "deploy_start"
+              } else if contains(msg, "deployment in progress") {
+                .event.type = "deploy_progress"
+              } else if contains(msg, "job completed successfully") {
+                .event.type = "job_success"
+              } else if contains(msg, "new application version available") {
+                .event.type = "version_warning"
+              } else if contains(msg, "starting application") {
+                .event.type = "startup"
+              }
+
+              if exists(.parsed.repository) {
+                .repo = .parsed.repository
+              }
+
+              if exists(.parsed.job_id) {
+                .job.id = .parsed.job_id
+              }
+
+              if exists(.parsed.elapsed_time) {
+                secs, err = parse_regex(.parsed.elapsed_time, r'(?P<val>[0-9.]+)')
+                if err == null {
+                  .metrics.elapsed_seconds = to_float!(secs.val)
+                }
+              }
+
+              if exists(.parsed.next_run) {
+                .schedule.next_run = parse_timestamp!(.parsed.next_run, "%+")
+              }
+            }
+
+            # =========================
+            # FINAL GUARANTEES
+            # =========================
+
+            if !exists(.timestamp) {
+              .timestamp = now()
+            }
+
+            .message = to_string!(.message)
+
+            if exists(.label) {
+              del(.label)
+            }
       sinks:
         vlogs_container_nats:
           type: elasticsearch
