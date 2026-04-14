@@ -147,10 +147,7 @@ spec:
             if .container_name == "garage" {
                 .message = strip_ansi_escape_codes!(.message)
 
-                parsed, err = parse_regex(
-                .message,
-                r'^(?P<timestamp>\S+)\s+(?P<level>\w+)\s+(?P<component>[^:]+::[^\:]+):\s+(?P<msg>.*)$'
-                )
+                parsed, err = parse_regex( .message, r'^(?P<timestamp>\S+)\s+(?P<level>\w+)\s+(?P<component>[^:]+::[^\:]+):\s+(?P<msg>.*)$' )
 
                 if err == null {
                   .timestamp = parse_timestamp!(parsed.timestamp, "%+")
