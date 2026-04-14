@@ -237,10 +237,6 @@ spec:
 
                     # Optionally parse datetime into a proper timestamp
                     .timestamp_parsed = parse_timestamp(.datetime, format: "%Y/%m/%d %H:%M:%S") ?? null
-
-                    # Clean up raw message field
-                    del(.message)
-                    del(._msg)
                   }
                 }
             } else if .container_name == "doco-cd" {
