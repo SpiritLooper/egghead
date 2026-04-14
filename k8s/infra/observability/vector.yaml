@@ -209,6 +209,40 @@ spec:
                       (to_string(.parsed.RequestHost) ?? "?") + " " +
                       (to_string(.parsed.RequestPath) ?? "?")     
                 }
+
+                # Parse geoblock logs
+                raw_message = string(.message) ?? string(._msg) ?? ""
+
+                # Guard: check that the 2nd word is "GeoBlock"
+                words = split(raw_message, " ")
+
+                if length(words) < 2 || words[1] != "GeoBlock:" {
+                  .parsed = false
+                  .skip_reason = "Not a GeoBlock log entry"
+                } else {
+                  # Extract all fields from the GeoBlock message using regex
+                  parsed, err = parse_regex(raw_message, r'^(?P<log_level>\w+):\s+(?P<plugin_name>\S+):\s+(?P<datetime>\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2}:\d{2})\s+(?P<plugin_instance>\S+):\s+request\s+(?P<action>allowed|denied)\s+\[(?P<ip>[\d.]+)\]\s+for\s+country\s+\[(?P<country>[A-Z]+)\]')
+
+                  if err != null {
+                    .parse_error = err
+                    .parsed = false
+                  } else {
+                    .log_level        = parsed.log_level        # "INFO"
+                    .datetime         = parsed.datetime         # "2026/04/14 18:30:40"
+                    .plugin_name      = parsed.plugin_instance  # "geoblock@docker"
+                    .action           = parsed.action           # "allowed" or "denied"
+                    .ip               = parsed.ip               # "89.87.104.198"
+                    .country          = parsed.country          # "FR"
+                    .parsed           = true
+
+                    # Optionally parse datetime into a proper timestamp
+                    .timestamp_parsed = parse_timestamp(.datetime, format: "%Y/%m/%d %H:%M:%S") ?? null
+
+                    # Clean up raw message field
+                    del(.message)
+                    del(._msg)
+                  }
+                }
             } else if .container_name == "doco-cd" {
 
                 parsed, err = parse_json(.message)
