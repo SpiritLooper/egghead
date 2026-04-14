@@ -115,6 +115,34 @@ spec:
     envFrom:
       - secretRef:
           name: vector-creds
+    extraVolumes:
+      - name: geoip-db
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: geoip-db
+        mountPath: /geoip
+    initContainers:
+      - name: geoip-updater
+        image: ghcr.io/maxmind/geoipupdate:latest
+        env:
+          - name: GEOIPUPDATE_ACCOUNT_ID
+            valueFrom:
+              secretKeyRef:
+                name: vector-creds
+                key: GEOIP_ACCOUNT_ID
+          - name: GEOIPUPDATE_LICENSE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: vector-creds
+                key: GEOIP_LICENSE_KEY
+          - name: GEOIPUPDATE_EDITION_IDS
+            value: "GeoLite2-City"
+          - name: GEOIPUPDATE_DB_DIR
+            value: /geoip
+        volumeMounts:
+          - name: geoip-db
+            mountPath: /geoip
+
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -174,16 +202,16 @@ spec:
                     .parse_error = kv_err
                     .parsed = false
                   } else {
-                    .in_interface  = string(kv_parsed.IN)    ?? null   # "ens3"
-                    .out_interface = string(kv_parsed.OUT)   ?? null   # "" (empty = local)
-                    .src.ip        = string(kv_parsed.SRC)   ?? null   # "87.251.64.159"
-                    .dst.ip        = string(kv_parsed.DST)   ?? null   # "51.178.54.234"
-                    .proto         = string(kv_parsed.PROTO) ?? null   # "TCP"
-                    .src.port      = to_int(kv_parsed.SPT)   ?? null   # 61000
-                    .dst.port      = to_int(kv_parsed.DPT)   ?? null   # 41878
-                    .ttl           = to_int(kv_parsed.TTL)   ?? null   # 241
-                    .mac           = string(kv_parsed.MAC)   ?? null   # "fa:16:3e:..."
-                    .length        = to_int(kv_parsed.LEN)   ?? null   # 44
+                    .in_interface  = string(kv_parsed.IN)    ?? null
+                    .out_interface = string(kv_parsed.OUT)   ?? null
+                    .src.ip        = string(kv_parsed.SRC)   ?? null
+                    .dst.ip        = string(kv_parsed.DST)   ?? null
+                    .proto         = string(kv_parsed.PROTO) ?? null
+                    .src.port      = to_int(kv_parsed.SPT)   ?? null
+                    .dst.port      = to_int(kv_parsed.DPT)   ?? null
+                    .ttl           = to_int(kv_parsed.TTL)   ?? null
+                    .mac           = string(kv_parsed.MAC)   ?? null
+                    .length        = to_int(kv_parsed.LEN)   ?? null
                     .parsed        = true
                   }
                 }
@@ -204,7 +232,7 @@ spec:
 
                 ip_match, err = parse_regex(.message, r'(?P<ip>\d+\.\d+\.\d+\.\d+|\[::ffff:[^\]]+\])')
                   if err == null {
-                  .ip = ip_match.ip
+                  .src.ip = ip_match.ip
                 }
 
                 http_match, err = parse_regex(.message, r'(?P<method>GET|POST|PUT|DELETE|HEAD)\s+(?P<path>/\S+)')
@@ -245,8 +273,8 @@ spec:
                   .http.host = .parsed.RequestHost
                   .http.status = to_int!(.parsed.DownstreamStatus)
 
-                  .network.client_ip = .parsed.ClientHost
-                  .network.client_port = to_int!(.parsed.ClientPort)
+                  .src.ip = .parsed.ClientHost
+                  .src.port = to_int!(.parsed.ClientPort)
 
                   .backend.service = .parsed.ServiceName
                   .message =
@@ -273,12 +301,12 @@ spec:
                     .parse_error = err
                     .parsed = false
                   } else {
-                    .log_level        = parsed.log_level        # "INFO"
-                    .datetime         = parsed.datetime         # "2026/04/14 18:30:40"
-                    .plugin_name      = parsed.plugin_instance  # "geoblock@docker"
-                    .action           = parsed.action           # "allowed" or "denied"
-                    .ip               = parsed.ip               # "89.87.104.198"
-                    .country          = parsed.country          # "FR"
+                    .log_level        = parsed.log_level      
+                    .datetime         = parsed.datetime       
+                    .plugin_name      = parsed.plugin_instance
+                    .action           = parsed.action         
+                    .src.ip           = parsed.ip             
+                    .src.country      = parsed.country        
                     .parsed           = true
 
                     # Optionally parse datetime into a proper timestamp
@@ -354,13 +382,21 @@ spec:
             if exists(.label) {
               del(.label)
             }
+        skypiea_geoip:
+          type: geoip
+          inputs:
+            - skypiea_normalized
+          database: /geoip/GeoLite2-City.mmdb
+          source: src.ip
+          target: src.geo
+          locale: en
       sinks:
         vlogs_container_nats:
           type: elasticsearch
           endpoints:
             - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
-            - skypiea_normalized
+            - skypiea_geoip
           compression: gzip
           healthcheck:
             enabled: false

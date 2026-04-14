@@ -1,6 +1,8 @@
 apiVersion: v1
 stringData:
-  VECTOR_NATS_SEED: ENC[AES256_GCM,data:2S1U1r0nDPyPPEHu8TAPQyK0Vx8ZSX1X4MPf5yseSzzr3ElcUkL/qGLsHlaqdO9emUv8U6ZAjWnVxA==,iv:SNH00uGwgqfS1h3UmnnayUoRz5I8ARKk8TD22Amqft4=,tag:Ni2lxIQ/rIzys4i8anflkw==,type:str]
+  VECTOR_NATS_SEED: ENC[AES256_GCM,data:9BjUH74D+NJd/ZbDtsF+Kt57vgcSLXPgJtwXTbe/SU024Bsooc5AmD7FUKaP0Ar02TppNltoc7r3yA==,iv:HBL4gl/MPv3A5+jeZGMjkhMLkVFEHaPGgwyjvXXHeI8=,tag:l4k8j2VAenCtpPL2lZZeoQ==,type:str]
+  GEOIP_ACCOUNT_ID: ENC[AES256_GCM,data:VEiZy02MvRTYFK/1RJ7DEB/BuhSoqA==,iv:PVJN4TN/z2TSkoPxMF7rQRg8+ZHjEOS2OTbCpGjdx30=,tag:ahs14c9GNTJkSJAqKpf05w==,type:str]
+  GEOIP_LICENSE_KEY: ENC[AES256_GCM,data:Mq1fY0qtHL1L+25pSzCSLsTpFw3AGM7AQtk9x5o1Laob2S9S5W8zog==,iv:/s8kWkvuKMErSQI75HqiBn5YY0Of9fXcHJPutqJ9NRI=,tag:vjAMTEd8uKNaFERUTOo2Ww==,type:str]
 kind: Secret
 metadata:
   name: vector-creds
@@ -10,13 +12,13 @@ sops:
     - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlZFM1UTR4QVMvdkFrRWsy
-        WGNOR0FvT1FnNm53UkRJSVRGT1FQV1dHUm1ZCjFrY3ZaMjJIYlFITnNGVVZ2dVR1
-        OENVS3NDNGt3Nm5DTWNxUlVEdjF6RjAKLS0tIGxvVUgrOStnQ01FNnBLMStLbkY3
-        TCtsN203bjZsdTM3enNZNklpUCtIdjgKdJ6lZg+W9pupv6mEIjWjrUf2vTZZoOIK
-        tQMNGVz6dCf34Z7JwYfUgGHH24wHxYYPHhnTxs20R0gmG4++5xGrqg==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBMOWxxOWtZVVlIeUxTTEtH
+        eXpEMVh0Tmtrb3B2MUJCa2JYc3paRU5JVVc0CkdwM3YzV3RqZitKOG41NWgwZ2k2
+        QTVBbTNwT2ZtdTg4Z25ZNVZUVTBTb0UKLS0tIDlBb1pOaHZkVW9mUnUvd2toQ2M0
+        M3M2amdlTmJqUkhSZ0ZGd1RCWEcyME0KVh9X69m1TY981MnR74rkuk4CxLeCAwCO
+        L1oK/gBLByaccPNeUt5IBe54qNqgG5rDGiDpOwSzsZ8EceOda38JEw==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-04-11T09:46:15Z"
-  mac: ENC[AES256_GCM,data:xDX2vC4Yc+DQO/vOlRTJQKhqpXoBeSby7BpW+iFVqUFNCrXCJ3wKa/xhLdo0tT3PTyHaFM3nJ/P29Xgsd+rr+mSLgeWgir3eKGK1mFGMEFftC6FLoEYzdwkeur5qnJ/jV5/Me40QxlOufweQj93cKXxu1t7t6VxAYLGnpWcxZUk=,iv:qLSp2kb09Xl3TRFm4bYR6zOASe5h7g9wcihubskjblo=,tag:iS9P6pFwlYLhE5o2aYjx9w==,type:str]
+  lastmodified: "2026-04-14T20:04:42Z"
+  mac: ENC[AES256_GCM,data:VozHLjYusPSHxy+4l81CAvDbzcLPcnDo7xhmByYGPnbhIvDao0msGd2bFUcc8rhg2UQRtmTNqDGWEEKTYxnweQnnJg8SKxHhXN7rDz/Mof6Z3ntdJBM8GQuvHyYN5ciXkxvVl0bYqCa64YaNzxRi5OWnorxKkHKc/ZJGElrt/4Y=,iv:i1dkRVxS0IWEAYvXO4HqiuOVIMPfW79PAbAABGFBi9E=,tag:dUzdW3GkIuQYtXL5nbdscA==,type:str]
   encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
   version: 3.12.2
