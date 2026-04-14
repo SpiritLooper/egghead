@@ -109,7 +109,7 @@ spec:
     role: "Stateless-Aggregator"
     image:
       repository: docker.io/timberio/vector
-      tag: @sha256:fdc7f6bbcacd4ef1897e6429b1846ffb4990dba2aacf2db91f2c814b1e365676 
+      tag: debian-nightly
     service:
       enabled: false
     envFrom:
