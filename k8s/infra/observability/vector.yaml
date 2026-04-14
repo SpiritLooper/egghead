@@ -145,6 +145,10 @@ spec:
 
     customConfig:
       data_dir: /vector-data-dir
+      enrichment_tables:
+        geoip_table:
+          type: geoip
+          path: /geoip/GeoLite2-City.mmdb
       api:
         enabled: true
         address: 0.0.0.0:8686
@@ -370,9 +374,17 @@ spec:
             }
 
             # =========================
+            # GEOIP ENRICHMENT
+            # =========================
+            if exists(.src.ip) && .src.ip != null {
+              geo, err = get_enrichment_table_record("geoip_table", {"ip": string!(.src.ip)})
+              if err == null {
+                .src.geo = geo
+              }
+            }
+            # =========================
             # FINAL GUARANTEES
             # =========================
-
             if !exists(.timestamp) {
               .timestamp = now()
             }
@@ -382,21 +394,13 @@ spec:
             if exists(.label) {
               del(.label)
             }
-        skypiea_geoip:
-          type: geoip
-          inputs:
-            - skypiea_normalized
-          database: /geoip/GeoLite2-City.mmdb
-          source: src.ip
-          target: src.geo
-          locale: en
       sinks:
         vlogs_container_nats:
           type: elasticsearch
           endpoints:
             - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
-            - skypiea_geoip
+            - skypiea_normalized
           compression: gzip
           healthcheck:
             enabled: false
