@@ -144,7 +144,7 @@ spec:
             .host = string(.kubernetes.pod_node_name) ?? "skypiea"
             .container = string(.container_name) ?? "unknown"
             if .container_name == "garage" {
-              .message = strip_ansi_escape_codes(.message)
+              .message = strip_ansi_escape_codes!(.message)
 
               parsed, err = parse_regex(
                 .message,
