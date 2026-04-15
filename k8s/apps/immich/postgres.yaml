@@ -24,10 +24,10 @@ spec:
         barmanObjectName: garage-immich-backup-store
 
   bootstrap:
-    initdb:
-      recovery:
-        source: source
+    recovery:
+      source: source
       # TODO: Use managed extensions (pg 18)
+    initdb:
       postInitApplicationSQL:
         # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
         - CREATE EXTENSION vchord CASCADE;
