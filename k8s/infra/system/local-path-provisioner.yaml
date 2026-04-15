@@ -27,3 +27,4 @@ spec:
     storageClass:
       defaultClass: true
       provisionerName: local-path
+      pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}/"
