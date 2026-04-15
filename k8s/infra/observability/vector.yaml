@@ -51,6 +51,58 @@ spec:
           source: |
             .service = string(._SYSTEMD_UNIT) ?? "unknown"
             .message = string(.message) ?? string(._COMM) ?? ""
+            if .service == "ssh.service" {
+              err = null
+              parse.user = null
+              parse.port = null
+
+              if starts_with(.message, "Disconnected") {
+                  parse, err = parse_regex(.message, r'Disconnected from invalid user (?P<user>.+) (?P<ip>((\d{1,3}.){3}.(\d{1,3}))|(?:(?:[a-fA-F0-9]*)?:){1,7}[A-Fa-f0-9]*) port (?P<port>\d+).*')
+                  .ssh.log_type = "invalid user"
+                  .level = "notice"
+              } else if starts_with(.message, "Invalid") {
+                  parse, err = parse_regex(.message, r'Invalid user (?P<user>.+) from (?P<ip>((\d{1,3}.){3}.(\d{1,3}))|(?:(?:[a-fA-F0-9]*)?:){1,7}[A-Fa-f0-9]*) port (?P<port>\d+).*')
+                  .ssh.log_type = "invalid user"
+                  .level = "notice"
+              } else if starts_with(.message, "Received") {
+                  parse, err = parse_regex(.message, r'Received disconnect from (?P<ip>((\d{1,3}.){3}.(\d{1,3}))|(?:(?:[a-fA-F0-9]*)?:){1,7}[A-Fa-f0-9]*) port (?P<port>\d+).*')
+                  .ssh.log_type = "tcp check"
+                  .level = "notice"
+              } else if starts_with(.message, "Accepted") {
+                  parse, err = parse_regex(.message, r'Accepted publickey for (?P<user>.+) from (?P<ip>((\d{1,3}.){3}.(\d{1,3}))|(?:(?:[a-fA-F0-9]*)?:){1,7}[A-Fa-f0-9]*) port (?P<port>\d+) .+: (?P<key_alg>\S+) (?P<hash_alg>\S+):(?P<hash>.+)')
+                  .ssh.log_type = "allow user"
+                  .ssh.key.hash = parse.hash
+                  .ssh.key.hash_alg = parse.hash_alg
+                  .ssh.key.key_alg = parse.key_alg
+                  .level = "notice"
+              } else if match(.message, r'pam_unix') {
+                  parse, err = parse_regex(.message, r'.*pam_unix: session opened for user (?P<user>.+).uid=(?P<uid>\d+). by (?P<auser>.+).uid=(?P<auid>\d+).')
+                  .pam.from.user = parse.user
+                  .pam.from.uid = parse.uid
+                  .pam.to.user = parse.auser
+                  .pam.to.uid = parse.auid
+                  if parse.auid == 0 {
+                      .ssh.log_type = "root access"
+                      .level = "warn"
+                  } else {
+                      .ssh.log_type = "user switch"
+                      .level = "info"
+                  }
+              } else if starts_with(.message, "Connection") {
+                  parse, err = parse_regex(.message, r'Connection (?P<tcp_action>.+) by (?P<reason>.+) user (?P<user>.+) (?P<ip>((\d{1,3}.){3}.(\d{1,3}))|(?:(?:[a-fA-F0-9]*)?:){1,7}[A-Fa-f0-9]*) port (?P<port>\d+).*')
+                  .ssh.log_type = "invalid user"
+                  .ssh.tcp_action = parse.tcp_action
+                  .level = "warn"
+              }
+
+              if err == null {
+                  .ssh.user = parse.user
+                  .src.ip = parse.ip
+                  .src.port = to_int(parse.port) ?? parse.port
+              } else {
+                  .err = err
+              }
+            }
             del(._MACHINE_ID)
             del(._SYSTEMD_CGROUP)
             del(._TRANSPORT)
