@@ -51,12 +51,6 @@ spec:
     shared_preload_libraries:
       - "vchord.so"
 
-  plugins:
-    - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: true
-      parameters:
-        barmanObjectName: garage-immich-backup-store
-
   bootstrap:
     recovery:
       source: source
