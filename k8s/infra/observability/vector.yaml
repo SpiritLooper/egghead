@@ -76,11 +76,12 @@ spec:
                   .ssh.key.key_alg = parse.key_alg
                   .level = "notice"
               } else if match(.message, r'pam_unix') {
-                  parse, err = parse_regex(.message, r'.*pam_unix: session opened for user (?P<user>.+).uid=(?P<uid>\d+). by (?P<auser>.+).uid=(?P<auid>\d+).')
+                  parse, err = parse_regex(.message, r'.*pam_unix.*: session (?P<action>\S+) for user (?P<user>\S+)(\(uid=(?P<uid>\d+)\) by (?P<auser>\S+).uid=(?P<auid>\d+).)?$')
                   .pam.from.user = parse.user
                   .pam.from.uid = parse.uid
                   .pam.to.user = parse.auser
                   .pam.to.uid = parse.auid
+                  .pam.action = parse.action
                   if parse.auid == 0 {
                       .ssh.log_type = "root access"
                       .level = "warn"
