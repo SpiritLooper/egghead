@@ -1,3 +1,37 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-database
+  annotations:
+    k8up.io/backup: "false"
+spec:
+  instances: 1
+
+  storage:
+    storageClass: nfs
+    size: 1Gi
+
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
+
+  postgresql:
+    shared_preload_libraries:
+      - "vchord.so"
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: garage-immich-backup-store
+
+  bootstrap:
+    initdb:
+      # TODO: Use managed extensions (pg 18)
+      postInitApplicationSQL:
+        # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
+        - CREATE EXTENSION vchord CASCADE;
+        - CREATE EXTENSION earthdistance CASCADE;
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
