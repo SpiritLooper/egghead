@@ -28,5 +28,3 @@ spec:
       isWALArchiver: true
       parameters:
         barmanObjectName: garage-romm-backup-store
-  storage:
-    size: 1Gi
