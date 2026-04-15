@@ -27,7 +27,7 @@ metadata:
 spec:
   schedule: "0 30 4 * * *"
   cluster:
-    name: immich-database
+    name: immich-database-restore
   immediate: true
   method: plugin
   pluginConfiguration:

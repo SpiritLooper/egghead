@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: immich-database
+  name: immich-database-restore
   annotations:
     k8up.io/backup: "false"
 spec:
@@ -25,8 +25,18 @@ spec:
 
   bootstrap:
     initdb:
+      recovery:
+        source: source
       # TODO: Use managed extensions (pg 18)
       postInitApplicationSQL:
         # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
         - CREATE EXTENSION vchord CASCADE;
         - CREATE EXTENSION earthdistance CASCADE;
+
+  externalClusters:
+    - name: source
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-immich-backup-store
+          serverName: immich-database
