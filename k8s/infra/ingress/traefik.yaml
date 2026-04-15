@@ -112,11 +112,11 @@ spec:
     metrics:
       prometheus:
         service:
-          enabled: true
+          enabled: false
           labels: 
             app: traefik
         serviceMonitor:
-          enabled: true
+          enabled: false
           additionalLabels:
             release: kube-prometheus-stack
     experimental:
