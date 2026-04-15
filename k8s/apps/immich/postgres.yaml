@@ -27,11 +27,11 @@ spec:
     recovery:
       source: source
       # TODO: Use managed extensions (pg 18)
-    initdb:
-      postInitApplicationSQL:
-        # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
-        - CREATE EXTENSION vchord CASCADE;
-        - CREATE EXTENSION earthdistance CASCADE;
+    # initdb:
+    #   postInitApplicationSQL:
+    #     # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
+    #     - CREATE EXTENSION vchord CASCADE;
+    #     - CREATE EXTENSION earthdistance CASCADE;
 
   externalClusters:
     - name: source
