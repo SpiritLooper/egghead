@@ -235,7 +235,6 @@ spec:
           inputs:
             - routers_syslog_logs
           source: |
-            . = parse_syslog!(.message)
             .host = .hostname
             .level = .severity
             .service = .appname
