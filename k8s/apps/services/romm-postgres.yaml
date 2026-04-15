@@ -2,20 +2,31 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: romm-database
+  name: romm-database-restore
+  namespace: services
   annotations:
     k8up.io/backup: "false"
 spec:
   instances: 1
-
+  imagePullPolicy: IfNotPresent
   storage:
     storageClass: nfs
     size: 1Gi
-
   imageName: ghcr.io/cloudnative-pg/postgresql:17.6
-
+  bootstrap:
+    recovery:
+      source: source
+  externalClusters:
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: garage-romm-backup-store
+        serverName: romm-database
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters:
         barmanObjectName: garage-romm-backup-store
+  storage:
+    size: 1Gi
