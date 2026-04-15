@@ -164,7 +164,13 @@ spec:
       repository: docker.io/timberio/vector
       tag: nightly-debian
     service:
-      enabled: false
+      enabled: true
+      type: LoadBalancer
+      port:
+        - name: syslog
+          port: 9000
+          protocol: UDP
+          targetPort: syslog
     envFrom:
       - secretRef:
           name: vector-creds
@@ -206,6 +212,10 @@ spec:
         enabled: true
         address: 0.0.0.0:8686
       sources:
+        routers_syslog_logs:
+          type: syslog
+          address: 0.0.0.0:9000
+          mode: udp
         skypiea_logs:
           type: nats
           connection_name: egghead_vector
@@ -220,6 +230,18 @@ spec:
             server_name: logs.skypiea.infrao.top 
           url: wss://logs.skypiea.infrao.top:4222
       transforms:
+        routers_normalized:
+          type: remap
+          inputs:
+            - routers_syslog_logs
+          source: |
+            . = parse_syslog!(.message)
+            .host = .hostname
+            .level = .severity
+            .service = .appname
+            del(.hostname)
+            del(.severity)
+            del(.appname)
         skypiea_normalized:
           type: remap
           inputs:
@@ -474,6 +496,7 @@ spec:
             - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
             - skypiea_route.unknown_container
+            - routers_normalized
           compression: gzip
           healthcheck:
             enabled: false
