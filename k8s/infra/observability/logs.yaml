@@ -26,7 +26,7 @@ spec:
     server:
       image:
         repository: victoriametrics/victoria-logs
-        tag: v1.49.0
+        tag: v1.50.0
       persistentVolume:
         annotations: 
           k8up.io/backup: "false"
