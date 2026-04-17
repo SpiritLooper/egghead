@@ -30,12 +30,12 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ohara-infrao-top
+  name:  cloud-end-infrao-top-tls
 spec:
-  secretName: ohara-infrao-top-tls
+  secretName: cloud-end-infrao-top-tls
   dnsNames:
-    - ohara.infrao.top
-    - ohara.cp0.infrao.top
+    - cloud-end.infrao.top
+    - cloud-end.cp0.infrao.top
   issuerRef:
     name: cloudflare
     kind: Issuer
