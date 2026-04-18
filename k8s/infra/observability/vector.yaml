@@ -49,6 +49,12 @@ spec:
           type: journald
           journal_directory: /var/log/journal
       transforms:
+        remap_hostmetrics:
+          type: remap
+          inputs:
+            - egghead_host_metrics
+          source: |
+            .host = "egghead"
         journald_normalized:
           type: remap
           inputs:
@@ -153,7 +159,7 @@ spec:
         victoriametrics_sink:
           type: prometheus_remote_write
           inputs:
-            - egghead_host_metrics
+            - remap_hostmetrics
           endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
           healthcheck:
             enabled: false
