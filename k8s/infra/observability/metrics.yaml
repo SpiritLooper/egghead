@@ -1,0 +1,58 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: victoria-metrics-single
+  namespace: victoriametrics
+spec:
+  interval: 1h
+  url: oci://ghcr.io/victoriametrics/helm-charts/victoria-metrics-single
+  ref:
+    tag: 0.35.0
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  namespace: victoriametrics
+  name: victoria-metrics
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: victoria-metrics-single
+    namespace: victoriametrics
+  values:
+    server:
+      enabled: true
+      image:
+        repository: victoriametrics/victoria-metrics
+        tag: "v1.140.0"
+      persistentVolume:
+        enabled: true
+        annotations:
+          k8up.io/backup: "false"
+        storageClassName: "local-path"
+        size: 16Gi
+      resources:
+        {}
+        # limits:
+        #   cpu: 500m
+        #   memory: 512Mi
+        # requests:
+        #   cpu: 500m
+        #   memory: 512Mi
+
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - name: vmetrics.egghead.infrao.top
+            path:
+              - /
+            port: http
+        tls:
+          - hosts:
+            - vmetrics.egghead.infrao.top
+      mode: statefulSet
