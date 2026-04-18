@@ -23,8 +23,6 @@ spec:
   dnsNames:
     - knock-up-stream.infrao.top
     - knock-up-stream.cp0.infrao.top
-  ipAddresses:
-    - 192.168.8.1
   issuerRef:
     name: cloudflare
     kind: Issuer
@@ -38,8 +36,6 @@ spec:
   dnsNames:
     - cloud-end.infrao.top
     - cloud-end.cp0.infrao.top
-  ipAddresses:
-    - 192.168.9.1
   issuerRef:
     name: cloudflare
     kind: Issuer
