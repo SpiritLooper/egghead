@@ -299,6 +299,8 @@ spec:
           type: log_to_metric
           inputs: 
             - skypiea_metrics_normalized
+          all_metrics: true
+          metrics: []
         routers_normalized:
           type: remap
           inputs:
