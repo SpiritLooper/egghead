@@ -154,7 +154,7 @@ spec:
           type: prometheus_remote_write
           inputs:
             - egghead_host_metrics
-          endpoint: http://victoria-metrics-victoria-metrics-single-server/api/v1/write:8428
+          endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
           healthcheck:
             enabled: false
 ---
