@@ -54,7 +54,7 @@ spec:
           inputs:
             - egghead_host_metrics
           source: |
-            .host = "egghead"
+            .tags.host = "egghead"
         journald_normalized:
           type: remap
           inputs:
