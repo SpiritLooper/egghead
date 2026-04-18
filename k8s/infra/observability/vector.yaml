@@ -43,6 +43,20 @@ spec:
       sources:
         egghead_host_metrics:
           type: host_metrics
+          cgroups:
+            groups:
+              excludes:
+                - "kubepods.slice/*"
+          filesystem:
+            devices:
+              excludes:
+                - overlay
+                - proc
+            filesystems:
+              excludes:
+                - autofs
+                - binfmt_misc
+                - tmpfs
         egghead_k3s:
           type: kubernetes_logs
         egghead_journald:
