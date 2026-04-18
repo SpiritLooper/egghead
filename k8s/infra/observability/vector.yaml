@@ -41,6 +41,8 @@ spec:
         enabled: true
         address: 0.0.0.0:8686
       sources:
+        egghead_host_metrics:
+          type: host_metrics
         egghead_k3s:
           type: kubernetes_logs
         egghead_journald:
@@ -148,6 +150,13 @@ spec:
             _msg_field: message
             _time_field: timestamp
             _stream_fields: host,service
+        victoriametrics_sink:
+          type: prometheus_remote_write
+          inputs:
+            - host_metrics_source
+          endpoint: http://victoria-metrics-victoria-metrics-single-server/api/v1/write:8428
+          healthcheck:
+            enabled: false
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
