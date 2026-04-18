@@ -59,7 +59,7 @@ spec:
         name: garage-creds
         key: ACCESS_SECRET_KEY
   backup:
-    promURL: http://prometheus-pushgateway.supervision:9091
+    promURL: http://victoria-metrics-victoria-metrics-single-server.victoriametrics:8428
     schedule: '40 4 * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
