@@ -289,6 +289,10 @@ spec:
             server_name: logs.skypiea.infrao.top 
           url: wss://logs.skypiea.infrao.top:4222
       transforms:
+        logs_to_metrics:
+          type: log_to_metric
+          inputs: 
+            - skypiea_metrics
         routers_normalized:
           type: remap
           inputs:
@@ -538,7 +542,7 @@ spec:
         victoriametrics_sink:
           type: prometheus_remote_write
           inputs:
-            - skypiea_metrics
+            - logs_to_metrics
           endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
           healthcheck:
             enabled: false
