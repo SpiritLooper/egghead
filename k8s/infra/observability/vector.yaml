@@ -295,6 +295,7 @@ spec:
             - skypiea_metrics_json
           source: |
             . = parse_json!(.message)
+            .tags.host = .host
 
             if exists(.gauge.value)     && .gauge.value     == null { abort }
             if exists(.counter.value)   && .counter.value   == null { abort }
