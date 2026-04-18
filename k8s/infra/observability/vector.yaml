@@ -153,7 +153,7 @@ spec:
         victoriametrics_sink:
           type: prometheus_remote_write
           inputs:
-            - host_metrics_source
+            - egghead_host_metrics
           endpoint: http://victoria-metrics-victoria-metrics-single-server/api/v1/write:8428
           healthcheck:
             enabled: false
