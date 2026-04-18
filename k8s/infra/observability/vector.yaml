@@ -56,7 +56,17 @@ spec:
               excludes:
                 - autofs
                 - binfmt_misc
+                - bpf
+                - configfs
+                - cgroup2
+                - debugfs
+                - efivarfs
+                - fusectl
+                - pstore
+                - sysfs
+                - securityfs
                 - tmpfs
+                - tracefs
         egghead_k3s:
           type: kubernetes_logs
         egghead_journald:
