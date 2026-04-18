@@ -275,7 +275,7 @@ spec:
             enabled: true
             server_name: logs.skypiea.infrao.top 
           url: wss://logs.skypiea.infrao.top:4222
-        skypiea_metrics:
+        skypiea_metrics_json:
           type: nats
           connection_name: egghead_vector_metrics
           subject: skypiea.metrics
@@ -292,13 +292,13 @@ spec:
         skypiea_metrics_normalized:
           type: remap
           inputs:
-            - skypiea_metrics
+            - skypiea_metrics_json
           source: |
             . = parse_json!(.message)
-        # logs_to_metrics:
-        #   type: log_to_metric
-        #   inputs: 
-        #     - skypiea_metrics_normalized
+        logs_to_metrics:
+          type: log_to_metric
+          inputs: 
+            - skypiea_metrics_normalized
         routers_normalized:
           type: remap
           inputs:
@@ -545,13 +545,13 @@ spec:
             known_container: .container != "unknown"
             unknown_container: .container == "unknown"
       sinks:
-        # victoriametrics_sink:
-        #   type: prometheus_remote_write
-        #   inputs:
-        #     - logs_to_metrics
-        #   endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
-        #   healthcheck:
-        #     enabled: false
+        victoriametrics_sink:
+          type: prometheus_remote_write
+          inputs:
+            - logs_to_metrics
+          endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
+          healthcheck:
+            enabled: false
         vlogs_containers:
           type: elasticsearch
           endpoints:
