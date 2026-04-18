@@ -295,6 +295,20 @@ spec:
             - skypiea_metrics_json
           source: |
             . = parse_json!(.message)
+
+            if exists(.gauge.value)     && .gauge.value     == null { abort }
+            if exists(.counter.value)   && .counter.value   == null { abort }
+            if exists(.histogram.value) && .histogram.value == null { abort }
+            if exists(.summary.value)   && .summary.value   == null { abort }
+            if exists(.set.value)       && .set.value       == null { abort }
+
+            # Aplatir les valeurs
+            if exists(.gauge.value)     { .gauge.value     = to_float!(.gauge.value) }
+            if exists(.counter.value)   { .counter.value   = to_float!(.counter.value) }
+            if exists(.histogram.value) { .histogram.value = to_float!(.histogram.value) }
+            if exists(.summary.value)   { .summary.value   = to_float!(.summary.value) }
+            if exists(.set.value)       { .set.value       = to_float!(.set.value) }
+
             del(.message)
             del(.timestamp)
             del(.source_type)
