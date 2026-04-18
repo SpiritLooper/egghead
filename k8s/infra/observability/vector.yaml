@@ -258,6 +258,14 @@ spec:
         enabled: true
         address: 0.0.0.0:8686
       sources:
+        routers_metrics_kus:
+          type: prometheus_scrape
+          endpoints:
+            - http://knock-up-stream.infrao.top:9100/metrics
+        routers_metrics_ce:
+          type: prometheus_scrape
+          endpoints:
+            - http://cloud-end.infrao.top:9100/metrics
         routers_syslog_logs:
           type: syslog
           address: 0.0.0.0:9000
@@ -289,6 +297,18 @@ spec:
             server_name: logs.skypiea.infrao.top 
           url: wss://logs.skypiea.infrao.top:4222
       transforms:
+        add_kus_host_tag_metrics:
+          type: remap
+          inputs:
+            - routers_metrics_kus
+          source: |
+            .tags.host = "knock-up-stream"
+        add_ce_host_tag_metrics:
+          type: remap
+          inputs:
+            - routers_metrics_ce
+          source: |
+            .tags.host = "cloud-end"
         skypiea_metrics_normalized:
           type: remap
           inputs:
@@ -570,6 +590,8 @@ spec:
           type: prometheus_remote_write
           inputs:
             - logs_to_metrics
+            - add_ce_host_tag_metrics
+            - add_kus_host_tag_metrics
           endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
           healthcheck:
             enabled: false
