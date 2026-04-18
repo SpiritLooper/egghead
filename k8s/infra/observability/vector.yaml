@@ -294,7 +294,10 @@ spec:
           inputs:
             - skypiea_metrics_json
           source: |
-            . = parse_json!(.message)
+            .metrics = parse_json!(.message)
+            del(.message)
+            del(.timestamp)
+            del(.source_type)
         logs_to_metrics:
           type: log_to_metric
           inputs: 
