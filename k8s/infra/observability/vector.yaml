@@ -26,7 +26,7 @@ spec:
     role: "Agent"
     image:
       repository: docker.io/timberio/vector
-      tag: 0.54.0-debian
+      tag: 0.55.0-debian
     service:
       enabled: false
     env:
