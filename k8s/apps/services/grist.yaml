@@ -64,6 +64,9 @@ spec:
             value: "true"
           - name: TZ
             value: Europe/Paris
+        envFrom:
+          - secretRef:
+              name: grist-creds
         volumes:
           - name: grist-data
             persistentVolumeClaim:
