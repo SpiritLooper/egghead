@@ -1,0 +1,27 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grist-creds
+stringData:
+  GRIST_SESSION_SECRET: ENC[AES256_GCM,data:mAk4krOHRbs8zox9wTpQxBdN8r3wUJoHGmy9YIJPVmk=,iv:BVrwvX22CBL9SSKGgH1z1ivzgz+5cq+4wS/9eHRn8Q0=,tag:icPda4iZG16S2xxA92+utw==,type:str]
+  GRIST_DEFAULT_EMAIL: ENC[AES256_GCM,data:vvUNByPGyZbmEOZHt2A2ipsS+6Ry1Ak=,iv:HiorV9VkGdX92zpBjKTsDqUGEIb0AoUCxGGu9f87Q3E=,tag:tYoByeUJYbqAoOybeNSGHw==,type:str]
+  GRIST_DOCS_MINIO_ACCESS_KEY: ENC[AES256_GCM,data:Lt1mgDl81bv6b17dv95P9LOQYUTFzgyEOQw=,iv:XdtV9YSItjG3lwPC2scY//ZIwgRXVtECvZaFh6OLwqs=,tag:7W/Ny7/mEsxtr0gSvydgPw==,type:str]
+  GRIST_DOCS_MINIO_SECRET_KEY: ENC[AES256_GCM,data:1BqnNNycKlviS5Lj8NMc27NXi7bGV8hll3JSV4lsh9Eo9qnlZF9bPAWuJ1WdFO9tXtJClgdW5vPILxCzbIWTBw==,iv:pjPIC/7ZOTMuAiG5GdTNLFTNngLAPSwgXgZrbCaXir4=,tag:q93AtWI6Gp5wT/DHLdy+Nw==,type:str]
+  GRIST_OIDC_IDP_CLIENT_ID: ENC[AES256_GCM,data:DiwLZutgx4/F2LoSgJrwxuK06I1J1514rJ5b5eu2hfLg6sp3,iv:AyCTv5YwcL6Q0qKsyE2e5NZqwp4ls6SMCeA1/084yUE=,tag:XyoDiQWF2sdPmXUhE0eulg==,type:str]
+  GRIST_OIDC_IDP_CLIENT_SECRET: ENC[AES256_GCM,data:gonyq96InClM8Z1ATN3Cdt8bUPb8zLe7aL1rLwlGfCY=,iv:9U5fWPjO4M4mdm5jqKEYANRkGoe7UqcRR6owtVrw8q8=,tag:UTL4hJbG2KYOT0EVk/+4vw==,type:str]
+sops:
+  age:
+    - recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBaazVXNU5QdnpZUmxiMGhD
+        RVZhOEZPREFqMG1BZkRjUW5GeWdodW8yUGw4CnRxSWl4MUVQcUlaUmczbDZKMXBk
+        UWgzNk14d0NOOWdPeFBQcWp6Vis3aEkKLS0tIGsvSVpKLzFvSnZWc1ptWEovdGxK
+        TW05ZDF0ZVdjTWx5YkxZc2R5UStSODAKejpqvVTnyOZ13EQSKx6PBLFwN8UmcHcg
+        nTahldjtuMl1iiXL1QSskq1BxTrKtG05nqMOI3HjwW+qh1tIUpFAAw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-04-28T19:20:35Z"
+  mac: ENC[AES256_GCM,data:PpYSKOHnwg03be4D7eHqkT2QRANANZGqQuu4s3hG0DupFCQ/nCu+J8XyYWkwvJRGCPK8q0h5CYk121RXl2+5KNn/oz58QXQ8Li9VI/P5tJ3DZRTBHkzsMAqEuHGlY+XGz3RRymX4Kq4PoX+Wp3x7jGI57sJBZENZszNdQRB5QQg=,iv:uLeKLTs3QlA8WZ1Nv9oDHmkpvq3vKt7z6Vtn/4V9F/g=,tag:9SJQeaOme/25Sc8Ov+pxZg==,type:str]
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  version: 3.12.2
