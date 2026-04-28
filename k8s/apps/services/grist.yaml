@@ -42,14 +42,6 @@ spec:
             value: "homelab"
           - name: GRIST_TELEMETRY_LEVEL
             value: "off"
-          - name: GRIST_DOCS_MINIO_USE_SSL
-            value: "1"
-          - name: GRIST_DOCS_MINIO_BUCKET
-            value: grist-docs
-          - name: GRIST_DOCS_MINIO_ENDPOINT
-            value: ohara.infrao.top
-          - name: GRIST_DOCS_MINIO_PORT
-            value: "3900"
           - name: REDIS_URL
             value: "redis://grist-valkey:6379"
           - name: GRIST_OIDC_SP_HOST
