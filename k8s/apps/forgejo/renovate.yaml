@@ -15,7 +15,7 @@ spec:
               claimName: renovate-cache
           containers:
             - name: renovate
-              image: renovate/renovate:43.101.0
+              image: renovate/renovate:43.150.0
               envFrom:
                 - configMapRef:
                     name: renovate-env
