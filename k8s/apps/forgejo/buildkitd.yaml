@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: buildkitd
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: buildkitd
+        image: moby/buildkit:v0.29.0-rootless
+        deploymentSpec:
+          strategy:
+            type: Recreate
+        containerSpec:
+          args:
+            - --addr
+            - unix:///run/user/1000/buildkit/buildkitd.sock
+            - --addr
+            - tcp://0.0.0.0:1234
+            - --oci-worker-no-process-sandbox
+          readinessProbe:
+            exec:
+              command:
+                - buildctl
+                - debug
+                - workers
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          livenessProbe:
+            exec:
+              command:
+                - buildctl
+                - debug
+                - workers
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          securityContext:
+            seccompProfile:
+              type: Unconfined
+            appArmorProfile:
+              type: Unconfined
+            runAsUser: 1000
+            runAsGroup: 1000
+        volumeMounts:
+          - mountPath: /home/user/.local/share/buildkit
+            name: buildkitd
+        env:
+          - name: TZ
+            value: Europe/Paris
+        volumes:
+          - name: buildkitd
+            emptyDir: {}
+        service: 1234
+
