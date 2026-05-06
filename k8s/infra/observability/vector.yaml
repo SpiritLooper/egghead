@@ -8,7 +8,7 @@ spec:
   interval: 1h
   url: oci://ghcr.io/vectordotdev/helm-charts/vector
   ref:
-    tag: 0.51.0
+    tag: 0.52.0
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
