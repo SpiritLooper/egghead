@@ -22,6 +22,10 @@ spec:
     name: forgejo-runner-oci
     namespace: forgejo
   values:
+    image:
+      registry: code.forgejo.org
+      repository: forgejo/runner
+      tag: "12.10.1"
     knownLastVersion: true
     extraEnvVars:
       - name: TZ
