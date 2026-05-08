@@ -13,16 +13,16 @@ spec:
     storageClass: nfs
     size: 1Gi
   imageName: ghcr.io/cloudnative-pg/postgresql:17.6
-  # bootstrap:
-  #   recovery:
-  #     source: source
-  # externalClusters:
-  # - name: source
-  #   plugin:
-  #     name: barman-cloud.cloudnative-pg.io
-  #     parameters:
-  #       barmanObjectName: garage-romm-backup-store
-  #       serverName: romm-database
+  bootstrap:
+    recovery:
+      source: source
+  externalClusters:
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: garage-romm-backup-store
+        serverName: romm-database
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
