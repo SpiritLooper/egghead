@@ -27,7 +27,7 @@ metadata:
 spec:
   schedule: "0 45 2 * * *"
   cluster:
-    name: romm-database-restore
+    name: romm-database
   immediate: true
   method: plugin
   pluginConfiguration:
