@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: romm-database-restore
+  name: romm-database
   namespace: services
   annotations:
     k8up.io/backup: "false"
@@ -17,12 +17,12 @@ spec:
     recovery:
       source: source
   externalClusters:
-  - name: source
-    plugin:
-      name: barman-cloud.cloudnative-pg.io
-      parameters:
-        barmanObjectName: garage-romm-backup-store
-        serverName: romm-database
+    - name: source
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-romm-backup-store
+          serverName: romm-database
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true

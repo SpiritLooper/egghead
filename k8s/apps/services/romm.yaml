@@ -83,27 +83,27 @@ spec:
           - name: DB_NAME
             valueFrom:
               secretKeyRef:
-                name: romm-database-restore-app
+                name: romm-database-app
                 key: dbname
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
-                name:  romm-database-restore-app
+                name:  romm-database-app
                 key: host
           - name: DB_USER
             valueFrom:
               secretKeyRef:
-                name:  romm-database-restore-app
+                name:  romm-database-app
                 key: user
           - name: DB_PASSWD
             valueFrom:
               secretKeyRef:
-                name:  romm-database-restore-app
+                name:  romm-database-app
                 key: password
           - name: DB_PORT
             valueFrom:
               secretKeyRef:
-                name: romm-database-restore-app
+                name: romm-database-app
                 key: port
           - name: DISABLE_USERPASS_LOGIN
             value: "true"
