@@ -71,5 +71,5 @@ spec:
             localstorage: true
             backup: true
       - name: grist-valkey
-        image: valkey/valkey:9.0.3-alpine
+        image: valkey/valkey:9.0.4-alpine
         service: 6379
