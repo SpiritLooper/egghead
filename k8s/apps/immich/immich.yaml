@@ -63,27 +63,27 @@ spec:
               DB_DATABASE_NAME:
                 valueFrom:
                   secretKeyRef:
-                    name: immich-database-restore-app
-                    key: dbname
+                    name: immich-pg-postgres-custom-user-credentials
+                    key: CUSTOM_DB
               DB_HOSTNAME:
                 valueFrom:
                   secretKeyRef:
-                    name: immich-database-restore-app
+                    name: immich-pg-postgres
                     key: host
               DB_USERNAME:
                 valueFrom:
                   secretKeyRef:
-                    name: immich-database-restore-app
-                    key: user
+                    name: immich-pg-postgres-custom-user-credentials
+                    key: CUSTOM_USER
               DB_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: immich-database-restore-app
-                    key: password
+                    name: immich-pg-postgres-custom-user-credentials
+                    key: CUSTOM_PASSWORD
               DB_PORT:
                 valueFrom:
                   secretKeyRef:
-                    name: immich-database-restore-app
+                    name: immich-pg-postgresmm
                     key: port
         securityContext:
           privileged: true
