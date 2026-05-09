@@ -83,7 +83,7 @@ spec:
               DB_PORT:
                 valueFrom:
                   secretKeyRef:
-                    name: immich-pg-postgresmm
+                    name: immich-pg-postgres
                     key: port
         securityContext:
           privileged: true
