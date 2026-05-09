@@ -14,6 +14,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: forgejo-runner
+  namespace: forgejo
 spec:
   interval: 10m
   timeout: 5m
@@ -40,4 +41,4 @@ spec:
               TZ: Europe/Paris
             labels:
               - node-24:docker://node:24-trixie
-              - nixos-latest:docker://nixos/nix
+              - dind:docker://docker:dind
