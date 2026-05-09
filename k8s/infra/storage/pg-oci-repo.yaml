@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: postgres-oci
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: oci://registry-1.docker.io/cloudpirates/postgres
+  ref:
+    tag: 0.19.3

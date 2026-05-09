@@ -1,32 +1,30 @@
 ---
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
-  name: romm-database
+  name: romm-pg
   namespace: services
-  annotations:
-    k8up.io/backup: "false"
 spec:
-  instances: 1
-  imagePullPolicy: IfNotPresent
-  storage:
-    storageClass: nfs
-    size: 1Gi
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.6
-  bootstrap:
-    recovery:
-      source: source
-      recoveryTarget:
-        backupID: "20260416T004500"
-  externalClusters:
-    - name: source
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: garage-romm-backup-store
-          serverName: romm-database-restore
-  plugins:
-    - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: true
-      parameters:
-        barmanObjectName: garage-romm-backup-store
+  interval: 10m
+  chartRef:
+    kind: OCIRepository
+    name: postgres-oci
+    namespace: flux-system
+  values:
+    image:
+      registry: docker.io
+      repository: postgres
+      tag: "18.3"
+
+    customUser:
+      name: romm
+
+    podAnnotations:
+      k8up.io/backupcommand: sh -c 'PGDATABASE="$CUSTOM_DB" PGUSER="$CUSTOM_USER" PGPASSWORD="$CUSTOM_PASSWORD" pg_dump --clean'
+      k8up.io/file-extension: .sql
+
+    persistence:
+      storageClass: local-path
+      size: 5Gi
+      annotations:
+        k8up.io/backup: "false"
