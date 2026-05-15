@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: buildkitd
-        image: moby/buildkit:v0.29.0-rootless
+        image: moby/buildkit:v0.30.0-rootless
         deploymentSpec:
           strategy:
             type: Recreate
