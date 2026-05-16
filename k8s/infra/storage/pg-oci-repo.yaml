@@ -8,4 +8,4 @@ spec:
   interval: 1h
   url: oci://registry-1.docker.io/cloudpirates/postgres
   ref:
-    tag: 0.19.3
+    tag: 0.19.4
