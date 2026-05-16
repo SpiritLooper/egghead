@@ -40,6 +40,8 @@ spec:
             value: "https://grist.egghead.infrao.top"
           - name: GRIST_SINGLE_ORG
             value: "homelab"
+          - name: GRIST_IN_SERVICE
+            value: "true"
           - name: GRIST_TELEMETRY_LEVEL
             value: "off"
           - name: REDIS_URL
