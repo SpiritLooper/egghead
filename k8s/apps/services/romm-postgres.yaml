@@ -14,7 +14,7 @@ spec:
     image:
       registry: docker.io
       repository: postgres
-      tag: "18.3"
+      tag: "18.4"
 
     customUser:
       name: romm
