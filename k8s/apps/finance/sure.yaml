@@ -73,7 +73,7 @@ spec:
           domain: finance.egghead.infrao.top
         pvc:
           - name: sure-storage
-            localstorage: false
+            localstorage: true
             backup: true
 
       - name: sure-worker
