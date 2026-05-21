@@ -1,0 +1,128 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sure
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: sure-valkey
+        image: valkey/valkey:9.0.3-alpine
+        service: 6379
+      - name: sure-web
+        excludeShipLogs: true
+        image: ghcr.io/we-promise/sure:0.7.0-hotfix.3
+        containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 3000
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+        volumeMounts:
+          - mountPath: /rails/storage
+            name: sure-storage
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres-custom-user-credentials
+                key: CUSTOM_DB
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres
+                key: host
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres-custom-user-credentials
+                key: CUSTOM_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres-custom-user-credentials
+                key: CUSTOM_PASSWORD
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres
+                key: port
+        envFrom:
+          - secretRef:
+              name: sure-creds
+          - configMapRef:
+              name: sure-config
+        volumes:
+          - name: sure-storage
+            persistentVolumeClaim:
+              claimName: sure-storage
+        service: 3000
+        ingress:
+          domain: finance.egghead.infrao.top
+        pvc:
+          - name: romm-assets
+            localstorage: false
+            backup: true
+
+      - name: sure-worker
+        excludeShipLogs: true
+        image: ghcr.io/we-promise/sure:0.7.0-hotfix.3
+        containerSpec:
+          command: [ bundle, exec, sidekiq ]
+          readinessProbe:
+            httpGet:
+              port: 3000
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+        volumeMounts:
+          - mountPath: /rails/storage
+            name: sure-storage
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres-custom-user-credentials
+                key: CUSTOM_DB
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres
+                key: host
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres-custom-user-credentials
+                key: CUSTOM_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres-custom-user-credentials
+                key: CUSTOM_PASSWORD
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: sure-pg-postgres
+                key: port
+        envFrom:
+          - secretRef:
+              name: sure-creds
+          - configMapRef:
+              name: sure-config
+        volumes:
+          - name: sure-storage
+            persistentVolumeClaim:
+              claimName: sure-storage

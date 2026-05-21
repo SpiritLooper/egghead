@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Secret
+stringData:
+  SECRET_KEY_BASE: ENC[AES256_GCM,data:1gNyn3eBXgnzHY1xmRi/CfJpdZdXISUopAtPnUYERrB40VpNlgyHR0u0nIKIytyzXJXpjq/LSIzrYrJmjrJOGUL7TX20jm8kPz33vM/MfhsQ6YFfQ7eVcVv/C9ihPw3aniVl1Q4oewdwSUjcGdI+kGsgZiv68kJiuXuhU93rVgA=,iv:l04G3sEtlEwXjgUb53BhIgJIk+/TJegDaCs58O9ogNQ=,tag:OGE5B18SMVLChQj2r6u0bg==,type:str]
+  OIDC_CLIENT_ID: ENC[AES256_GCM,data:DA9OS07NVAXcw7Ec/dzZkLBK66VNry4Db/U+Dzt7Wk0pWCWm,iv:HQI8MUteRcferB7Wb1Nu5G54JTv4Nm6H6KSYXmQXyy8=,tag:hxnqhlAzmtFf641bA1pU9Q==,type:str]
+  OIDC_CLIENT_SECRET: ENC[AES256_GCM,data:1Wd26GQuxHK+sszmWemZl2p7CCoEpJCTaW+hv9t4UuE=,iv:aE7ayrlnYZ8m6VBny1kmOB/7W/5gOe9BOaMSguvYuJY=,tag:4S1udfU6IYRjfdnFWMcG8Q==,type:str]
+metadata:
+  name: sure-creds
+  namespace: finance
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxdEZrbFZkMkZkcGR5MjdE
+        a1NqU3hGOW9vQzJSR2NIMzdJT1JNV1RzTzBJCmowbUlMdTdjYXo0T0QxWHN4U2tk
+        K21KdDhIK2dOazB3MS9FVkNhSHVhSFEKLS0tIHh1UUtIVnhHNHV3VE1KS3NLNFJa
+        d2FGWjlQQU9NcWhKM1MwdEhsZkxLZVEKw8lBLRLLvkmbYsZ1XSPSCD2YTzioBNvz
+        oXuu3mRCfNkhU+16nKIyLCokIfPqdUdf8DxZiIwki14HLLfXD7H0Xg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  lastmodified: "2026-05-21T08:26:57Z"
+  mac: ENC[AES256_GCM,data:yNmRZuo5ompFTEgPxzNJXKQ+7FqNp8oPJWUlsSE1X0mcm7f14zziIfex1WK5izvPv8HmUsabcIt3+DpZnMfw0/fOTvKLg0OdbC9LoZk6Njip/GSK6pDfO9XRYNfGw+E/FwNaNltlx7p615sOlSYgc5CmOPyZjfMtzqJ7PXHS5b8=,iv:go3qjoaiqVHsJeiG2y8xUb1IkWKsX6/3BMlBJjOZF3w=,tag:kNSitHhJqtDBc04YFbVqAQ==,type:str]
+  version: 3.13.1

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sure-config
+  namespace: finance
+data:
+  OIDC_ISSUER: https://pocketid.egghead.infrao.top
+  OIDC_REDIRECT_URI: https://finance.egghead.infrao.top/auth/openid_connect/callback
+  ONBOARDING_STATE: open
+  RAILS_FORCE_SSL: "false"
+  RAILS_ASSUME_SSL: "false"
+  REDIS_URL: redis://sure-valkey:6379/1
+  SELF_HOSTED: "true"
+  TZ: Europe/Paris
