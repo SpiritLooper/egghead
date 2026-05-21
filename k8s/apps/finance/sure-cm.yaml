@@ -4,6 +4,8 @@ metadata:
   name: sure-config
   namespace: finance
 data:
+  AUTH_LOCAL_LOGIN_ENABLED: "false"
+  AUTH_LOCAL_ADMIN_OVERRIDE_ENABLED: "false"
   OIDC_ISSUER: https://pocketid.egghead.infrao.top
   OIDC_REDIRECT_URI: https://finance.egghead.infrao.top/auth/openid_connect/callback
   ONBOARDING_STATE: open
