@@ -81,13 +81,6 @@ spec:
         image: ghcr.io/we-promise/sure:0.7.0-hotfix.3
         containerSpec:
           command: [ bundle, exec, sidekiq ]
-          readinessProbe:
-            httpGet:
-              port: 3000
-          ports:
-            - containerPort: 3000
-              name: http
-              protocol: TCP
         volumeMounts:
           - mountPath: /rails/storage
             name: sure-storage
