@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: sure-valkey
-        image: valkey/valkey:9.0.3-alpine
+        image: valkey/valkey:9.1.0-alpine
         service: 6379
       - name: sure-web
         excludeShipLogs: true
