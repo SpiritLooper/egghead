@@ -1,0 +1,24 @@
+apiVersion: v1
+stringData:
+  ACCESS_KEY_ID: ENC[AES256_GCM,data:5YwQd1YnQxrAt+x1s4nDOxhFFlTlmv8x0ho=,iv:ddY7yF9czKEREzI9wARAglhU8XOovruOAoG/APX1Vk4=,tag:o3rHC2B+wC4H/8ZmpxdJqw==,type:str]
+  ACCESS_SECRET_KEY: ENC[AES256_GCM,data:PA6ELfP3C7aqhBwbehwWWg4/v/Ud0RdebIm02GnYjGcgAVSzcox6RNLb0WSi151OnSXRWTWJQJSPguVnKxbZBg==,iv:g7iYj2H6+0z+ee5Ynalg4SBb03j/O77U/1/hbyYFyxk=,tag:1ILgqMrzCOa9Veq+4nnsFw==,type:str]
+  restic-password: ENC[AES256_GCM,data:xtwd6yQSTenYP7w87iDcqAQCYR9TyjjwNnyGazluO+g=,iv:BuXMChOT7bz0aDupMFCMM5j+uRL5VK7awht4XDy6FvI=,tag:sM58QkIucl2r2/4J8Iy22g==,type:str]
+kind: Secret
+metadata:
+  name: garage-creds
+  namespace: finance
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBRNVJpQUhvRGRyOC8xRENi
+        Z2syeDF5QTBQbDBVWmt2Y2FtMmtPWFRvWUhnCkk0Mmhjejd4Q0pGMHQxRkdlRThu
+        L1crWkJibWhrdDF3SlZWSXFGdENZcGMKLS0tIGlSanhiaU5Mc05tUEFESkU3SVRs
+        bmdWdk15RktyOFFzTnhpYTVBb0k0aUEK2nM3ainjOA7RTPmt2sThikqtpT7pJh3L
+        LAggSU57FDLN162Vq7raksLqTpLQmoqxtcS0hQ8QUbrRH10sDvYQ5g==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  lastmodified: "2026-05-22T05:52:31Z"
+  mac: ENC[AES256_GCM,data:4J9WI1q1g0NNYoFfo2KoO7T27WWS8ycb1VyzRck0FUDqOaq9sTZAALOkCpwJpluyklx1R98nme0o2pWBrenVlgSG+J//aD768deWc7zd2JltGk0EFKTsi/6mZCuPVu2Y++I4A1gDgvY8AR2PTp29CGvrPfT6Q1kDR/qtSsTGvzA=,iv:W97Zx32KnBBKePQxrFrq52+1Sgg5PyGj/g8NSCawlc0=,tag:46xiXYFcXmeqCPBAAJ2a6w==,type:str]
+  version: 3.13.1

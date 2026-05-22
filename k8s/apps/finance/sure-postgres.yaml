@@ -14,11 +14,15 @@ spec:
     image:
       registry: docker.io
       repository: postgres
-      tag: "18.3"
+      tag: "18.4"
 
     customUser:
       name: sure
 
+    podAnnotations:
+      k8up.io/backupcommand: sh -c 'PGDATABASE="$CUSTOM_DB" PGUSER="$CUSTOM_USER" PGPASSWORD="$CUSTOM_PASSWORD" pg_dump --clean'
+      k8up.io/file-extension: .sql
+    
     persistence:
       storageClass: local-path
       size: 5Gi

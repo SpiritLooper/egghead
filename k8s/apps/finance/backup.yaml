@@ -1,0 +1,33 @@
+---
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: backup-finance
+spec:
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  backend:
+    repoPasswordSecretRef:
+      name: garage-creds
+      key: restic-password
+    s3:
+      endpoint: https://ohara.infrao.top:3900
+      bucket: finance-backup/finance
+      accessKeyIDSecretRef:
+        name: garage-creds
+        key: ACCESS_KEY_ID
+      secretAccessKeySecretRef:
+        name: garage-creds
+        key: ACCESS_SECRET_KEY
+  backup:
+    promURL: http://victoria-metrics-victoria-metrics-single-server.victoriametrics:8428
+    schedule: '45 3 * * *'
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 2
+  check:
+    schedule: '50 3 * * 1'
+  prune:
+    schedule: '50 3 * * 0'
+    retention:
+      keepLast: 5
+      keepDaily: 2
