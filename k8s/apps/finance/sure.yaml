@@ -25,6 +25,10 @@ spec:
         containerSpec:
           readinessProbe:
             httpGet:
+              path: /up
+              port: 3000
+          livenessProbe:
+            httpGet:
               port: 3000
           ports:
             - containerPort: 3000
