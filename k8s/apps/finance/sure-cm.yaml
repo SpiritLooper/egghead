@@ -6,6 +6,7 @@ metadata:
 data:
   AUTH_LOCAL_LOGIN_ENABLED: "false"
   AUTH_LOCAL_ADMIN_OVERRIDE_ENABLED: "false"
+  DB_POOL: "15"
   OIDC_ISSUER: https://pocketid.egghead.infrao.top
   OIDC_REDIRECT_URI: https://finance.egghead.infrao.top/auth/openid_connect/callback
   ONBOARDING_STATE: open
@@ -13,4 +14,5 @@ data:
   RAILS_ASSUME_SSL: "false"
   REDIS_URL: redis://sure-valkey:6379/1
   SELF_HOSTED: "true"
+  SIDEKIQ_CONCURRENCY: "10"
   TZ: Europe/Paris
