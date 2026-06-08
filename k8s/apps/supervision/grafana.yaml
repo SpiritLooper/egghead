@@ -1,0 +1,84 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: grafana
+  namespace: supervision
+spec:
+  interval: 1h
+  url: oci://ghcr.io/grafana-community/helm-charts/grafana
+  ref:
+    tag: 12.4.2
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  namespace: supervision
+  name: grafana
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: grafana
+    namespace: supervision
+  values:
+    image:
+      repository: grafana/grafana
+      tag: 13.0.1-security-01
+    testFramework:
+      enabled: false
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      hosts:
+        - grafana.egghead.infrao.top
+      path: /
+      pathType: Prefix
+      tls:
+        - hosts:
+          - grafana.egghead.infrao.top
+    persistence:
+      enabled: true
+      storageClassName: local-path
+      annotations: 
+        k8up.io/backup: "true"
+    admin:
+      existingSecret: grafana-creds
+      userKey: adminUser
+      passwordKey: adminPass
+    envValueFrom:
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: 
+        secretKeyRef:
+          name: grafana-creds
+          key: providerClientId
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: 
+        secretKeyRef:
+          name: grafana-creds
+          key: providerClientSecret
+    grafana.ini:
+      analytics:
+        check_for_updates: false
+        reporting_enabled: false
+      auth.generic_oauth:
+        enabled: true
+        name: Pocket ID
+        validate_id_token: true
+        jwk_set_url: https://pocketid.egghead.infrao.top/.well-known/jwks.json
+        auth_url: https://pocketid.egghead.infrao.top/authorize
+        token_url: https://pocketid.egghead.infrao.top/api/oidc/token
+        api_url: https://pocketid.egghead.infrao.top/api/oidc/userinfo
+        scopes: openid email profile groups
+        use_pkce: true
+        allow_assign_grafana_admin: true
+        role_attribute_path: >-
+          contains(grafana_roles[*], 'admin') && 'GrafanaAdmin' || 'None'
+      news:
+        news_feed_enabled: false
+      metrics:
+        enabled: false
+      server:
+        domain: grafana.egghead.infrao.top
+        root_url: https://grafana.egghead.infrao.top/
