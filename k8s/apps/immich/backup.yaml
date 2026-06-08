@@ -25,7 +25,7 @@ spec:
         name: garage-creds
         key: ACCESS_SECRET_KEY
   backup:
-    promURL: http://victoria-metrics-victoria-metrics-single-server.victoriametrics:8428
+    promURL: http://vector-egghead.victoriametrics:9091
     schedule: '40 4 * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2
