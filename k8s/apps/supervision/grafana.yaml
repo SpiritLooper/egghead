@@ -81,23 +81,43 @@ spec:
         role_attribute_path: >-
           contains(grafana_roles[*], 'admin') && 'GrafanaAdmin' || 'None'
       feature_toggles:
-        publicDashboardsScene: false
-        featureHighlights: false
-        cloudWatchCrossAccountQuerying: false
-        lokiQuerySplitting: false
-        influxdbBackendMigration: false
-        awsDatasourcesTempCredentials: false
+        alertingMigrationUI: false
         awsAsyncQueryCaching: false
-        dashgpt: false
-        cloudWatchBatchQueries: false
-        cloudWatchNewLabelParsing: false
-        azureMonitorPrometheusExemplars: false
-        cloudWatchRoundUpEndTime: false
+        awsDatasourcesTempCredentials: false
         azureMonitorDisableLogLimit: false
-        enableSCIM: false
         azureMonitorEnableUserAuth: false
-        lokiLabelNamesQueryApi: false
+        azureMonitorPrometheusExemplars: false
         azureResourcePickerUpdates: false
+        cloudWatchBatchQueries: false
+        cloudWatchCrossAccountQuerying: false
+        cloudWatchNewLabelParsing: false
+        cloudWatchRoundUpEndTime: false
+        dashgpt: false
+        enableSCIM: false
+        featureHighlights: false
+        grafanaAssistantInProfilesDrilldown: false
+        influxdbBackendMigration: false
+        lokiLabelNamesQueryApi: false
+        lokiQuerySplitting: false
+        publicDashboardsScene: false
+      plugins:
+        disable_plugins: >-
+          cloudwatch,
+          elasticsearch,
+          grafana-azure-monitor-datasource,
+          grafana-pyroscope-datasource,
+          grafana-lokiexplore-app,
+          grafana-metricsdrilldown-app,
+          grafana-pyroscope-app,
+          grafana-exploretraces-app,
+          graphite,
+          influxdb,
+          loki,
+          mssql,
+          news,
+          parca,
+          tempo,
+          zipkin
       news:
         news_feed_enabled: false
       metrics:
