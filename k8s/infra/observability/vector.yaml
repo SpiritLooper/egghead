@@ -28,7 +28,13 @@ spec:
       repository: docker.io/timberio/vector
       tag: 0.56.0-debian
     service:
-      enabled: false
+      enabled: true
+      type: ClusterIP
+      port:
+        - name: promgw
+          port: 9091
+          protocol: TCP
+          targetPort: promgw
     env:
       - name: TZ
         value: Europe/Paris
@@ -69,6 +75,9 @@ spec:
                 - tracefs
         egghead_k3s:
           type: kubernetes_logs
+        egghead_k8up:
+          type: prometheus_pushgateway
+          address: 0.0.0.0:9091
         egghead_journald:
           type: journald
           journal_directory: /var/log/journal
@@ -76,6 +85,7 @@ spec:
         remap_hostmetrics:
           type: remap
           inputs:
+            - egghead_k8up
             - egghead_host_metrics
           source: |
             .tags.host = "egghead"
