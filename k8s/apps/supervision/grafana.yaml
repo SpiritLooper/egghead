@@ -62,6 +62,11 @@ spec:
       analytics:
         check_for_updates: false
         reporting_enabled: false
+        feedback_links_enabled: false
+      auth.basic:
+        enabled: false
+      auth.anonymous:
+        enabled: false
       auth.generic_oauth:
         enabled: true
         name: Pocket ID
@@ -75,6 +80,24 @@ spec:
         allow_assign_grafana_admin: true
         role_attribute_path: >-
           contains(grafana_roles[*], 'admin') && 'GrafanaAdmin' || 'None'
+      feature_toggles:
+        publicDashboardsScene: false
+        featureHighlights: false
+        cloudWatchCrossAccountQuerying: false
+        lokiQuerySplitting: false
+        influxdbBackendMigration: false
+        awsDatasourcesTempCredentials: false
+        awsAsyncQueryCaching: false
+        dashgpt: false
+        cloudWatchBatchQueries: false
+        cloudWatchNewLabelParsing: false
+        azureMonitorPrometheusExemplars: false
+        cloudWatchRoundUpEndTime: false
+        azureMonitorDisableLogLimit: false
+        enableSCIM: false
+        azureMonitorEnableUserAuth: false
+        lokiLabelNamesQueryApi: false
+        azureResourcePickerUpdates: false
       news:
         news_feed_enabled: false
       metrics:
