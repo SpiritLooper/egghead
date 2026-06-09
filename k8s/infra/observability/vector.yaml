@@ -176,7 +176,48 @@ spec:
           type: remap
           inputs:
             - egghead_k3s_metrics
-          source: ""
+          source: |-
+            pod_name = string!(.pod)
+
+            # CronJob : <nom>-<epoch5c>-<hash5c>  (ex: mycron-28123456-xk2p9)
+            if match(pod_name, r'^(?P<name>.+)-\d{8,}-[a-z0-9]{5}$') {
+                captures = parse_regex!(pod_name, r'^(?P<name>.+)-\d{8,}-[a-z0-9]{5}$')
+                .workload_type = "cronjob"
+                .workload_name = captures.name
+                .workload_ref  = "cronjob/" + captures.name
+
+            # Deployment : <nom>-<template-hash 9-10c>-<pod-hash 5c>
+            } else if match(pod_name, r'^(?P<name>.+)-[a-z0-9]{9,10}-[a-z0-9]{5}$') {
+                captures = parse_regex!(pod_name, r'^(?P<name>.+)-[a-z0-9]{9,10}-[a-z0-9]{5}$')
+                .workload_type = "deployment"
+                .workload_name = captures.name
+                .workload_ref  = "deployment/" + captures.name
+
+            # StatefulSet : <nom>-<index entier>  (ex: myapp-0, myapp-12)
+            } else if match(pod_name, r'^(?P<name>.+)-\d+$') {
+                captures = parse_regex!(pod_name, r'^(?P<name>.+)-\d+$')
+                .workload_type = "statefulset"
+                .workload_name = captures.name
+                .workload_ref  = "sts/" + captures.name
+
+            # DaemonSet / Job "bare" : <nom>-<hash5c>
+            # Pas de double suffixe → DaemonSet ou Job sans CronJob parent
+            } else if match(pod_name, r'^(?P<name>.+)-[a-z0-9]{5}$') {
+                captures = parse_regex!(pod_name, r'^(?P<name>.+)-[a-z0-9]{5}$')
+                .workload_name = captures.name
+                if match(captures.name, r'^(vector|svclb)') {
+                    .workload_type = "daemonset"
+                    .workload_ref  = "daemonset/" + captures.name
+                } else {
+                    .workload_type = "job"
+                    .workload_ref  = "job/" + captures.name
+                }
+            # Fallback : pod statique ou nom custom
+            } else {
+                .workload_type = "pod"
+                .workload_name = pod_name
+                .workload_ref  = "pod/" + pod_name
+            }
         k8s_normalized:
           type: remap
           inputs:
