@@ -237,12 +237,79 @@ spec:
           inputs:
             - egghead_k3s_logs
           source: |
-            .host = string(.kubernetes.pod_node_name) ?? "egghead"
+            .host      = string(.kubernetes.pod_node_name) ?? "egghead"
             .namespace = string(.kubernetes.pod_namespace) ?? "unknown"
-            .pod = string(.kubernetes.pod_name) ?? "unknown"
+            .pod       = string(.kubernetes.pod_name)      ?? "unknown"
             .container = string(.kubernetes.container_name) ?? "unknown"
             del(.kubernetes.pod_labels)
             del(.kubernetes.pod_annotations)
+
+            # ── Parsing du message ──────────────────────────────────────────────────
+            msg = string(.message) ?? ""
+
+            # 1. JSON
+            if starts_with(msg, "{") && ends_with(msg, "}") {
+              parsed, err = parse_json(msg)
+              if err == null {
+                .log_format = "json"
+                . |= object(parsed) ?? {}
+              }
+
+            # 2. klog  ->  I0609 14:33:36.477676 1 vpa.go:334] ...
+            } else if match(msg, r'^[IWEF]\d{4} ') {
+              parsed, err = parse_klog(msg)
+              if err == null {
+                .log_format = "klog"
+                . |= parsed
+                .level = to_string(.level) ?? "unknown"
+              }
+
+            # 3. logfmt  ->  time=... level=... msg=...
+            } else if match(msg, r'^\w+=\S+') {
+              parsed, err = parse_key_value(msg)
+              if err == null {
+                .log_format = "logfmt"
+                . |= object(parsed) ?? {}
+                # Normaliser le champ timestamp logfmt
+                if exists(.time) && !exists(.timestamp) {
+                  .timestamp = parse_timestamp(string(.time) ?? "", "%+") ?? null
+                }
+              }
+
+            # 4. Syslog  ->  <PRI>timestamp hostname app[pid]: msg
+            } else if match(msg, r'^<\d+>') || match(msg, r'^\w{3}\s+\d+ \d{2}:\d{2}:\d{2}') {
+              parsed, err = parse_syslog(msg)
+              if err == null {
+                .log_format = "syslog"
+                . |= parsed
+              }
+
+            # 5. Format non reconnu → on garde le message brut
+            } else {
+              .log_format = "raw"
+            }
+
+            # ── Normalisation du level ──────────────────────────────────────────────
+            # Ramène tous les champs level/severity/lvl vers .level normalisé
+            if !exists(.level) {
+              .level = string(.severity) ?? string(.lvl) ?? string(.log_level) ?? "unknown"
+            }
+            del(.severity)
+            del(.lvl)
+            del(.log_level)
+
+            .level = downcase(string(.level) ?? "unknown")
+
+            .level = if .level == "i" || .level == "info"                         { "info"  }
+                else if .level == "w" || .level == "warn" || .level == "warning"  { "warn"  }
+                else if .level == "e" || .level == "err"  || .level == "error"    { "error" }
+                else if .level == "f" || .level == "fatal" || .level == "crit"    { "fatal" }
+                else if .level == "d" || .level == "debug"                        { "debug" }
+                else                                                              { "unknown" }
+
+            # ── Nettoyage final ─────────────────────────────────────────────────────
+            del(.kubernetes)
+            del(.source_type)
       sinks:
         vlogs_container:
           type: elasticsearch
