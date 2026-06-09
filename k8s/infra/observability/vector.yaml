@@ -269,7 +269,7 @@ spec:
               parsed, err = parse_key_value(msg)
               if err == null {
                 .log_format = "logfmt"
-                . |= object(parsed) ?? {}
+                . |= object(parsed)
                 # Normaliser le champ timestamp logfmt
                 if exists(.time) && !exists(.timestamp) {
                   .timestamp = parse_timestamp(string(.time) ?? "", "%+") ?? null
@@ -292,7 +292,7 @@ spec:
             # ── Normalisation du level ──────────────────────────────────────────────
             # Ramène tous les champs level/severity/lvl vers .level normalisé
             if !exists(.level) {
-              .level = string(.severity) ?? string(.lvl) ?? string(.log_level) ?? "unknown"
+                .level = string(.severity) ?? string(.lvl) ?? string(.log_level) ?? "unknown"
             }
             del(.severity)
             del(.lvl)
