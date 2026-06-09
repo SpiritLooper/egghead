@@ -20,7 +20,7 @@ spec:
         name: garage-creds
         key: ACCESS_SECRET_KEY
   backup:
-    promURL: http://vector-egghead.victoriametrics:9091
+    promURL: http://prometheus-pushgateway.victoriametrics:9091
     schedule: '0 3 * * *'
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 2

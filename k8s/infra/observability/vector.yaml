@@ -96,8 +96,11 @@ spec:
           tls:
             ca_file: /run/secrets/kubernetes.io/serviceaccount/ca.crt
         egghead_k8up:
-          type: prometheus_pushgateway
+          type: prometheus_scrape
           address: 0.0.0.0:9091
+          endpoints:
+            - http://prometheus-pushgateway.victoriametrics:9091/metrics
+          scrape_interval_secs: 7200
         egghead_journald:
           type: journald
           journal_directory: /var/log/journal
