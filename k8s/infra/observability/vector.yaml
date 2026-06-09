@@ -261,7 +261,7 @@ spec:
               if err == null {
                 .log_format = "klog"
                 . |= parsed
-                .level = to_string(.level) ?? "unknown"
+                .level = to_string(.level)
               }
 
             # 3. logfmt  ->  time=... level=... msg=...
