@@ -35,12 +35,22 @@ spec:
           port: 9091
           protocol: TCP
           targetPort: promgw
+    rbac:
+      extraRules:
+        - apiGroups: [""]
+          resources: ["nodes/proxy"]
+          verbs: ["get"]
     env:
       - name: TZ
         value: Europe/Paris
     envFrom:
       - secretRef:
           name: vector-creds
+    command: [ "/bin/sh", "-c" ]
+    args: 
+      - |-
+        export K8S_TOKEN="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"
+        exec vector --config-dir /etc/vector/
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -73,8 +83,18 @@ spec:
                 - securityfs
                 - tmpfs
                 - tracefs
-        egghead_k3s:
+        egghead_k3s_logs:
           type: kubernetes_logs
+        egghead_k3s_metrics:
+          type: prometheus_scrape
+          auth:
+            strategy: bearer
+            token: "$K8S_TOKEN"
+          endpoints:
+            - https://kubernetes.default.svc/api/v1/nodes/$VECTOR_SELF_NODE_NAME/proxy/metrics/cadvisor
+          scrape_interval_secs: 30
+          tls:
+            ca_file: /run/secrets/kubernetes.io/serviceaccount/ca.crt
         egghead_k8up:
           type: prometheus_pushgateway
           address: 0.0.0.0:9091
@@ -152,10 +172,15 @@ spec:
             del(._MACHINE_ID)
             del(._SYSTEMD_CGROUP)
             del(._TRANSPORT)
+        k8s_metrics_remap: 
+          type: remap
+          inputs:
+            - egghead_k3s_metrics
+          source: ""
         k8s_normalized:
           type: remap
           inputs:
-            - egghead_k3s
+            - egghead_k3s_logs
           source: |
             .host = string(.kubernetes.pod_node_name) ?? "egghead"
             .namespace = string(.kubernetes.pod_namespace) ?? "unknown"
@@ -193,6 +218,7 @@ spec:
         victoriametrics_sink:
           type: prometheus_remote_write
           inputs:
+            - k8s_metrics_remap
             - remap_hostmetrics
           endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
           healthcheck:
