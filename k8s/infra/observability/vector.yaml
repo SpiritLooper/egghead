@@ -105,6 +105,13 @@ spec:
           type: journald
           journal_directory: /var/log/journal
       transforms:
+        egghead_container_metrics_filter:
+          type: filter
+          inputs: 
+            - egghead_k3s_metrics
+          condition:
+            type: vrl
+            source: '.tags.container != ""'
         remap_hostmetrics:
           type: remap
           inputs:
@@ -178,7 +185,7 @@ spec:
         k8s_metrics_remap: 
           type: remap
           inputs:
-            - egghead_k3s_metrics
+            - egghead_container_metrics_filter
           source: |-
             pod_name, err = string(.tags.pod)
             if err == null {
