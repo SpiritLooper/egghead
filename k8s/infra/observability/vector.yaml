@@ -178,11 +178,7 @@ spec:
             - egghead_k3s_metrics
           source: |-
             pod_name, err = string(.tags.pod)
-            if err != null {
-              .tags.workload_type = "unknown"
-              .tags.workload_name = "unknown"
-              .tags.workload_ref  = "unknown"
-            } else {
+            if err == null {
               # CronJob : <nom>-<epoch5c>-<hash5c>  (ex: mycron-28123456-xk2p9)
               if match(pod_name, r'^(?P<name>.+)-\d{8,}-[a-z0-9]{5}$') {
                   captures = parse_regex!(pod_name, r'^(?P<name>.+)-\d{8,}-[a-z0-9]{5}$')
