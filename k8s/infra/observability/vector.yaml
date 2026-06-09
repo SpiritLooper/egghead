@@ -229,6 +229,9 @@ spec:
                   .tags.workload_ref  = "pod/" + pod_name
               }
             }
+            del(.tags.id)
+            del(.tags.image)
+            del(.tags.name)
         k8s_normalized:
           type: remap
           inputs:
