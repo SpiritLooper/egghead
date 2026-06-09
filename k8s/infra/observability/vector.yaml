@@ -177,50 +177,50 @@ spec:
           inputs:
             - egghead_k3s_metrics
           source: |-
-            pod_name, err = string(.pod)
+            pod_name, err = string(.tags.pod)
             if err != null {
-              .workload_type = "unknown"
-              .workload_name = "unknown"
-              .workload_ref  = "unknown"
+              .tags.workload_type = "unknown"
+              .tags.workload_name = "unknown"
+              .tags.workload_ref  = "unknown"
             } else {
               # CronJob : <nom>-<epoch5c>-<hash5c>  (ex: mycron-28123456-xk2p9)
               if match(pod_name, r'^(?P<name>.+)-\d{8,}-[a-z0-9]{5}$') {
                   captures = parse_regex!(pod_name, r'^(?P<name>.+)-\d{8,}-[a-z0-9]{5}$')
-                  .workload_type = "cronjob"
-                  .workload_name = captures.name
-                  .workload_ref  = "cronjob/" + captures.name
+                  .tags.workload_type = "cronjob"
+                  .tags.workload_name = captures.name
+                  .tags.workload_ref  = "cronjob/" + captures.name
 
               # Deployment : <nom>-<template-hash 9-10c>-<pod-hash 5c>
               } else if match(pod_name, r'^(?P<name>.+)-[a-z0-9]{9,10}-[a-z0-9]{5}$') {
                   captures = parse_regex!(pod_name, r'^(?P<name>.+)-[a-z0-9]{9,10}-[a-z0-9]{5}$')
-                  .workload_type = "deployment"
-                  .workload_name = captures.name
-                  .workload_ref  = "deployment/" + captures.name
+                  .tags.workload_type = "deployment"
+                  .tags.workload_name = captures.name
+                  .tags.workload_ref  = "deployment/" + captures.name
 
               # StatefulSet : <nom>-<index entier>  (ex: myapp-0, myapp-12)
               } else if match(pod_name, r'^(?P<name>.+)-\d+$') {
                   captures = parse_regex!(pod_name, r'^(?P<name>.+)-\d+$')
-                  .workload_type = "statefulset"
-                  .workload_name = captures.name
-                  .workload_ref  = "sts/" + captures.name
+                  .tags.workload_type = "statefulset"
+                  .tags.workload_name = captures.name
+                  .tags.workload_ref  = "sts/" + captures.name
 
               # DaemonSet / Job "bare" : <nom>-<hash5c>
               # Pas de double suffixe → DaemonSet ou Job sans CronJob parent
               } else if match(pod_name, r'^(?P<name>.+)-[a-z0-9]{5}$') {
                   captures = parse_regex!(pod_name, r'^(?P<name>.+)-[a-z0-9]{5}$')
-                  .workload_name = captures.name
+                  .tags.workload_name = captures.name
                   if match(captures.name, r'^(vector|svclb)') {
-                      .workload_type = "daemonset"
-                      .workload_ref  = "daemonset/" + captures.name
+                      .tags.workload_type = "daemonset"
+                      .tags.workload_ref  = "daemonset/" + captures.name
                   } else {
-                      .workload_type = "job"
-                      .workload_ref  = "job/" + captures.name
+                      .tags.workload_type = "job"
+                      .tags.workload_ref  = "job/" + captures.name
                   }
               # Fallback : pod statique ou nom custom
               } else {
-                  .workload_type = "pod"
-                  .workload_name = pod_name
-                  .workload_ref  = "pod/" + pod_name
+                  .tags.workload_type = "pod"
+                  .tags.workload_name = pod_name
+                  .tags.workload_ref  = "pod/" + pod_name
               }
             }
         k8s_normalized:
