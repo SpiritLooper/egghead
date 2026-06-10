@@ -647,7 +647,7 @@ spec:
                     .parse_error = err
                     .parsed = false
                   } else {
-                    .log_level        = parsed.log_level      
+                    .level        = parsed.log_level      
                     .datetime         = parsed.datetime       
                     .plugin_name      = parsed.plugin_instance
                     .action           = parsed.action         
