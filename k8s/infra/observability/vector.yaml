@@ -595,6 +595,28 @@ spec:
             .host = .hostname
             .level = .severity
             .service = .appname
+            if .service == "netbird" {
+              raw = to_string(.message)
+
+              # Lookup table : {pattern, level}
+              level_map = [
+                { "key":r'INFO', "level":"info" },
+                { "key":r'WARN', "level":"warn" },
+                { "key":r'ERROR', "level":"error" },
+                { "key":r'DEBUG', "level":"debug" },
+                { "key":r'TRACE', "level":"trace" },
+                { "key":r'FATAL', "level":"fatal" }
+              ]
+              detected = null
+              for_each(level_map) -> |_i, entry| {
+                if detected == null && match(raw, entry.key) {
+                  detected = entry.level
+                }
+              }
+              if detected != null {
+                .level = detected
+              }
+            }
             del(.hostname)
             del(.severity)
             del(.appname)
