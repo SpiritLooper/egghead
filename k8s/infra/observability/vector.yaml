@@ -333,10 +333,20 @@ spec:
 
                 # Bracket long : [INFO] [WARNING] [ERROR] [DEBUG]
                 { "pattern": r'\[INFO\]',    "level": "info"  },
+                { "pattern": r'\[Info\]',    "level": "info"  },
+                { "pattern": r'\[info\]',    "level": "info"  },
                 { "pattern": r'\[WARNING\]', "level": "warn"  },
+                { "pattern": r'\[Warning\]', "level": "warn"  },
+                { "pattern": r'\[warning\]', "level": "warn"  },
                 { "pattern": r'\[ERROR\]',   "level": "error" },
+                { "pattern": r'\[Error\]',   "level": "error" },
+                { "pattern": r'\[error\]',   "level": "error" },
                 { "pattern": r'\[DEBUG\]',   "level": "debug" },
+                { "pattern": r'\[Debug\]',   "level": "debug" },
+                { "pattern": r'\[debug\]',   "level": "debug" },
                 { "pattern": r'\[NOTICE\]',  "level": "notice"},
+                { "pattern": r'\[Notice\]',  "level": "notice"},
+                { "pattern": r'\[notice\]',  "level": "notice"},
 
                 # Uptime Kuma : [MONITOR] WARN: / INFO: / ERROR:
                 { "pattern": r'\[MONITOR\]\s+WARN',  "level": "warn"  },
