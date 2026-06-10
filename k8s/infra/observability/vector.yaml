@@ -277,7 +277,7 @@ spec:
               }
 
               # Gestion logs mongo
-              if exists(.attr.message.level) {
+              if exists(.attr.message.verbose_level) {
                 .level = downcase(to_string!(.attr.message.verbose_level))
               }
               if exists(.attr.message.msg) {
