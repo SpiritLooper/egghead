@@ -268,8 +268,6 @@ spec:
                 msg = string(zerolog_match.inner) ?? ""
             }
 
-
-
             # 1. JSON
             if starts_with(msg, "{") && ends_with(msg, "}") {
               parsed, err = parse_json(msg)
@@ -318,6 +316,56 @@ spec:
             # 5. Format non reconnu → on garde le message brut
             } else {
               .log_format = "raw"
+            }
+
+            if !exists(.level) || .level == "unknown" {
+              
+              raw = to_string(.message) ?? ""
+              detected = null
+
+              # Lookup table : {pattern, level}
+              level_patterns = [
+                # Gitea : [I] [W] [E] [D]
+                { "pattern": r'\[I\]',       "level": "info"  },
+                { "pattern": r'\[W\]',       "level": "warn"  },
+                { "pattern": r'\[E\]',       "level": "error" },
+                { "pattern": r'\[D\]',       "level": "debug" },
+
+                # Bracket long : [INFO] [WARNING] [ERROR] [DEBUG]
+                { "pattern": r'\[INFO\]',    "level": "info"  },
+                { "pattern": r'\[WARNING\]', "level": "warn"  },
+                { "pattern": r'\[ERROR\]',   "level": "error" },
+                { "pattern": r'\[DEBUG\]',   "level": "debug" },
+                { "pattern": r'\[NOTICE\]',  "level": "notice"},
+
+                # Uptime Kuma : [MONITOR] WARN: / INFO: / ERROR:
+                { "pattern": r'\[MONITOR\]\s+WARN',  "level": "warn"  },
+                { "pattern": r'\[MONITOR\]\s+INFO',  "level": "info"  },
+                { "pattern": r'\[MONITOR\]\s+ERROR', "level": "error" },
+
+                # Redis : "1:M" "4920:C" "123:S" suivi de * ou #
+                { "pattern": r'^\d+:[MCSRAX] .+ \*',  "level": "info"  },
+                { "pattern": r'^\d+:[MCSRAX] .+ #',   "level": "warn"  },
+                { "pattern": r'^\d+:[MCSRAX] .+ -',   "level": "error" },
+
+                # Mots clés en fin de recours
+                { "pattern": r'(?i)\bERROR\b',   "level": "error" },
+                { "pattern": r'(?i)\bWARN\b',    "level": "warn"  },
+                { "pattern": r'(?i)\bWARNING\b', "level": "warn"  },
+                { "pattern": r'(?i)\bDEBUG\b',   "level": "debug" },
+                { "pattern": r'(?i)\bFATAL\b',   "level": "fatal" },
+                { "pattern": r'(?i)\bCRITICAL\b',"level": "fatal" },
+              ]
+
+              for_each(level_patterns) -> |_i, entry| {
+                if detected == null && match(raw, entry.pattern) {
+                  detected = entry.level
+                }
+              }
+
+              if detected != null {
+                .level = detected
+              }
             }
 
             # ── Normalisation du level ──────────────────────────────────────────────
