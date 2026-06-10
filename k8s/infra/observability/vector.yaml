@@ -126,6 +126,7 @@ spec:
           source: |
             .service = string(._SYSTEMD_UNIT) ?? "unknown"
             .message = string(.message) ?? string(._COMM) ?? ""
+            .level = to_syslog_level(to_int!(.PRIORITY)) ?? "unknown"
             if .service == "ssh.service" {
               err = null
               parse.user = null
