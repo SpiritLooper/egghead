@@ -596,7 +596,7 @@ spec:
             .level = .severity
             .service = .appname
             if .service == "netbird" {
-              raw = to_string(.message)
+              raw = to_string(.message) ?? ""
 
               # Lookup table : {pattern, level}
               level_map = [
