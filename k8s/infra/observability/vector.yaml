@@ -260,7 +260,7 @@ spec:
             # Strip préfixe zerolog : "Jun 10 16:24:42 INF Request <logfmt...>"
             # ou plus généralement : "<timestamp> <LEVEL> <OptionalLabel> <logfmt...>"
             zerolog_match, zerolog_err = parse_regex(msg,
-                r'^\w{3}\s+\d+\s+\d{2}:\d{2}:\d{2}\s+(?P<level>\w+)\s+(?:\w+\s+)?(?P<inner>\w+=.+)$'
+              r'^(?:(?P<ts>\w{3}\s+\d+\s+\d{2}:\d{2}:\d{2})\s+(?P<level>\w+)\s+)?(?P<label>(?:\w+\s+)+)(?P<inner>\w+=\S+.*)$'
             )
             if zerolog_err == null {
                 raw_level = downcase(to_string(zerolog_match.level))
