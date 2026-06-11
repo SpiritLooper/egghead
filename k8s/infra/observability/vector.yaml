@@ -67,7 +67,6 @@ spec:
             devices:
               excludes:
                 - overlay
-                - proc
             filesystems:
               excludes:
                 - autofs
@@ -83,6 +82,9 @@ spec:
                 - securityfs
                 - tmpfs
                 - tracefs
+            mountpoints:
+              excludes:
+                - "*/proc/sys/fs/binfmt_misc"
         egghead_k3s_logs:
           type: kubernetes_logs
         egghead_k3s_metrics:
