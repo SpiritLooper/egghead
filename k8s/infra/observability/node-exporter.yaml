@@ -1,0 +1,27 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: prometheus-node-exporter
+  namespace: victoriametrics
+spec:
+  interval: 1h
+  url: oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter
+  ref:
+    tag: 4.55.0
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  namespace: victoriametrics
+  name: node-exporter
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: prometheus-node-exporter
+    namespace: victoriametrics
+  values:
+    image:
+      distroless: true

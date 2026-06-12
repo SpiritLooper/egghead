@@ -58,33 +58,10 @@ spec:
         address: 0.0.0.0:8686
       sources:
         egghead_host_metrics:
-          type: host_metrics
-          cgroups:
-            groups:
-              excludes:
-                - "kubepods.slice/*"
-          filesystem:
-            devices:
-              excludes:
-                - overlay
-            filesystems:
-              excludes:
-                - autofs
-                - binfmt_misc
-                - bpf
-                - configfs
-                - cgroup2
-                - debugfs
-                - efivarfs
-                - fusectl
-                - pstore
-                - sysfs
-                - securityfs
-                - tmpfs
-                - tracefs
-            mountpoints:
-              excludes:
-                - "*/proc/sys/fs/binfmt_misc"
+          type: prometheus_scrape
+          endpoints:
+            - https://node-exporter-prometheus-node-exporter:9100/metrics
+          scrape_interval_secs: 15
         egghead_k3s_logs:
           type: kubernetes_logs
         egghead_k3s_metrics:
