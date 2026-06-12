@@ -96,6 +96,7 @@ spec:
           inputs:
             - egghead_k8up
             - egghead_host_metrics
+            - k8s_metrics_remap
           source: |
             .tags.host = "egghead"
         journald_normalized:
@@ -408,7 +409,6 @@ spec:
         victoriametrics_sink:
           type: prometheus_remote_write
           inputs:
-            - k8s_metrics_remap
             - remap_hostmetrics
           endpoint: http://victoria-metrics-victoria-metrics-single-server:8428/api/v1/write
           healthcheck:
