@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: radarr
-        image: linuxserver/radarr:6.1.1
+        image: linuxserver/radarr:6.2.1
         excludeShipLogs: true
         containerSpec:
           readinessProbe:
