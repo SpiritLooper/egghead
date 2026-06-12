@@ -60,7 +60,7 @@ spec:
         egghead_host_metrics:
           type: prometheus_scrape
           endpoints:
-            - https://node-exporter-prometheus-node-exporter:9100/metrics
+            - http://node-exporter-prometheus-node-exporter:9100/metrics
           scrape_interval_secs: 15
         egghead_k3s_logs:
           type: kubernetes_logs
