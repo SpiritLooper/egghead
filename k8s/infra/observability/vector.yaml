@@ -211,7 +211,6 @@ spec:
               }
             }
             del(.tags.id)
-            del(.tags.image)
             del(.tags.name)
         k8s_normalized:
           type: remap
