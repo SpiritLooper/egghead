@@ -8,7 +8,7 @@ spec:
   interval: 1h
   url: oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter
   ref:
-    tag: 4.54.0
+    tag: 4.53.1
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
