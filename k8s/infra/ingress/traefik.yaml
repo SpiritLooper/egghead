@@ -112,7 +112,7 @@ spec:
     metrics:
       prometheus:
         service:
-          enabled: false
+          enabled: true
           labels: 
             app: traefik
         serviceMonitor:
