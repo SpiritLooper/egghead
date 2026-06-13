@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: grist
-        image: gristlabs/grist:1.7.14
+        image: gristlabs/grist:1.7.15
         deploymentSpec:
           strategy:
             type: Recreate
