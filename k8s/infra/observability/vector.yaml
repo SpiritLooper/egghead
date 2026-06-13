@@ -61,6 +61,7 @@ spec:
           type: prometheus_scrape
           endpoints:
             - http://node-exporter-prometheus-node-exporter:9100/metrics
+            - http://traefik-metrics.ingress:9100/metrics
           scrape_interval_secs: 15
         egghead_k3s_logs:
           type: kubernetes_logs
