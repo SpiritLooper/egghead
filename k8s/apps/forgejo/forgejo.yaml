@@ -56,6 +56,9 @@ spec:
         server:
           SSH_LISTEN_PORT: 30022
           SSH_PORT: 30022
+        service:
+          DISABLE_REGISTRATION: true
+          ENABLE_INTERNAL_SIGNIN: false
       oauth:
         - name: PocketID
           existingSecret: forgejo-oauth-secret
