@@ -60,6 +60,11 @@ spec:
         egghead_host_metrics:
           type: prometheus_scrape
           endpoints:
+            - http://cert-manager.cert-manager:9402/metrics
+            - http://cert-manager-cainjector.cert-manager:9402/metrics
+            - http://cert-manager-webhook.cert-manager:9402/metrics
+            - http://k8up-metrics.k8up-system:8080/metrics
+            - http://kube-dns.kube-system:9153/metrics
             - http://node-exporter-prometheus-node-exporter:9100/metrics
             - http://traefik-metrics.ingress:9100/metrics
           scrape_interval_secs: 15
