@@ -80,6 +80,9 @@ spec:
         allow_assign_grafana_admin: true
         role_attribute_path: >-
           contains(grafana_roles[*], 'admin') && 'GrafanaAdmin' || 'None'
+        org_attribute_path: grafana_roles
+        org_mapping: >-
+          infra_viewer:Infra:Viewer botcoin_editor:BotCoin:Editor
       feature_toggles:
         alertingMigrationUI: false
         awsAsyncQueryCaching: false
