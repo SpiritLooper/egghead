@@ -384,13 +384,21 @@ spec:
             # ── Nettoyage final ─────────────────────────────────────────────────────
             del(.kubernetes)
             del(.source_type)
+        k8s_log_split:
+          type: route
+          inputs: k8s_normalized
+          reroute_unmatched: true
+          route: 
+            botcoin_logs:
+              source: 'starts_with(to_string!(.namespace), "botcoin")'
+              type: vrl
       sinks:
         vlogs_container:
           type: elasticsearch
           endpoints:
             - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
-            - k8s_normalized
+            - k8s_log_split._unmatched
           compression: gzip
           healthcheck:
             enabled: false
@@ -398,6 +406,23 @@ spec:
             _msg_field: message
             _time_field: timestamp
             _stream_fields: host,namespace,pod,container
+        vlogs_botcoin:
+          type: elasticsearch
+          endpoints:
+            - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
+          inputs:
+            - k8s_log_split.botcoin_logs
+          compression: gzip
+          healthcheck:
+            enabled: false
+          query:
+            _msg_field: message
+            _time_field: timestamp
+            _stream_fields: host,namespace,pod,container
+          request:
+            headers:
+              AccountID: "1"
+              ProjectID: "1"
         vlogs_systemd:
           type: elasticsearch
           endpoints:
