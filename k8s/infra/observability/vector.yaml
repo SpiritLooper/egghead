@@ -386,7 +386,8 @@ spec:
             del(.source_type)
         k8s_log_split:
           type: route
-          inputs: k8s_normalized
+          inputs: 
+            - k8s_normalized
           reroute_unmatched: true
           route: 
             botcoin_logs:
