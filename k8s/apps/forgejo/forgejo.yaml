@@ -38,6 +38,10 @@ spec:
     service:
       ssh:
         type: NodePort
+        ipFamilyPolicy: PreferDualStack
+        ipFamilies: 
+          - IPv4
+          - IPv6
         port: 30022
         nodePort: 30022
     deployment:
