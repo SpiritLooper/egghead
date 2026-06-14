@@ -54,7 +54,7 @@ spec:
         service: 6379
       - name: rommapp
         excludeShipLogs: true
-        image: rommapp/romm:4.8.1
+        image: rommapp/romm:4.9.0
         podSpec:
           hostAliases:
             - ip: "192.168.8.5"
