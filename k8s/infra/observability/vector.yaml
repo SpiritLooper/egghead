@@ -872,7 +872,6 @@ spec:
             - skypiea_normalized
           route:
             known_container: .container != "unknown"
-            unknown_container: .container == "unknown"
       sinks:
         victoriametrics_sink:
           type: prometheus_remote_write
@@ -901,7 +900,7 @@ spec:
           endpoints:
             - http://victoria-logs-victoria-logs-single-server:9428/insert/elasticsearch/
           inputs:
-            - skypiea_route.unknown_container
+            - skypiea_route._unmatched
             - routers_normalized
           compression: gzip
           healthcheck:
