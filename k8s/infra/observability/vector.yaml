@@ -628,7 +628,7 @@ spec:
               if detected != null {
                 .level = detected
               }
-            } else if .service == blocky {
+            } else if .service == "blocky" {
               . = parse_json!(.message)
               .timestamp = .time
               .message = .msg
