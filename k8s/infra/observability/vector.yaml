@@ -630,12 +630,12 @@ spec:
                 .level = detected
               }
             } else if .service == "blocky" {
-              . = parse_json!(.message)
-              .timestamp = .time
-              .message = .msg
-              del(.msg)
-              del(.instance)
-              del(.time)
+              .dns = parse_json!(.message)
+              .timestamp = .dns.time
+              .message = .dns.msg
+              del(.dns.msg)
+              del(.dns.instance)
+              del(.dns.time)
             }
             del(.hostname)
             del(.severity)
