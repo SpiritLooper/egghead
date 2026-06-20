@@ -520,6 +520,7 @@ spec:
           type: prometheus_scrape
           endpoints:
             - http://knock-up-stream.infrao.top:9100/metrics
+            - http://knock-up-stream.infrao.top:4000/metrics
         routers_metrics_ce:
           type: prometheus_scrape
           endpoints:
