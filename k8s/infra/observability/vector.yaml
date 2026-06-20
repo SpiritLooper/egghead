@@ -524,6 +524,7 @@ spec:
           type: prometheus_scrape
           endpoints:
             - http://cloud-end.infrao.top:9100/metrics
+            - http://cloud-end.infrao.top:4000/metrics
         routers_syslog_logs:
           type: syslog
           address: 0.0.0.0:9000
@@ -627,6 +628,13 @@ spec:
               if detected != null {
                 .level = detected
               }
+            } else if .service == blocky {
+              . = parse_json!(.message)
+              .timestamp = .time
+              .message = .msg
+              del(.msg)
+              del(.instance)
+              del(.time)
             }
             del(.hostname)
             del(.severity)
