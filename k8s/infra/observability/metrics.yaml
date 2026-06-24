@@ -27,7 +27,7 @@ spec:
       enabled: true
       image:
         repository: victoriametrics/victoria-metrics
-        tag: "v1.145.0"
+        tag: "v1.146.0"
       persistentVolume:
         enabled: true
         annotations:
