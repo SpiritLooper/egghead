@@ -21,7 +21,7 @@ spec:
         service: 6379
       - name: sure-web
         excludeShipLogs: true
-        image: ghcr.io/we-promise/sure:0.7.0-hotfix.3
+        image: ghcr.io/we-promise/sure:0.7.1
         containerSpec:
           readinessProbe:
             httpGet:
