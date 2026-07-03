@@ -104,7 +104,6 @@ spec:
       enabled: true
       persistence:
         data:
-          enable: true
           annotations:
             k8up.io/backup: "false"
           type: persistentVolumeClaim
@@ -120,7 +119,6 @@ spec:
                 IMMICH_CONFIG_FILE: /config/immich-config.yaml
       persistence:
         config:
-          enabled: true
           type: secret
           name: immich-config
       ingress:
