@@ -50,6 +50,10 @@ spec:
   values:
     global:
       checkNewVersion: false
+    image:
+      registry: docker.io
+      repository: traefik
+      tag: v3.7.6
     additionalArguments: 
       - --entryPoints.websecure.transport.respondingTimeouts.readTimeout=1800s
       - --entryPoints.websecure.transport.respondingTimeouts.writeTimeout=1800s
@@ -105,10 +109,10 @@ spec:
     resources:
       limits:
         cpu: 100m
-        memory: 100Mi
+        memory: 200Mi
       requests:
         cpu: 50m
-        memory: 80Mi
+        memory: 120Mi
     metrics:
       prometheus:
         service:
