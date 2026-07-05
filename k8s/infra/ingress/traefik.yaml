@@ -109,10 +109,10 @@ spec:
     resources:
       limits:
         cpu: 100m
-        memory: 200Mi
+        memory: 500Mi
       requests:
         cpu: 50m
-        memory: 120Mi
+        memory: 256Mi
     metrics:
       prometheus:
         service:
