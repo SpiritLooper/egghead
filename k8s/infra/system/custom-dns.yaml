@@ -11,7 +11,7 @@ data:
         forward . 192.168.8.1
     }
   egghead.server: |
-    .egghead.infrao.top:53 {
+    egghead.infrao.top:53 {
         errors
         cache 30
         forward . 192.168.8.1
