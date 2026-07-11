@@ -53,7 +53,7 @@ spec:
     image:
       registry: docker.io
       repository: traefik
-      tag: v3.7.6
+      tag: v3.7.7
     additionalArguments: 
       - --entryPoints.websecure.transport.respondingTimeouts.readTimeout=1800s
       - --entryPoints.websecure.transport.respondingTimeouts.writeTimeout=1800s
