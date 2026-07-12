@@ -57,7 +57,7 @@ spec:
           main:
             image:
               # renovate: depName=ghcr.io/immich-app/immich-server
-              tag: v3.0.1
+              tag: v3.0.2
             env:
               TZ: Europe/Paris
               DB_DATABASE_NAME:
