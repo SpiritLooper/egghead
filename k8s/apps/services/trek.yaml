@@ -46,6 +46,8 @@ spec:
             value: fr
           - name: FORCE_HTTPS
             value: "true"
+          - name: ALLOW_INTERNAL_NETWORK
+            value: "true"
           - name: APP_URL
             value: https://trek.egghead.infrao.top
           - name: OIDC_ISSUER
