@@ -47,7 +47,7 @@ spec:
           - name: FORCE_HTTPS
             value: "true"
           - name: APP_URL
-            value: trek.egghead.infrao.top
+            value: https://trek.egghead.infrao.top
           - name: OIDC_ISSUER
             value: https://pocketid.egghead.infrao.top
           - name: OIDC_DISPLAY_NAME
