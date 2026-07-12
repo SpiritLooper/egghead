@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Secret
+stringData:
+  ENCRYPTION_KEY: ENC[AES256_GCM,data:F2Lxm6z1ETt376ZgJj020yJBAtqvUpXjojtFSeLup8131utfdn78jWJDm+XhQfmER/y2g8wdYsBlLeL1w8/+Og==,iv:GhA9Ip7cCfi4LpAlDmluDZ7iEY2KF05cx7aZeu93h4I=,tag:71Z762uo2d8yBmyPJEU3pw==,type:str]
+  OIDC_CLIENT_ID: ENC[AES256_GCM,data:hs/mW6b9Gf0DfwV1LauSyIWWdSF6OUONq5RK7FhPAjqkYfqw,iv:PaZuGBLOOdnc1JYRf9suT9m7QoiRUsRpbVVZ8uSRyv0=,tag:YwDQquHa4KbCt4T58Fc0Iw==,type:str]
+  OIDC_CLIENT_SECRET: ENC[AES256_GCM,data:3WPElQ/6d3onS1SgZIeOV+PyEETMiiq7b8gO6uemuJg=,iv:8nQ896rNMcxgkWDatzmeeoyRNWGlZzwHr1iGTyECIb0=,tag:rN4h1efdikYm4w3CTnphKQ==,type:str]
+metadata:
+  name: trek-creds
+  namespace: services
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBEOW1tWEN2QWhCZExvdEVk
+        Wms3T1Y4L2REbGhjTUZ4WjZwdjV1SmYrUVNzCkNrTUk1Tmw4UDNuSU1CMlZDZkY4
+        WXcvUWZIcCtRVTdlYVBtNjY4cTV3QlUKLS0tIGl4TWJwSmxSTXB6WEtLSkcxZDlB
+        V0N4L1UrdWNpTWNicDBwWU1jQitwK0EKgkT8UvGdq0OWf6LhdMSHG9WTHbLcvFtx
+        bHZmXav8g+76f38oE6MO8eHzWcTgrX9L8UAgW1WN4XJ0LrBDmsV0Yg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  lastmodified: "2026-07-12T15:44:50Z"
+  mac: ENC[AES256_GCM,data:BgOqUOSTtfW9WmyNu1jcYfLjxZI5GiV9LSzkCS3hnlM92v+zTKNftEgnacZGW9LEhJfnwDHunJPfGh4o4OKokpKZFssZxmdM29V8+kVPVzAoY6SjV7dyzfpSsNk2RXPE4nxNK9d+Dg0sGSdLmcVLc9TxqDAs3exwwxGVCyiVNo4=,iv:luvjptenSzus+y15mH06fOvefNvLQDTG8lK0GkMUw34=,tag:dMMvXRwx36u7bMC2KNj2Gw==,type:str]
+  version: 3.13.2

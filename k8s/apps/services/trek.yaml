@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: trek
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: trek
+        image: mauriceboe/trek:3.3.0
+        excludeShipLogs: true
+        podSpec:
+          securityContext:
+            fsGroup: 1000
+        containerSpec:
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+        env:
+          - name: TZ
+            value: Europe/Paris
+          - name: DEFAULT_LANGUAGE
+            value: fr
+          - name: FORCE_HTTPS
+            value: "true"
+          - name: APP_URL
+            value: trek.egghead.infrao.top
+          - name: OIDC_ISSUER
+            value: https://pocketid.egghead.infrao.top
+          - name: OIDC_DISPLAY_NAME
+            value: PocketID
+          - name: OIDC_ONLY
+            value: "true"
+          - name: OIDC_DISCOVERY_URL
+            value: 
+        envFrom:
+          - secretRef:
+              name: trek-creds
+        volumeMounts:
+          - name: trek-data
+            mountPath: /app/data
+          - name: trek-uploads
+            mountPath: /app/uploads
+        volumes:
+          - name: trek-data
+            persistentVolumeClaim:
+              claimName: trek-data
+          - name: trek-uploads
+            persistentVolumeClaim:
+              claimName: trek-uploads
+        service: 3000
+        ingress:
+          domain: trek.egghead.infrao.top
+        pvc:
+          - name: trek-data
+            localstorage: true
+            backup: true
+          - name: trek-uploads
+            localstorage: true
+            backup: true
