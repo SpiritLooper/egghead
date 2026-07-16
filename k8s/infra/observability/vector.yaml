@@ -26,7 +26,7 @@ spec:
     role: "Agent"
     image:
       repository: docker.io/timberio/vector
-      tag: 0.56.0-debian
+      tag: 0.57.0-debian
     service:
       enabled: true
       type: ClusterIP
@@ -462,7 +462,7 @@ spec:
     role: "Stateless-Aggregator"
     image:
       repository: docker.io/timberio/vector
-      tag: 0.56.0-debian
+      tag: 0.57.0-debian
     service:
       enabled: true
       type: LoadBalancer
