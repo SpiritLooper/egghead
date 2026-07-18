@@ -402,8 +402,10 @@ spec:
           reroute_unmatched: true
           route: 
             botcoin_logs:
-              source: 'is_string(.namespace) && starts_with(.namespace, "botcoin")'
               type: vrl
+              source: |- 
+                ns = to_string(.namespace) ?? ""
+                starts_with(ns, "botcoin")
       sinks:
         vlogs_container:
           type: elasticsearch
