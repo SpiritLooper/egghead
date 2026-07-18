@@ -231,6 +231,12 @@ spec:
             del(.kubernetes.pod_labels)
             del(.kubernetes.pod_annotations)
 
+            # save k8s-derived identity fields before any merge can clobber them
+            _k8s_host = .host
+            _k8s_namespace = .namespace
+            _k8s_pod = .pod
+            _k8s_container = .container
+
             level_map = {
               "inf": "info",  "information": "info",
               "wrn": "warn",  "warning": "warn",
@@ -383,6 +389,10 @@ spec:
                 else                                                              { "unknown" }
 
             # ── Nettoyage final ─────────────────────────────────────────────────────
+            .host = _k8s_host
+            .namespace = _k8s_namespace
+            .pod = _k8s_pod
+            .container = _k8s_container
             del(.kubernetes)
             del(.source_type)
         k8s_log_split:
@@ -392,7 +402,7 @@ spec:
           reroute_unmatched: true
           route: 
             botcoin_logs:
-              source: 'starts_with(to_string!(.namespace), "botcoin")'
+              source: 'is_string(.namespace) && starts_with(.namespace, "botcoin")'
               type: vrl
       sinks:
         vlogs_container:
