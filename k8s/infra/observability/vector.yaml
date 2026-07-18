@@ -41,6 +41,8 @@ spec:
           resources: ["nodes/proxy"]
           verbs: ["get"]
     env:
+      - name: VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION
+        value: "true"
       - name: TZ
         value: Europe/Paris
     envFrom:
