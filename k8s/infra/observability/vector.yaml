@@ -476,7 +476,7 @@ spec:
     role: "Stateless-Aggregator"
     image:
       repository: docker.io/timberio/vector
-      tag: 0.56.0-debian
+      tag: 0.57.0-debian
     service:
       enabled: true
       type: LoadBalancer
@@ -487,6 +487,8 @@ spec:
           targetPort: syslog
       externalTrafficPolicy: Cluster
     env:
+      - name: VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION
+        value: "true"
       - name: TZ
         value: Europe/Paris
     envFrom:
