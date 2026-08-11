@@ -66,6 +66,11 @@ spec:
               secretKeyRef:
                 key: PAPERLESS_SOCIALACCOUNT_PROVIDERS
                 name: paperless-secret
+          - name: PAPERLESS_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                key: PAPERLESS_SECRET_KEY
+                name: paperless-secret
         volumes:
           - name: paperless-data
             persistentVolumeClaim:
