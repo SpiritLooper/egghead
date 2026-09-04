@@ -8,7 +8,7 @@ spec:
   interval: 1h
   url: oci://ghcr.io/grafana-community/helm-charts/grafana
   ref:
-    tag: 12.11.2
+    tag: 13.2.1
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
