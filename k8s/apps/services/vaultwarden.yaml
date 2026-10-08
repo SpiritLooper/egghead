@@ -19,7 +19,7 @@ spec:
   values:
     apps:
       - name: vaultwarden
-        image: vaultwarden/server:1.37.3
+        image: vaultwarden/server:1.37.4
         excludeShipLogs: true
         containerSpec:
           readinessProbe:
