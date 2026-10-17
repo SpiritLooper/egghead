@@ -48,7 +48,8 @@ spec:
             secretKeyRef:
               name: woodpecker-creds
               key: WOODPECKER_AGENT_SECRET
-        WOODPECKER_OPEN: "false"
+        WOODPECKER_FORCE_IGNORE_SERVICE_FAILURE: "false"
+        WOODPECKER_OPEN: "true"
         WOODPECKER_HOST: "https://woodpecker.egghead.infrao.top"
         WOODPECKER_FORGEJO: "true"
         WOODPECKER_FORGEJO_URL: https://forgejo.egghead.infrao.top
