@@ -59,6 +59,8 @@ spec:
         service:
           DISABLE_REGISTRATION: true
           ENABLE_INTERNAL_SIGNIN: false
+        webhook:
+          ALLOWED_HOST_LIST: woodpecker.egghead.infrao.top
       oauth:
         - name: PocketID
           existingSecret: forgejo-oauth-secret
