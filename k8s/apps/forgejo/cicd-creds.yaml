@@ -1,0 +1,26 @@
+apiVersion: v1
+stringData:
+  WOODPECKER_AGENT_SECRET: ENC[AES256_GCM,data:OmgSduZjcphssRZK5OmXo+hOZ6M4mJKX1+lPfJwi8Tnm611MScu2gyYixMN7ERZPScOxpI3LhAIM/+E+jrXk6g==,iv:CTlOztNr2qYW8/pp24krQfH2x2SQ0yEp9JvstspQQ2Y=,tag:nsNeNEDMVqMofWAwbKENVw==,type:str]
+  WOODPECKER_ADMIN: ENC[AES256_GCM,data:lZ3ZJZyqGk1iDFHJ,iv:vtqptpwmaO7eSyAw/Eug5epFCy3OYsG9gRKhA9jVip4=,tag:5uqBQMz6sn1SSZW9kB2LAA==,type:str]
+  WOODPECKER_GRPC_SECRET: ENC[AES256_GCM,data:89M9UTbrjJOrdB3SHLUHt8EZbEVixqHvRTaq5xYBVV1tTyD/itleXKNAeos1xsFGEMF7wV+ry2D1vFWvowov0A==,iv:vc8XRigoeefc12j4yq6gM/a3LsNjtJ+XtJag5NrnOCo=,tag:MDLRgGEXmFSH3FYKCerW4A==,type:str]
+  WOODPECKER_FORGEJO_CLIENT: ENC[AES256_GCM,data:SGMM9H/5IWl9phOexhXDeXQlJIXlg45F4hApBbWdQ+dh6ESN,iv:mwYD+fa68CHC+onHR9Ai6p48gpUDD3YSH9D81EsGLNw=,tag:Bjsp5Pua+8v9fEQ7WKgndw==,type:str]
+  WOODPECKER_FORGEJO_SECRET: ENC[AES256_GCM,data:J3e4mMPbgZo0olIDS6hAgdcvmEAiUCRyfZ4davZpOI93kNdEX8piw2Sm8HtRgs8evXNqQhFeCnc=,iv:dRMUZmnmGTrwSBlx/O+J/+Y4UhwO64cOgOrADY+RTnI=,tag:8ZYNolNtDfg60Kf2z8c/gA==,type:str]
+kind: Secret
+metadata:
+  name: woodpecker-creds
+  namespace: forgejo
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxSTNRMmFPNFQwZFBYL3JX
+        TkNMOFBZTDFpUTZMblpLNzJ0dngvSEo2OGh3CmhEL0VoeW81MmxidG5YdFRIT3lz
+        a1BwbjMwdFhrY2hTd2NLK09aNUx2SzAKLS0tIExIWTlZL3RvN1lVOE00cXU2akU2
+        a3o4WEFaZ0NEMnRnUS9vamxEdE9hcVUKkL481UhRLS89bT9HDC+fHXAU0RDJTwzP
+        oXoDnXtCxDu6nfKmVceObOGPwxCeZw0VHZ7osmOIjMpTvcRYJtbNxQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hqtagr9n8pg56xdzdp53ux5rucge4cpe9sh9t55zst6ruque4ftsw6papx
+  encrypted_regex: (token|email|^data$|^stringData$|webhook$|creds$)
+  lastmodified: "2026-10-17T20:11:15Z"
+  mac: ENC[AES256_GCM,data:wX6GZ2MOko3SYF/zHlH0TVpPCGQCV8GctyLf00bILBMME7bXlIkS3zWCtiy3QRH2Mw6Jvx3STkscFX3YvefOU7tACMMWSxt0WYCESefi1XK/pHio0P3Q9dmlQ5GASzgm4viFgtYGuDnz/t0Byw24uK4B+YKNEpSMuOWvOt5ycFw=,iv:I/LABNbHFff5Wz1cFKgMrh+xHuYxsYrUbTQ6pi4tzWg=,tag:aQxafUyiDyOk5gsJ90KwmQ==,type:str]
+  version: 3.13.3

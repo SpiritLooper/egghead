@@ -1,0 +1,71 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: woodpecker
+  namespace: forgejo
+spec:
+  interval: 1h
+  url: oci://ghcr.io/woodpecker-ci/helm/woodpecker
+  ref:
+    tag: 3.7.5
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: woodpecker
+  namespace: forgejo
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: woodpecker
+    namespace: forgejo
+  values:
+    agent:
+      image:
+        registry: docker.io
+        repository: woodpeckerci/woodpecker-agent
+        tag: v3.19.0-alpine
+      mapAgentSecret: false
+      env:
+        WOODPECKER_AGENT_SECRET: 
+          valueFrom:
+            secretKeyRef:
+              name: woodpecker-creds
+              key: WOODPECKER_AGENT_SECRET
+        WOODPECKER_BACKEND_K8S_NAMESPACE: forgejo
+        TZ: Europe/Paris
+    server:
+      image:
+        registry: docker.io
+        repository: woodpeckerci/woodpecker-server
+        tag: v3.19.0-alpine
+      env:
+        WOODPECKER_ADMIN:
+          valueFrom:
+            secretKeyRef:
+              name: woodpecker-creds
+              key: WOODPECKER_AGENT_SECRET
+        WOODPECKER_OPEN: "false"
+        WOODPECKER_HOST: "https://woodpecker.egghead.infrao.top"
+        WOODPECKER_FORGEJO: "true"
+        WOODPECKER_FORGEJO_URL: https://forgejo.egghead.infrao.top
+        TZ: Europe/Paris
+      createAgentSecret: false
+      extraSecretNamesForEnvFrom: 
+        - woodpecker-creds
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - host: woodpecker.egghead.infrao.top
+            paths:
+              - path: /
+                pathType: Prefix
+                port: http
+        tls:
+          - hosts:
+              - woodpecker.egghead.infrao.top
