@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: jellyfin
-        image: jellyfin/jellyfin:12.3
+        image: jellyfin/jellyfin:12.4
         excludeShipLogs: true
         containerSpec:
           securityContext:
