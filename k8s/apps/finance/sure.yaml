@@ -82,7 +82,7 @@ spec:
 
       - name: sure-worker
         excludeShipLogs: true
-        image: ghcr.io/we-promise/sure:0.7.0-hotfix.3
+        image: ghcr.io/we-promise/sure:0.7.5-hotfix.3
         containerSpec:
           command: [ bundle, exec, sidekiq ]
         volumeMounts:
