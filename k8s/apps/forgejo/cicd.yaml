@@ -27,7 +27,7 @@ spec:
       image:
         registry: docker.io
         repository: woodpeckerci/woodpecker-agent
-        tag: v3.19.0-alpine
+        tag: v3.20.1-alpine
       mapAgentSecret: false
       env:
         WOODPECKER_AGENT_SECRET: 
