@@ -43,7 +43,7 @@ spec:
       image:
         registry: docker.io
         repository: woodpeckerci/woodpecker-server
-        tag: v3.19.0-alpine
+        tag: v3.20.1-alpine
       env:
         WOODPECKER_ADMIN:
           valueFrom:
