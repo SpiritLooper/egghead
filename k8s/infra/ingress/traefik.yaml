@@ -70,8 +70,8 @@ spec:
           secretName: wildcard-egghead-infrao-top-tls
     service:
       enabled: true
-      type: LoadBalancer
       spec:
+        type: LoadBalancer
         externalTrafficPolicy: Local
     ports:
       web:
