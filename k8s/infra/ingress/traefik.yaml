@@ -40,7 +40,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: "42.3.0"
+      version: "42.3.1"
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -70,8 +70,8 @@ spec:
           secretName: wildcard-egghead-infrao-top-tls
     service:
       enabled: true
-      type: LoadBalancer
       spec:
+        type: LoadBalancer
         externalTrafficPolicy: Local
     ports:
       web:
