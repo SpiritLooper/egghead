@@ -82,9 +82,9 @@ spec:
 
       - name: sure-worker
         excludeShipLogs: true
-        image: ghcr.io/we-promise/sure:0.7.5-hotfix.3
+        image: ghcr.io/we-promise/sure:0.7.6
         containerSpec:
-          command: [ bundle, exec, sidekiq ]
+          command: [ bundle, exec, sidekiq, -C, config/sidekiq.yml ]
         volumeMounts:
           - mountPath: /rails/storage
             name: sure-storage
