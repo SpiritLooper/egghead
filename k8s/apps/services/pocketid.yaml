@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: pocketid
-        image: ghcr.io/pocket-id/pocket-id:v2.19.2
+        image: ghcr.io/pocket-id/pocket-id:v2.19.3
         deploymentSpec:
           strategy:
             type: Recreate
