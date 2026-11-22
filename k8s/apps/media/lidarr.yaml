@@ -16,7 +16,7 @@ spec:
       interval: 10m
   values:
     apps:
-      - name: sonarr
+      - name: lidarr
         image: quay.io/linuxserver.io/lidarr:3.1.6
         excludeShipLogs: true
         containerSpec:
