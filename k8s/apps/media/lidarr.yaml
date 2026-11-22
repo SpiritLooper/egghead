@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lidarr
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: sonarr
+        image: quay.io/linuxserver.io/lidarr:3.1.6
+        excludeShipLogs: true
+        containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 8686
+          resources:
+            limits:
+              cpu: 500m
+              memory: 250Mi
+            requests:
+              cpu: 50m
+              memory: 250Mi
+        volumeMounts:
+          - mountPath: /config
+            name: config
+          - mountPath: /media-root
+            name: arr-media-root
+        env:
+          - name: PUID
+            value: "1000"
+          - name: GUID
+            value: "1000"
+          - name: TZ
+            value: Europe/Paris
+        volumes:
+          - name: config
+            persistentVolumeClaim:
+              claimName: lidarr-config
+          - name: arr-media-root
+            persistentVolumeClaim:
+              claimName: arr-media-root
+        service: 8686
+        ingress:
+          domain: lidarr.egghead.infrao.top
+        pvc:
+          - name: lidarr-config
+            localstorage: true
+            backup: true
