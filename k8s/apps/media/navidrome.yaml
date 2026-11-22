@@ -40,6 +40,10 @@ spec:
             name: media
             readOnly: true
         env:
+          - name: ND_SESSIONTIMEOUT
+            value: "12h"
+          - name: ND_ENABLETRANSCODINGCONFIG
+            value: "true"
           - name: ND_MUSICFOLDER
             value: /media/musics
           - name: ND_BASEURL
