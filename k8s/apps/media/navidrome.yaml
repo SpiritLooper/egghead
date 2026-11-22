@@ -41,7 +41,7 @@ spec:
             readOnly: true
         env:
           - name: ND_MUSICFOLDER
-            value: /media/music
+            value: /media/musics
           - name: ND_BASEURL
             value: https://music.egghead.infrao.top
           - name: TZ
