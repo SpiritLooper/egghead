@@ -1,0 +1,62 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: navidrome
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./k8s/appchart
+      version: "x.x.x"
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 10m
+  values:
+    apps:
+      - name: navidrome
+        image: navidrome/navidrome:0.64.2
+        excludeShipLogs: true
+        containerSpec:
+          readinessProbe:
+            httpGet:
+              port: 4533
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 250Mi
+            requests:
+              cpu: 50m
+              memory: 250Mi
+        volumeMounts:
+          - mountPath: /data
+            name: navidrome-data
+          - mountPath: /media
+            name: media
+            readOnly: true
+        env:
+          - name: ND_MUSICFOLDER
+            value: /media/music
+          - name: ND_BASEURL
+            value: https://music.egghead.infrao.top
+          - name: TZ
+            value: Europe/Paris
+        volumes:
+          - name: navidrome-data
+            persistentVolumeClaim:
+              claimName: navidrome-data
+          - name: media
+            persistentVolumeClaim:
+              claimName: media
+        service: 4533
+        ingress:
+          domain: music.egghead.infrao.top
+        pvc:
+          - name: navidrome-data
+            localstorage: true
+            backup: true
