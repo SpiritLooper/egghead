@@ -23,9 +23,15 @@ spec:
           readinessProbe:
             httpGet:
               port: 8000
+              httpHeaders:
+                - name: Host
+                  value: localhost
           livenessProbe:
             httpGet:
               port: 8000
+              httpHeaders:
+                - name: Host
+                  value: localhost
 #          resources:
 #            limits:
 #              cpu: 2
@@ -53,6 +59,8 @@ spec:
             value: Europe/Paris
           - name: PAPERLESS_URL
             value: https://paperless.egghead.infrao.top
+          - name: PAPERLESS_ALLOWED_HOSTS
+            value: localhost,docs.egghead.infrao.top,$(POD_IP)
           - name: PAPERLESS_APPS
             value: allauth.socialaccount.providers.openid_connect
           - name: PAPERLESS_DISABLE_REGULAR_LOGIN
