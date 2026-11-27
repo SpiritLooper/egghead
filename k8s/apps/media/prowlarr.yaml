@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: prowlarr
-        image: linuxserver/prowlarr:3.0.2
+        image: linuxserver/prowlarr:3.1.0
         containerSpec:
           readinessProbe:
             httpGet:
