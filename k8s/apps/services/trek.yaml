@@ -17,7 +17,7 @@ spec:
   values:
     apps:
       - name: trek
-        image: mauriceboe/trek:5.1.4
+        image: mauriceboe/trek:5.2.1
         excludeShipLogs: true
         podSpec:
           securityContext:
