@@ -25,8 +25,8 @@ spec:
               port: 8686
           resources:
             limits:
-              cpu: 500m
-              memory: 250Mi
+              cpu: 1000m
+              memory: 2Gi
             requests:
               cpu: 50m
               memory: 250Mi
